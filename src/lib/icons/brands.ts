@@ -1,0 +1,1 @@
+export { SiInstagram } from '@icons-pack/react-simple-icons';

@@ -1,0 +1,19 @@
+{
+  "name": "Gallego Cazaux - Negocios Inmobiliarios",
+  "short_name": "Gallego Cazaux",
+  "icons": [
+    {
+      "src": "/assets/icons/icon1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/apple-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#018f33",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
