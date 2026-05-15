@@ -24,7 +24,8 @@ export default function WhatsAppFAB() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed bottom-6 right-6 z-50"
+          className="fixed z-50"
+          style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom))', right: '1.5rem' }}
           initial={{ opacity: 0, scale: 0.7, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.7, y: 16 }}
