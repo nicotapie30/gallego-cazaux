@@ -1,0 +1,314 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - link "Gallego Cazaux" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img "Gallego Cazaux" [ref=e6]
+        - generic [ref=e7]:
+          - list [ref=e8]:
+            - listitem [ref=e9]:
+              - link "Inicio" [ref=e10] [cursor=pointer]:
+                - /url: /
+                - text: Inicio
+            - listitem [ref=e12]:
+              - link "Propiedades" [ref=e13] [cursor=pointer]:
+                - /url: /propiedades
+                - text: Propiedades
+            - listitem [ref=e14]:
+              - link "FAQ" [ref=e15] [cursor=pointer]:
+                - /url: /faq
+                - text: FAQ
+            - listitem [ref=e16]:
+              - link "Nosotros" [ref=e17] [cursor=pointer]:
+                - /url: /sobre-nosotros
+                - text: Nosotros
+            - listitem [ref=e18]:
+              - link "Contacto" [ref=e19] [cursor=pointer]:
+                - /url: /contacto
+                - text: Contacto
+          - link "WhatsApp" [ref=e21] [cursor=pointer]:
+            - /url: https://wa.me/542954272138
+            - img [ref=e22]
+            - text: WhatsApp
+  - main [ref=e24]:
+    - generic [ref=e25]:
+      - generic [ref=e26]:
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - img [ref=e31]
+            - text: Santa Rosa, La Pampa
+          - heading "Tu inversión segura en La Pampa." [level=1] [ref=e34]:
+            - generic [ref=e35]: Tu
+            - generic [ref=e36]: inversión
+            - generic [ref=e37]: segura
+            - generic [ref=e38]: en
+            - generic [ref=e39]: La
+            - generic [ref=e40]: Pampa.
+          - paragraph [ref=e41]: Más de 20 años acompañando familias e inversores en Santa Rosa. Comprá, vendé o alquilá con confianza.
+          - generic [ref=e42]:
+            - link "Ver propiedades" [ref=e43] [cursor=pointer]:
+              - /url: /propiedades
+              - text: Ver propiedades
+              - img [ref=e44]
+            - link "WhatsApp" [ref=e46] [cursor=pointer]:
+              - /url: https://wa.me/542954272138
+              - img [ref=e47]
+              - text: WhatsApp
+          - generic [ref=e49]:
+            - generic [ref=e50]:
+              - generic [ref=e52]: 0+
+              - generic [ref=e53]: Años de experiencia
+            - generic [ref=e54]:
+              - generic [ref=e56]: 0+
+              - generic [ref=e57]: Operaciones realizadas
+            - generic [ref=e58]:
+              - generic [ref=e60]: 0K+
+              - generic [ref=e61]: Seguidores en Instagram
+        - generic:
+          - generic:
+            - img
+            - img
+      - generic [ref=e63]:
+        - generic [ref=e65]:
+          - paragraph [ref=e66]: En venta y alquiler
+          - heading "Propiedades destacadas" [level=2] [ref=e67]:
+            - text: Propiedades
+            - text: destacadas
+        - generic [ref=e68]:
+          - link "Casa en Moreno al 500 Venta Casa Moreno al 500, Santa Rosa Casa en Moreno al 500 US$ 85.000 2 1 80m²" [ref=e71] [cursor=pointer]:
+            - /url: /propiedades/casa-moreno-500
+            - generic [ref=e72]:
+              - img "Casa en Moreno al 500" [ref=e73]
+              - generic [ref=e75]:
+                - generic [ref=e76]: Venta
+                - generic [ref=e77]: Casa
+              - generic [ref=e78]:
+                - paragraph [ref=e79]: Moreno al 500, Santa Rosa
+                - heading "Casa en Moreno al 500" [level=3] [ref=e80]
+                - generic [ref=e81]:
+                  - generic [ref=e82]: US$ 85.000
+                  - generic [ref=e83]:
+                    - generic [ref=e84]:
+                      - img [ref=e85]
+                      - text: "2"
+                    - generic [ref=e87]:
+                      - img [ref=e88]
+                      - text: "1"
+                    - generic [ref=e91]:
+                      - img [ref=e92]
+                      - text: 80m²
+          - link "Casa en Bouchard al 200 Venta Casa US$ 115.000 Casa en Bouchard al 200 Bouchard al 200, Santa Rosa 3 dorm. 2 baños 198 m²" [ref=e100] [cursor=pointer]:
+            - /url: /propiedades/casa-bouchard-200
+            - generic [ref=e101]:
+              - img "Casa en Bouchard al 200" [ref=e102]
+              - generic [ref=e104]:
+                - generic [ref=e105]: Venta
+                - generic [ref=e106]: Casa
+              - generic [ref=e107]: US$ 115.000
+            - generic [ref=e108]:
+              - heading "Casa en Bouchard al 200" [level=3] [ref=e109]
+              - paragraph [ref=e110]: Bouchard al 200, Santa Rosa
+              - generic [ref=e111]:
+                - generic [ref=e112]:
+                  - img [ref=e113]
+                  - text: 3 dorm.
+                - generic [ref=e115]:
+                  - img [ref=e116]
+                  - text: 2 baños
+                - generic [ref=e119]:
+                  - img [ref=e120]
+                  - text: 198 m²
+          - link "Departamento en el centro Venta Depto. US$ 75.000 Departamento en el centro Marcelo T. de Alvear 446, Santa Rosa 1 dorm. 1 baños 43 m²" [ref=e128] [cursor=pointer]:
+            - /url: /propiedades/departamento-marcelo-alvear
+            - generic [ref=e129]:
+              - img "Departamento en el centro" [ref=e130]
+              - generic [ref=e132]:
+                - generic [ref=e133]: Venta
+                - generic [ref=e134]: Depto.
+              - generic [ref=e135]: US$ 75.000
+            - generic [ref=e136]:
+              - heading "Departamento en el centro" [level=3] [ref=e137]
+              - paragraph [ref=e138]: Marcelo T. de Alvear 446, Santa Rosa
+              - generic [ref=e139]:
+                - generic [ref=e140]:
+                  - img [ref=e141]
+                  - text: 1 dorm.
+                - generic [ref=e143]:
+                  - img [ref=e144]
+                  - text: 1 baños
+                - generic [ref=e147]:
+                  - img [ref=e148]
+                  - text: 43 m²
+          - link "Terreno en Avenida Uruguay Venta US$ 42.000 Terreno Terreno en Avenida Uruguay Av. Uruguay al 800, Santa Rosa 400 m²" [ref=e156] [cursor=pointer]:
+            - /url: /propiedades/terreno-avenida-uruguay
+            - generic [ref=e157]:
+              - img "Terreno en Avenida Uruguay" [ref=e158]
+              - generic [ref=e159]: Venta
+            - generic [ref=e160]:
+              - generic [ref=e161]:
+                - generic [ref=e162]:
+                  - paragraph [ref=e163]: US$ 42.000
+                  - generic [ref=e164]: Terreno
+                - heading "Terreno en Avenida Uruguay" [level=3] [ref=e165]
+                - paragraph [ref=e166]: Av. Uruguay al 800, Santa Rosa
+              - generic [ref=e168]:
+                - img [ref=e169]
+                - text: 400 m²
+          - link "Explorar Ver todas las propiedades" [ref=e177] [cursor=pointer]:
+            - /url: /propiedades
+            - paragraph [ref=e178]: Explorar
+            - generic [ref=e179]:
+              - paragraph [ref=e180]:
+                - text: Ver todas las
+                - text: propiedades
+              - img [ref=e182]
+      - generic [ref=e186]:
+        - generic [ref=e187]:
+          - paragraph [ref=e188]: Lo que hacemos
+          - heading "Todo lo que necesitás en una sola oficina." [level=2] [ref=e189]:
+            - text: Todo lo que
+            - text: necesitás en
+            - text: una sola oficina.
+          - paragraph [ref=e190]: Compra, venta, alquiler o tasación — con el respaldo de más de 20 años en el mercado pampeano.
+        - generic [ref=e191]:
+          - generic [ref=e193]:
+            - img [ref=e196]
+            - heading "Compra" [level=3] [ref=e199]
+            - paragraph [ref=e200]: Te acompañamos a encontrar la propiedad ideal según tu presupuesto y necesidades en Santa Rosa y La Pampa.
+          - generic [ref=e202]:
+            - img [ref=e205]
+            - heading "Venta" [level=3] [ref=e208]
+            - paragraph [ref=e209]: Vendemos tu propiedad al mejor precio, con estrategia de difusión y seguimiento personalizado en cada paso.
+          - generic [ref=e211]:
+            - img [ref=e214]
+            - heading "Alquiler" [level=3] [ref=e218]
+            - paragraph [ref=e219]: "Gestionamos el alquiler de tu inmueble de inicio a fin: inquilinos, contratos y cobranzas."
+          - generic [ref=e221]:
+            - img [ref=e224]
+            - heading "Tasación" [level=3] [ref=e227]
+            - paragraph [ref=e228]: Valuamos tu inmueble con criterio de mercado local para que tomés las mejores decisiones.
+      - generic [ref=e231]:
+        - generic [ref=e233]:
+          - img "Equipo Gallego Cazaux" [ref=e234]
+          - generic [ref=e236]:
+            - paragraph [ref=e237]: Pellegrini 594 · Santa Rosa
+            - paragraph [ref=e238]: Abriendo puertas desde 2003
+        - generic [ref=e239]:
+          - generic [ref=e240]:
+            - paragraph [ref=e241]: Por qué elegirnos
+            - heading "Conocemos Santa Rosa mejor que nadie." [level=2] [ref=e242]:
+              - text: Conocemos Santa Rosa
+              - text: mejor que nadie.
+            - paragraph [ref=e243]: Somos la inmobiliaria de referencia en La Pampa. Cada barrio, cada zona, cada oportunidad — antes de que aparezca en el mercado.
+          - generic [ref=e244]:
+            - generic [ref=e246]:
+              - img [ref=e248]
+              - generic [ref=e254]:
+                - heading "20+ años en el mercado" [level=3] [ref=e255]
+                - paragraph [ref=e256]: Décadas de experiencia nos dan el conocimiento y la red de contactos que ningún portal puede reemplazar.
+            - generic [ref=e258]:
+              - img [ref=e260]
+              - generic [ref=e263]:
+                - heading "Especialistas en Santa Rosa" [level=3] [ref=e264]
+                - paragraph [ref=e265]: Conocemos cada barrio, cada zona, cada oportunidad — antes de que aparezca en el mercado.
+            - generic [ref=e267]:
+              - img [ref=e269]
+              - generic [ref=e274]:
+                - heading "Atención sin intermediarios" [level=3] [ref=e275]
+                - paragraph [ref=e276]: Hablás directamente con quien maneja tu operación. Sin call centers ni burocracia.
+      - generic [ref=e281]:
+        - generic [ref=e282]:
+          - paragraph [ref=e283]: ¿Listo para el próximo paso?
+          - heading "Más de 500 familias encontraron su lugar. La próxima podés ser vos." [level=2] [ref=e284]:
+            - text: Más de 500 familias
+            - text: encontraron su lugar.
+            - text: La próxima podés ser vos.
+          - paragraph [ref=e285]: Dos décadas en Santa Rosa nos enseñaron que detrás de cada operación hay una historia. Contanos la tuya y te ayudamos a dar el siguiente paso.
+          - generic [ref=e286]:
+            - link "Hablemos sin compromiso" [ref=e287] [cursor=pointer]:
+              - /url: https://wa.me/542954272138
+              - img [ref=e288]
+              - text: Hablemos sin compromiso
+            - link "Ver propiedades" [ref=e290] [cursor=pointer]:
+              - /url: /propiedades
+              - text: Ver propiedades
+              - img [ref=e291]
+        - generic [ref=e293]:
+          - generic [ref=e294]:
+            - generic [ref=e295]: "\""
+            - paragraph [ref=e296]: Vendimos la casa en menos de un mes. El trato fue excelente, siempre disponibles y muy profesionales. Los recomiendo sin dudarlo.
+            - generic [ref=e297]:
+              - generic [ref=e298]: MR
+              - generic [ref=e299]:
+                - paragraph [ref=e300]: Marcos Rodríguez
+                - paragraph [ref=e301]: Cliente — Venta en Santa Rosa
+          - generic [ref=e302]:
+            - button "Testimonio 1" [ref=e303]
+            - button "Testimonio 2" [ref=e304]
+            - button "Testimonio 3" [ref=e305]
+            - button "Testimonio 4" [ref=e306]
+            - button "Testimonio 5" [ref=e307]
+  - contentinfo [ref=e308]:
+    - generic [ref=e309]:
+      - generic [ref=e310]:
+        - generic [ref=e311]:
+          - img "Gallego Cazaux" [ref=e313]
+          - paragraph [ref=e314]: Negocios Inmobiliarios. Tu partner de confianza en Santa Rosa, La Pampa. Encontrá tu próximo hogar con nosotras.
+          - generic [ref=e315]:
+            - link "Instagram" [ref=e316] [cursor=pointer]:
+              - /url: https://www.instagram.com/gallegocazauxnegocios/
+              - img "Instagram" [ref=e317]
+            - link "Escribinos" [ref=e319] [cursor=pointer]:
+              - /url: https://wa.me/542954272138
+              - img [ref=e320]
+              - text: Escribinos
+        - generic [ref=e322]:
+          - heading "Enlaces" [level=3] [ref=e323]
+          - list [ref=e324]:
+            - listitem [ref=e325]:
+              - link "Propiedades" [ref=e326] [cursor=pointer]:
+                - /url: /propiedades
+                - text: Propiedades
+            - listitem [ref=e327]:
+              - link "Preguntas Frecuentes" [ref=e328] [cursor=pointer]:
+                - /url: /faq
+                - text: Preguntas Frecuentes
+            - listitem [ref=e329]:
+              - link "Nosotros" [ref=e330] [cursor=pointer]:
+                - /url: /sobre-nosotros
+                - text: Nosotros
+            - listitem [ref=e331]:
+              - link "Contacto" [ref=e332] [cursor=pointer]:
+                - /url: /contacto
+                - text: Contacto
+        - generic [ref=e333]:
+          - heading "Contacto" [level=3] [ref=e334]
+          - list [ref=e335]:
+            - listitem [ref=e336]:
+              - img [ref=e337]
+              - generic [ref=e340]:
+                - paragraph [ref=e341]: Pellegrini 594
+                - paragraph [ref=e342]: Santa Rosa, La Pampa
+            - listitem [ref=e343]:
+              - img [ref=e344]
+              - generic [ref=e346]:
+                - paragraph [ref=e347]: Lunes a Viernes
+                - paragraph [ref=e348]: 9:00 - 18:00 hs
+            - listitem [ref=e349]:
+              - img [ref=e350]
+              - link "(2954) 272138" [ref=e352] [cursor=pointer]:
+                - /url: tel:2954272138
+            - listitem [ref=e353]:
+              - img [ref=e354]
+              - link "info@gallegocazaux.com" [ref=e357] [cursor=pointer]:
+                - /url: mailto:info@gallegocazaux.com
+      - generic [ref=e359]:
+        - paragraph [ref=e360]: © 2026 Gallego Cazaux. Todos los derechos reservados.
+        - generic [ref=e361]:
+          - link "Términos y Condiciones" [ref=e362] [cursor=pointer]:
+            - /url: /terminos
+          - link "Privacidad" [ref=e363] [cursor=pointer]:
+            - /url: /privacidad
+  - button "Open Next.js Dev Tools" [ref=e369] [cursor=pointer]:
+    - img [ref=e370]

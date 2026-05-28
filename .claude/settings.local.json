@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Nico\\\\Desktop\\\\Programacion\\\\gallego-cazaux\" -Force)",
+      "Bash(Select-Object Name)",
+      "Bash(Copy-Item *)",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(p.dependencies['framer-motion'] || 'NOT INSTALLED'\\)\")",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(curl *)",
+      "Bash(findstr \"location\")",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(p.dependencies.next\\)\")",
+      "Bash(gh repo *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:www.webreactiva.com)",
+      "Bash(npm run *)",
+      "Bash(Remove-Item *)",
+      "WebFetch(domain:openspec.dev)",
+      "Bash(openspec --help)",
+      "Bash(npx openspec *)",
+      "Bash(openspec change *)",
+      "Bash(openspec new *)",
+      "Bash(openspec init *)",
+      "Bash(openspec status *)",
+      "Bash(openspec instructions *)",
+      "mcp__magic__21st_magic_component_inspiration",
+      "Skill(caveman)",
+      "Bash(git branch *)",
+      "mcp__plugin_playwright_playwright__browser_resize",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "Skill(frontend-design)",
+      "Bash(npx vercel *)",
+      "Bash(git add *)",
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git remote *)"
+    ]
+  }
+}
