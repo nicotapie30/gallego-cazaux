@@ -58,3 +58,13 @@ Fonts (Next.js `next/font/google`): Outfit (headings) + DM Sans (body) + JetBrai
 ## Types
 
 `src/lib/types.ts` defines: `Property`, `Post`, `FAQ`, `PropertyFilters`. Extend here before adding new data shapes.
+
+## Git hygiene — AI/dev tooling files
+
+Never commit these — always in `.gitignore`:
+- `.playwright-mcp/` — Playwright MCP logs/snapshots
+- `.claude/settings.local.json` — local Claude permissions
+- `openspec/` — OpenSpec spec artifacts
+- Screenshot files generated during verification (e.g. `hero-*.png`)
+
+If a new AI/dev tooling file appears → add it to `.gitignore` before committing.
