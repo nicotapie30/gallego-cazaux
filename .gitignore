@@ -40,6 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# playwright
+# ai / dev tooling — not needed in production
 .playwright-mcp/
 hero-*.png
+.claude/settings.local.json
+openspec/
