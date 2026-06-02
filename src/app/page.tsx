@@ -474,11 +474,11 @@ export default function Home() {
     <div>
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="grain relative min-h-[calc(100dvh-5rem)] flex items-center overflow-hidden">
+      <section ref={heroRef} className="grain relative min-h-[100dvh] flex items-center overflow-hidden">
         {/* Hero background photo */}
-        <img src="/equipo.jpg" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
-        {/* Dark overlay */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(4,18,46,0.92) 0%, rgba(5,16,61,0.88) 40%, rgba(6,18,64,0.85) 65%, rgba(2,11,40,0.92) 100%)' }} />
+        <img src="/equipo.webp" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+        {/* Dark overlay — left-heavy so team photo breathes on the right */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.97) 0%, rgba(5,16,61,0.92) 35%, rgba(6,18,64,0.68) 58%, rgba(2,11,40,0.52) 78%, rgba(2,11,40,0.45) 100%)' }} />
         {/* Blob 1: large green ambient — top right, breathes + parallax */}
         <motion.div
           className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
@@ -587,7 +587,7 @@ export default function Home() {
                   <div className="text-[10px] md:text-xs text-gray-500 mt-0.5 leading-tight">Operaciones<br className="md:hidden" /> realizadas</div>
                 </div>
                 <div className="px-3 py-3 md:px-6 md:py-5">
-                  <div className="font-outfit text-xl md:text-3xl font-bold text-primary"><CountUp to={7} suffix="K+" /></div>
+                  <div className="font-outfit text-xl md:text-3xl font-bold text-white"><CountUp to={7} suffix="K+" /></div>
                   <div className="text-[10px] md:text-xs text-gray-500 mt-0.5 leading-tight">Seguidores<br className="md:hidden" /> Instagram</div>
                 </div>
               </motion.div>

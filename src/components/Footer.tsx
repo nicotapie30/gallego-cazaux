@@ -13,7 +13,7 @@ export default function Footer() {
 
         {/* Brand — full width en mobile */}
         <div className="mb-8 lg:hidden">
-          <img src="/assets/images/gallego-cazaux-logo.webp" alt="Gallego Cazaux" className="h-12 w-auto mb-3" />
+          <img src="/assets/images/gallego-cazaux-logo-white.webp" alt="Gallego Cazaux" className="h-12 w-auto mb-3" />
           <p className="text-gray-400 text-sm mb-4 leading-relaxed">
             Tu partner de confianza en Santa Rosa, La Pampa.
           </p>
@@ -37,7 +37,7 @@ export default function Footer() {
 
           {/* Brand — solo desktop */}
           <div className="hidden lg:block lg:col-span-2">
-            <img src="/assets/images/gallego-cazaux-logo.webp" alt="Gallego Cazaux" className="h-16 w-auto mb-4" />
+            <img src="/assets/images/gallego-cazaux-logo-white.webp" alt="Gallego Cazaux" className="h-16 w-auto mb-4" />
             <p className="text-gray-400 text-base mb-5 max-w-sm leading-relaxed">
               Negocios Inmobiliarios. Tu partner de confianza en Santa Rosa, La Pampa.
               Encontrá tu próximo hogar con nosotras.
