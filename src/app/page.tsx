@@ -708,7 +708,7 @@ export default function Home() {
               {services.map((service, i) => (
                 <AnimateIn key={service.title} delay={i * 70}>
                   <motion.div
-                    className="p-6 rounded-2xl border h-full cursor-default"
+                    className="relative overflow-hidden p-6 rounded-2xl border h-full cursor-default"
                     style={{ background: '#f8fafc', borderColor: 'rgba(226,232,240,1)' }}
                     initial="rest"
                     whileHover="hover"
@@ -727,6 +727,16 @@ export default function Home() {
                     }}
                     transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
                   >
+                    {/* Número decorativo de paso */}
+                    <motion.span
+                      variants={{ rest: { opacity: 0.07 }, hover: { opacity: 0.14 } }}
+                      transition={{ duration: 0.3 }}
+                      className="absolute -top-4 -right-2 font-outfit font-bold leading-none select-none pointer-events-none text-secondary"
+                      style={{ fontSize: '7.5rem' }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </motion.span>
+
                     <motion.div
                       className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
                       variants={{
