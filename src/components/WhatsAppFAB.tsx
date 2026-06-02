@@ -43,19 +43,12 @@ export default function WhatsAppFAB() {
             whileHover="hover"
             whileTap={{ scale: 0.94 }}
           >
-            {/* Icon */}
-            <motion.div
-              className="flex items-center justify-center"
-              variants={{
-                rest: { paddingLeft: '0.875rem', paddingRight: '0.875rem' },
-                hover: { paddingLeft: '0.875rem', paddingRight: '0.5rem' },
-              }}
-              transition={{ duration: 0.22, ease: [0, 0, 0.2, 1] }}
-            >
+            {/* Slot fijo — ícono siempre centrado */}
+            <div className="flex-shrink-0 flex items-center justify-center w-14 h-14">
               <WhatsAppIcon />
-            </motion.div>
+            </div>
 
-            {/* Label */}
+            {/* Label — expande a la derecha */}
             <motion.span
               className="font-semibold text-sm whitespace-nowrap overflow-hidden"
               variants={{

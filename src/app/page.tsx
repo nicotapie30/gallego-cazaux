@@ -306,8 +306,8 @@ function WhyUsSection() {
               animate="rest"
             >
               <motion.img
-                src="https://picsum.photos/id/1029/600/700"
-                alt="Equipo Gallego Cazaux"
+                src="/santa-rosa.webp"
+                alt="Santa Rosa, La Pampa"
                 className="w-full h-full object-cover"
                 style={{}}
                 variants={{
@@ -433,13 +433,6 @@ const heroWordVariants = {
 }
 
 
-const heroSlides = [
-  { image: 'https://picsum.photos/seed/realestate/800/1000', label: 'Destacado', title: 'Casa en Moreno al 500', price: 'US$ 85.000', bed: 2, bath: 1, area: 80 },
-  { image: 'https://picsum.photos/seed/house2/800/1000', label: 'En venta', title: 'Casa en Bouchard al 200', price: 'US$ 115.000', bed: 3, bath: 2, area: 198 },
-  { image: 'https://picsum.photos/seed/house3/800/1000', label: 'Oportunidad', title: 'Dpto. en el centro', price: 'US$ 75.000', bed: 1, bath: 1, area: 43 },
-  { image: 'https://picsum.photos/seed/house4/800/1000', label: 'En alquiler', title: 'Casa en Perón al 1200', price: '$ 180.000', bed: 3, bath: 1, area: 120 },
-  { image: 'https://picsum.photos/seed/house5/800/1000', label: 'En venta', title: 'Terreno en Av. Uruguay', price: 'US$ 42.000', bed: null, bath: null, area: 400 },
-]
 
 function ScrollIndicator() {
   const { scrollY } = useScroll()
@@ -475,26 +468,17 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
-  const imageParallaxY = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, -60])
   const blob1ParallaxY = useTransform(scrollYProgress, [0, 1], shouldReduceMotion ? [0, 0] : [0, 20])
-
-  const [heroImageIndex, setHeroImageIndex] = useState(0)
-  const heroPausedRef = useRef(false)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!heroPausedRef.current) {
-        setHeroImageIndex((i) => (i + 1) % heroSlides.length)
-      }
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
 
   return (
     <div>
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="grain relative min-h-[calc(100dvh-5rem)] flex items-center overflow-hidden" style={{ background: 'linear-gradient(135deg, #04122e 0%, #05103d 40%, #061240 65%, #020b28 100%)' }}>
+      <section ref={heroRef} className="grain relative min-h-[calc(100dvh-5rem)] flex items-center overflow-hidden">
+        {/* Hero background photo */}
+        <img src="/equipo.jpg" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(4,18,46,0.92) 0%, rgba(5,16,61,0.88) 40%, rgba(6,18,64,0.85) 65%, rgba(2,11,40,0.92) 100%)' }} />
         {/* Blob 1: large green ambient — top right, breathes + parallax */}
         <motion.div
           className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
@@ -518,11 +502,11 @@ export default function Home() {
         />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-20 w-full" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom, 0px))' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 gap-8 items-center">
 
-            {/* Left: copy — FM orchestrated entrance */}
+            {/* Copy — FM orchestrated entrance */}
             <motion.div
-              className="lg:col-span-7"
+              className="max-w-3xl"
               variants={heroCopyVariants}
               initial={shouldReduceMotion ? false : 'hidden'}
               animate="visible"
@@ -606,78 +590,6 @@ export default function Home() {
                   <div className="font-outfit text-xl md:text-3xl font-bold text-primary"><CountUp to={7} suffix="K+" /></div>
                   <div className="text-[10px] md:text-xs text-gray-500 mt-0.5 leading-tight">Seguidores<br className="md:hidden" /> Instagram</div>
                 </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Right: image — spring entrance + parallax + float loop */}
-            <motion.div
-              className="lg:col-span-5 relative hidden lg:block"
-              style={{ y: imageParallaxY }}
-              initial={shouldReduceMotion ? false : { scale: 1.08, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: 'spring', stiffness: 80, damping: 18, delay: 0.2 }}
-            >
-              <motion.div
-                className="relative rounded-3xl overflow-hidden aspect-[4/5]"
-                style={{ boxShadow: '0 0 100px rgba(1,143,51,0.28), 0 0 0 1px rgba(1,143,51,0.35), 0 30px 60px rgba(0,0,0,0.6)' }}
-                animate={shouldReduceMotion ? undefined : { y: [0, -10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                onMouseEnter={() => { heroPausedRef.current = true }}
-                onMouseLeave={() => { heroPausedRef.current = false }}
-              >
-                <AnimatePresence mode="sync" initial={false}>
-                  <motion.img
-                    key={heroImageIndex}
-                    src={heroSlides[heroImageIndex].image}
-                    alt="Propiedad en Santa Rosa, La Pampa"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1.2, ease: 'easeInOut' }}
-                  />
-                </AnimatePresence>
-                <div className="absolute inset-0 bg-gradient-to-t from-secondary/70 via-secondary/10 to-transparent" />
-
-                {/* Floating card — spring entrance + content crossfade */}
-                <motion.div
-                  className="absolute bottom-6 left-5 right-5 rounded-2xl p-4 overflow-hidden"
-                  style={{
-                    background: 'rgba(255,255,255,0.92)',
-                    backdropFilter: 'blur(16px)',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                  }}
-                  initial={shouldReduceMotion ? false : { y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.5 }}
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.div
-                      key={heroImageIndex}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
-                    >
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <p className="text-xs text-muted uppercase tracking-widest font-medium mb-0.5">{heroSlides[heroImageIndex].label}</p>
-                          <p className="font-outfit font-bold text-secondary text-sm leading-tight">{heroSlides[heroImageIndex].title}</p>
-                        </div>
-                        <p className="font-outfit font-bold text-primary text-base">{heroSlides[heroImageIndex].price}</p>
-                      </div>
-                      <div className="flex items-center gap-3 pt-3 border-t border-border text-xs text-muted">
-                        {heroSlides[heroImageIndex].bed && (
-                          <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" />{heroSlides[heroImageIndex].bed} dorm.</span>
-                        )}
-                        {heroSlides[heroImageIndex].bath && (
-                          <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" />{heroSlides[heroImageIndex].bath} baño{heroSlides[heroImageIndex].bath !== 1 ? 's' : ''}</span>
-                        )}
-                        <span className="flex items-center gap-1"><Ruler className="w-3.5 h-3.5" />{heroSlides[heroImageIndex].area} m²</span>
-                      </div>
-                    </motion.div>
-                  </AnimatePresence>
-                </motion.div>
               </motion.div>
             </motion.div>
 
