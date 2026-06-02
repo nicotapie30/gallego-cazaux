@@ -814,7 +814,7 @@ export default function Home() {
                   <p className="text-white/50 font-medium text-xs uppercase tracking-widest mb-3">¿Listo para el próximo paso?</p>
                   <h2 className="font-outfit text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 md:mb-6">
                     Más de 500 familias encontraron su lugar.{' '}
-                    <span className="text-white/55">La próxima podés ser vos.</span>
+                    <span className="text-white/90">La próxima podés ser vos.</span>
                   </h2>
                   <p className="text-white/70 text-base md:text-lg leading-relaxed mb-6 md:mb-10">
                     Dos décadas en Santa Rosa nos enseñaron que detrás de cada operación hay una historia. Contanos la tuya y te ayudamos a dar el siguiente paso.
