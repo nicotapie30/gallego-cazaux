@@ -111,14 +111,7 @@ export default function PropertyDetailClient({ property }: Props) {
   const mapEmbedUrl = `https://maps.google.com/maps?q=${mapQuery}&output=embed&hl=es`;
 
   return (
-    <div className="min-h-screen bg-background-alt relative">
-      {/* Background decorators */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, rgba(1,143,51,0.14) 1.5px, transparent 1.5px)', backgroundSize: '28px 28px' }} />
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(1,143,51,0.10) 0%, transparent 70%)' }} />
-        <div className="absolute -top-16 -right-16 w-96 h-96 rounded-full blur-[100px]" style={{ background: 'rgba(1,143,51,0.09)' }} />
-        <div className="absolute -bottom-16 -left-16 w-80 h-80 rounded-full blur-[90px]" style={{ background: 'rgba(5,16,61,0.07)' }} />
-      </div>
+    <div className="min-h-screen bg-gray-50 relative">
 
       {/* Header */}
       <div className="relative bg-secondary overflow-hidden">
@@ -136,17 +129,17 @@ export default function PropertyDetailClient({ property }: Props) {
           </div>
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <h1 className="font-outfit text-4xl md:text-5xl font-bold text-white mb-3 line-clamp-2">
+              <h1 className="font-outfit text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-3 line-clamp-2">
                 {property.title}
               </h1>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className={`px-2.5 py-1 text-xs font-semibold rounded-full ${operationColor}`}>
+              <div className="flex items-center gap-2 min-w-0 overflow-hidden">
+                <span className={`flex-shrink-0 px-2.5 py-1 text-xs font-semibold rounded-full ${operationColor}`}>
                   {operationLabel}
                 </span>
-                <span className="text-white/40 text-sm">·</span>
-                <span className="text-white/60 text-sm flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-primary" />
-                  {property.address}, {property.city}
+                <span className="flex-shrink-0 text-white/40 text-sm">·</span>
+                <span className="text-white/60 text-xs sm:text-sm flex items-center gap-1.5 min-w-0 truncate">
+                  <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary flex-shrink-0" />
+                  <span className="truncate">{property.address}, {property.city}</span>
                 </span>
               </div>
             </div>
@@ -184,7 +177,7 @@ export default function PropertyDetailClient({ property }: Props) {
 
             {/* Gallery */}
             <div
-              className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-background-alt cursor-zoom-in group/gallery"
+              className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-background-alt cursor-zoom-in group/gallery"
               onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; isSwiping.current = false; }}
               onTouchEnd={(e) => {
                 const diff = touchStartX.current - e.changedTouches[0].clientX;
