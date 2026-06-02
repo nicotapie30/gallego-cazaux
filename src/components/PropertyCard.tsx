@@ -7,11 +7,11 @@ import { Bed, Bath, Ruler, Car, MapPin } from '@/lib/icons';
 import type { Property } from '@/lib/types';
 
 const cardVariants = {
-  rest: { y: 0 },
-  hover: { y: -5 },
+  rest: { y: 0, boxShadow: '0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05)' },
+  hover: { y: -6, boxShadow: '0 20px 40px rgba(0,0,0,0.13), 0 8px 16px rgba(0,0,0,0.08)' },
 };
 
-const transition = { duration: 0.28, ease: [0, 0, 0.2, 1] as [number, number, number, number] };
+const transition = { duration: 0.3, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] };
 
 interface PropertyCardProps {
   property: Property;
@@ -23,6 +23,12 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    // Resetear zoom antes de que el VT capture el snapshot "from"
+    const img = (e.currentTarget as HTMLElement).querySelector('img');
+    if (img) {
+      img.style.transition = 'none';
+      img.style.transform = 'none';
+    }
     if ('startViewTransition' in document) {
       (document as Document & { startViewTransition(cb: () => void): void }).startViewTransition(
         () => router.push(href)
@@ -56,23 +62,26 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       animate="rest"
       variants={cardVariants}
       transition={transition}
-      className="rounded-xl overflow-hidden bg-white border border-border hover:shadow-lg hover:border-primary/40 transition-shadow transition-colors duration-300"
+      className="group rounded-xl overflow-hidden bg-white border border-border hover:border-primary/40 transition-colors duration-300 cursor-pointer"
     >
-      <Link href={href} onClick={handleClick} className="block">
+      <Link href={href} onClick={handleClick} className="block h-full">
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden bg-background-alt">
           {property.images && property.images.length > 0 ? (
             <img
               src={property.images[0]?.asset?.url}
               alt={property.title}
-              className="w-full h-full object-cover"
-              style={{ viewTransitionName: `prop-img-${property._id}`, borderRadius: '0.75rem' }}
+              className="w-full h-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-[1.06]"
+              style={{ viewTransitionName: `prop-img-${property._id}` }}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <MapPin className="w-8 h-8 text-border" />
             </div>
           )}
+
+          {/* Overlay verde sutil en hover */}
+          <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-500 pointer-events-none" />
 
           <span className={`absolute top-3 left-3 px-2.5 py-1 ${operationColor} text-white text-xs font-semibold rounded-full`}>
             {operationLabel}
@@ -88,7 +97,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         {/* Content */}
         <div className="p-4">
           <div className="font-outfit font-bold text-xl text-primary mb-1">
-            {formatPrice(property.price, property.currency)}
+            {property.priceOnRequest
+              ? <span className="text-secondary font-outfit font-semibold text-base italic">Consultar precio</span>
+              : formatPrice(property.price, property.currency)
+            }
           </div>
 
           <h3 className="font-outfit font-semibold text-gray text-sm mb-1.5 line-clamp-1">

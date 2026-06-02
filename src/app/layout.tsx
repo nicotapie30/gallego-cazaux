@@ -27,6 +27,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: "Gallego Cazaux - Negocios Inmobiliarios",
   description: "Inmobiliaria en Santa Rosa, La Pampa. Venta y alquiler de propiedades. Encontrá tu hogar ideal con nosotros.",
   keywords: ["inmobiliaria", "propiedades", "venta", "alquiler", "Santa Rosa", "La Pampa", "casa", "departamento"],
@@ -42,6 +43,7 @@ export const metadata: Metadata = {
 };
 
 import { ViewTransition } from "react";
+import { Toaster } from 'sonner';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
@@ -62,6 +64,12 @@ export default function RootLayout({
         </main>
         <Footer />
         <WhatsAppFAB />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: { fontFamily: 'var(--font-dm-sans)' },
+          }}
+        />
       </body>
     </html>
   );

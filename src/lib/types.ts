@@ -27,6 +27,7 @@ export interface Property {
     alt?: string;
   }>;
   isFeatured: boolean;
+  priceOnRequest?: boolean;
   status: 'disponible' | 'reservado' | 'vendido';
   publishedAt: string;
 }

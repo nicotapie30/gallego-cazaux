@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowRight, MapPin, Bed, Bath, Ruler, Home as HomeIcon, TrendingUp, Key, FileText, Trophy, Users } from '@/lib/icons';
 import type { Property } from '@/lib/types';
+import { mockProperties } from '@/lib/mock-data';
 import { AnimateIn } from '@/components/AnimateIn';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import { motion, AnimatePresence, useInView, animate, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion';
@@ -34,100 +35,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-const mockProperties: Property[] = [
-  {
-    _id: '1',
-    title: 'Casa en Moreno al 500',
-    slug: { current: 'casa-moreno-500' },
-    operation: 'venta',
-    propertyType: 'casa',
-    price: 85000,
-    currency: 'USD',
-    address: 'Moreno al 500',
-    city: 'Santa Rosa',
-    province: 'La Pampa',
-    description: 'Excelente oportunidad con gran potencial de inversión en zona residencial.',
-    features: { bedrooms: 2, bathrooms: 1, coveredArea: 80, totalArea: 150, garage: true },
-    images: [{ asset: { url: 'https://picsum.photos/seed/prop1/800/1000' } }],
-    isFeatured: true,
-    status: 'disponible',
-    publishedAt: '2024-01-15',
-  },
-  {
-    _id: '2',
-    title: 'Casa en Bouchard al 200',
-    slug: { current: 'casa-bouchard-200' },
-    operation: 'venta',
-    propertyType: 'casa',
-    price: 115000,
-    currency: 'USD',
-    address: 'Bouchard al 200',
-    city: 'Santa Rosa',
-    province: 'La Pampa',
-    description: 'Hermosa casa con piscina, jardín y garage para dos autos.',
-    features: { bedrooms: 3, bathrooms: 2, coveredArea: 198, totalArea: 338, garage: true },
-    images: [{ asset: { url: 'https://picsum.photos/seed/prop2/800/600' } }],
-    isFeatured: true,
-    status: 'disponible',
-    publishedAt: '2024-01-10',
-  },
-  {
-    _id: '3',
-    title: 'Departamento en el centro',
-    slug: { current: 'departamento-marcelo-alvear' },
-    operation: 'venta',
-    propertyType: 'departamento',
-    price: 75000,
-    currency: 'USD',
-    address: 'Marcelo T. de Alvear 446',
-    city: 'Santa Rosa',
-    province: 'La Pampa',
-    description: 'Departamento en pleno centro, luminoso y bien ubicado.',
-    features: { bedrooms: 1, bathrooms: 1, coveredArea: 43, totalArea: 55, garage: true },
-    images: [{ asset: { url: 'https://picsum.photos/seed/prop3/800/600' } }],
-    isFeatured: false,
-    status: 'disponible',
-    publishedAt: '2024-01-05',
-  },
-  {
-    _id: '4',
-    title: 'Terreno en Avenida Uruguay',
-    slug: { current: 'terreno-avenida-uruguay' },
-    operation: 'venta',
-    propertyType: 'terreno',
-    price: 42000,
-    currency: 'USD',
-    address: 'Av. Uruguay al 800',
-    city: 'Santa Rosa',
-    province: 'La Pampa',
-    description: 'Terreno en esquina, excelente ubicación para construir.',
-    features: { bedrooms: 0, bathrooms: 0, coveredArea: 0, totalArea: 400, garage: false },
-    images: [{ asset: { url: 'https://picsum.photos/seed/prop4/800/600' } }],
-    isFeatured: false,
-    status: 'disponible',
-    publishedAt: '2024-01-03',
-  },
-  {
-    _id: '5',
-    title: 'Casa en Perón al 1200',
-    slug: { current: 'casa-peron-1200' },
-    operation: 'alquiler',
-    propertyType: 'casa',
-    price: 180000,
-    currency: 'ARS',
-    address: 'Perón al 1200',
-    city: 'Santa Rosa',
-    province: 'La Pampa',
-    description: 'Casa amplia para alquiler, zona tranquila con patio y garage.',
-    features: { bedrooms: 3, bathrooms: 1, coveredArea: 120, totalArea: 220, garage: true },
-    images: [{ asset: { url: 'https://picsum.photos/seed/prop5/800/600' } }],
-    isFeatured: false,
-    status: 'disponible',
-    publishedAt: '2024-01-01',
-  },
-];
-
-function formatPrice(price: number, currency: string) {
+function formatPrice(price: number, currency: string, priceOnRequest?: boolean) {
+  if (priceOnRequest) return 'Consultar precio';
   return currency === 'USD'
     ? `US$ ${price.toLocaleString('es-AR')}`
     : `$ ${price.toLocaleString('es-AR')}`;
@@ -141,21 +50,28 @@ function FeaturedCard({ property }: { property: Property }) {
   const imageUrl = property.images?.[0]?.asset?.url;
   return (
     <motion.div
-      className="h-full rounded-2xl overflow-hidden transition-shadow duration-300"
-      style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}
-      whileHover={{ y: -8 }}
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      variants={{
+        rest: { y: 0, boxShadow: '0 4px 16px rgba(0,0,0,0.2)' },
+        hover: { y: -8, boxShadow: '0 16px 40px rgba(0,0,0,0.32)' },
+      }}
       transition={{ duration: 0.28, ease: [0, 0, 0.2, 1] }}
+      className="h-full rounded-2xl overflow-hidden"
     >
     <Link
       href={`/propiedades/${property.slug.current}`}
-      className="relative rounded-2xl overflow-hidden bg-secondary block h-full group"
+      className="relative rounded-2xl overflow-hidden bg-secondary block h-full"
     >
       <div className="relative h-full min-h-[420px] overflow-hidden">
         {imageUrl && (
-          <img
+          <motion.img
             src={imageUrl}
             alt={property.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover"
+            variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
+            transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/30 to-transparent" />
@@ -175,7 +91,13 @@ function FeaturedCard({ property }: { property: Property }) {
           <p className="text-white/60 text-sm mb-1">{property.address}, {property.city}</p>
           <h3 className="font-outfit font-bold text-white text-xl mb-3 leading-tight">{property.title}</h3>
           <div className="flex items-center justify-between">
-            <span className="font-outfit font-bold text-primary text-xl">{formatPrice(property.price, property.currency)}</span>
+            {property.priceOnRequest ? (
+              <span className="inline-flex items-center bg-white/15 backdrop-blur-sm border border-white/30 text-white font-outfit font-semibold text-sm px-4 py-1.5 rounded-full">
+                Consultar precio
+              </span>
+            ) : (
+              <span className="font-outfit font-bold text-primary text-xl">{formatPrice(property.price, property.currency)}</span>
+            )}
             <div className="flex items-center gap-3 text-white/70 text-sm">
               {!!property.features.bedrooms && (
                 <span className="flex items-center gap-1"><Bed className="w-4 h-4" />{property.features.bedrooms}</span>
@@ -202,17 +124,25 @@ function MediumCard({ property }: { property: Property }) {
   const imageUrl = property.images?.[0]?.asset?.url;
   return (
     <motion.div
-      className="rounded-2xl overflow-hidden bg-white border border-border transition-shadow duration-300 hover:shadow-lg hover:border-primary/25"
-      whileHover={{ y: -6 }}
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      variants={{
+        rest: { y: 0, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' },
+        hover: { y: -6, boxShadow: '0 12px 28px rgba(0,0,0,0.12)' },
+      }}
       transition={{ duration: 0.28, ease: [0, 0, 0.2, 1] }}
+      className="rounded-2xl overflow-hidden bg-white border border-border hover:border-primary/25 transition-colors duration-300"
     >
-      <Link href={`/propiedades/${property.slug.current}`} className="block group">
+      <Link href={`/propiedades/${property.slug.current}`} className="block">
         <div className="relative aspect-[4/3] overflow-hidden">
           {imageUrl && (
-            <img
+            <motion.img
               src={imageUrl}
               alt={property.title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover"
+              variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
+              transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -226,8 +156,8 @@ function MediumCard({ property }: { property: Property }) {
               </span>
             )}
           </div>
-          <span className="absolute bottom-3 right-3 font-outfit font-bold text-white text-base drop-shadow-lg">
-            {formatPrice(property.price, property.currency)}
+          <span className="absolute bottom-3 right-3 font-outfit font-semibold text-white text-sm bg-black/55 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full">
+            {formatPrice(property.price, property.currency, property.priceOnRequest)}
           </span>
         </div>
         <div className="p-4">
@@ -257,17 +187,25 @@ function HorizontalCard({ property }: { property: Property }) {
   const imageUrl = property.images?.[0]?.asset?.url;
   return (
     <motion.div
-      className="rounded-2xl overflow-hidden bg-white border border-border transition-shadow duration-300 hover:shadow-lg hover:border-primary/25"
-      whileHover={{ y: -5 }}
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      variants={{
+        rest: { y: 0, boxShadow: '0 1px 4px rgba(0,0,0,0.06)' },
+        hover: { y: -5, boxShadow: '0 10px 24px rgba(0,0,0,0.12)' },
+      }}
       transition={{ duration: 0.28, ease: [0, 0, 0.2, 1] }}
+      className="rounded-2xl overflow-hidden bg-white border border-border hover:border-primary/25 transition-colors duration-300"
     >
-      <Link href={`/propiedades/${property.slug.current}`} className="flex flex-col md:flex-row w-full group">
+      <Link href={`/propiedades/${property.slug.current}`} className="flex flex-col md:flex-row w-full">
         <div className="relative w-full md:w-36 md:shrink-0 overflow-hidden aspect-[16/9] md:aspect-auto">
           {imageUrl && (
-            <img
+            <motion.img
               src={imageUrl}
               alt={property.title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover"
+              variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
+              transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
             />
           )}
           <span className="absolute top-2.5 left-2.5 bg-primary text-white text-[9px] font-semibold px-2 py-0.5 rounded-full uppercase">
@@ -277,7 +215,11 @@ function HorizontalCard({ property }: { property: Property }) {
         <div className="flex-1 p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              <p className="font-outfit font-bold text-primary text-base">{formatPrice(property.price, property.currency)}</p>
+              {property.priceOnRequest ? (
+                <p className="font-outfit font-semibold text-secondary text-sm italic">Consultar precio</p>
+              ) : (
+                <p className="font-outfit font-bold text-primary text-base">{formatPrice(property.price, property.currency)}</p>
+              )}
               {TYPE_LABEL[property.propertyType] && (
                 <span className="text-[9px] font-semibold text-secondary bg-secondary/8 px-2 py-0.5 rounded-full">
                   {TYPE_LABEL[property.propertyType]}
@@ -556,21 +498,21 @@ export default function Home() {
         {/* Blob 1: large green ambient — top right, breathes + parallax */}
         <motion.div
           className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
-          style={{ background: 'rgba(1,143,51,0.18)', y: blob1ParallaxY }}
+          style={{ background: 'rgba(1,143,51,0.18)', y: blob1ParallaxY, willChange: 'transform' }}
           animate={shouldReduceMotion ? undefined : { scale: [1, 1.12, 1] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
         />
         {/* Blob 2: blue-tinted depth — bottom left, drifts */}
         <motion.div
           className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
-          style={{ background: 'rgba(1,4,25,0.70)' }}
+          style={{ background: 'rgba(1,4,25,0.70)', willChange: 'transform' }}
           animate={shouldReduceMotion ? undefined : { x: [0, 15, 0], y: [0, -10, 0] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         />
         {/* Blob 3: small warm accent — center, floats */}
         <motion.div
           className="absolute top-1/3 left-1/3 w-72 h-72 rounded-full blur-[80px] pointer-events-none"
-          style={{ background: 'rgba(1,143,51,0.10)' }}
+          style={{ background: 'rgba(1,143,51,0.10)', willChange: 'transform' }}
           animate={shouldReduceMotion ? undefined : { scale: [1, 1.08, 1] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         />

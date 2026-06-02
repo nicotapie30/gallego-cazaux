@@ -29,4 +29,6 @@ export {
   Users,
   Star,
   Waves,
+  Share2,
+  Check,
 } from 'lucide-react';
