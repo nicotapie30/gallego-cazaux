@@ -6,6 +6,7 @@ import type { Property } from '@/lib/types';
 import { mockProperties } from '@/lib/mock-data';
 import { AnimateIn } from '@/components/AnimateIn';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
+import Select from '@/components/ui/Select';
 import { motion, AnimatePresence, useInView, animate, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -300,16 +301,13 @@ function QuickSearch() {
           <div className="hidden sm:block w-px h-8 bg-gray-200 mx-1" />
 
           {/* Tipo — select */}
-          <select
+          <Select
             value={type}
-            onChange={e => setType(e.target.value)}
-            className="flex-1 px-4 py-2 rounded-lg text-sm bg-gray-100 text-gray-700 border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors duration-200 appearance-none"
-            style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
-          >
-            {TYPE_OPTS.map(opt => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
-            ))}
-          </select>
+            onChange={setType}
+            options={TYPE_OPTS}
+            className="flex-1"
+            buttonClassName="flex items-center justify-between gap-2 w-full px-4 py-2 rounded-lg text-sm bg-gray-100 text-gray-700 border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors duration-200 focus:outline-none select-none"
+          />
 
           {/* CTA */}
           <button

@@ -4,8 +4,9 @@ import { useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Filter, Search, X, ChevronDown, Home } from '@/lib/icons';
+import { Filter, Search, X, Home } from '@/lib/icons';
 import PropertyCard from '@/components/PropertyCard';
+import Select from '@/components/ui/Select';
 import { mockProperties } from '@/lib/mock-data';
 
 type Filters = {
@@ -182,16 +183,17 @@ function FilterPanel({ filters, search, onFiltersChange, onSearchChange, onClear
       {/* City */}
       <div>
         <label className="block text-sm font-medium text-gray mb-2">Ciudad</label>
-        <select
+        <Select
           value={filters.city}
-          onChange={(e) => setFilter('city', e.target.value)}
-          className="w-full px-3 py-2 border border-border rounded-lg text-sm text-gray focus:outline-none focus:ring-2 focus:ring-primary/20 bg-white"
-        >
-          <option value="">Todas las ciudades</option>
-          <option value="Santa Rosa">Santa Rosa</option>
-          <option value="Toay">Toay</option>
-          <option value="General Pico">General Pico</option>
-        </select>
+          onChange={(v) => setFilter('city', v)}
+          options={[
+            { value: '', label: 'Todas las ciudades' },
+            { value: 'Santa Rosa', label: 'Santa Rosa' },
+            { value: 'Toay', label: 'Toay' },
+            { value: 'General Pico', label: 'General Pico' },
+          ]}
+          className="w-full [&>button]:w-full [&>button]:justify-between"
+        />
       </div>
     </div>
   );
@@ -326,18 +328,11 @@ export default function PropiedadesPage() {
               </p>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted hidden sm:block">Ordenar:</span>
-                <div className="relative">
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none pl-3 pr-8 py-1.5 bg-white border border-border rounded-lg text-sm text-gray focus:outline-none focus:ring-2 focus:ring-primary/20 cursor-pointer"
-                  >
-                    {SORT_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>{opt.label}</option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted pointer-events-none" />
-                </div>
+                <Select
+                  value={sortBy}
+                  onChange={setSortBy}
+                  options={SORT_OPTIONS}
+                />
               </div>
             </div>
 
