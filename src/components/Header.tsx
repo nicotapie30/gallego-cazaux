@@ -46,8 +46,8 @@ export default function Header() {
     `}>
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         <div className="flex h-20 items-center justify-between">
-          {/* Logo — container fijo 80x80, cross-fade por opacity */}
-          <Link href="/" className="flex-none relative" style={{ width: 80, height: 80 }}>
+          {/* Logo — container fijo, cross-fade por opacity */}
+          <Link href="/" className="flex-none relative" style={{ width: 64, height: 64 }}>
             <img
               src="/assets/images/gallego-cazaux-logo-white.webp"
               alt="Gallego Cazaux"
