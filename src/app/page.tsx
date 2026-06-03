@@ -8,6 +8,7 @@ import { AnimateIn } from '@/components/AnimateIn';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import { motion, AnimatePresence, useInView, animate, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function CountUp({ to, suffix = '' }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null)
@@ -249,6 +250,80 @@ function HorizontalCard({ property }: { property: Property }) {
   );
 }
 
+const OPERATION_OPTS = [
+  { value: 'venta', label: 'Venta' },
+  { value: 'alquiler', label: 'Alquiler' },
+];
+
+const TYPE_OPTS = [
+  { value: '', label: 'Todos los tipos' },
+  { value: 'casa', label: 'Casa' },
+  { value: 'departamento', label: 'Departamento' },
+  { value: 'ph', label: 'PH' },
+  { value: 'terreno', label: 'Terreno' },
+  { value: 'local', label: 'Local' },
+];
+
+function QuickSearch() {
+  const router = useRouter();
+  const [operation, setOperation] = useState('');
+  const [type, setType] = useState('');
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (operation) params.set('operation', operation);
+    if (type) params.set('type', type);
+    router.push(`/propiedades${params.toString() ? `?${params}` : ''}`);
+  };
+
+  return (
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 px-6 py-5">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+          {/* Operación — pills */}
+          <div className="flex gap-2">
+            {OPERATION_OPTS.map(opt => (
+              <button
+                key={opt.value}
+                onClick={() => setOperation(operation === opt.value ? '' : opt.value)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  operation === opt.value
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="hidden sm:block w-px h-8 bg-gray-200 mx-1" />
+
+          {/* Tipo — select */}
+          <select
+            value={type}
+            onChange={e => setType(e.target.value)}
+            className="flex-1 px-4 py-2 rounded-lg text-sm bg-gray-100 text-gray-700 border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors duration-200 appearance-none"
+            style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+          >
+            {TYPE_OPTS.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+
+          {/* CTA */}
+          <button
+            onClick={handleSearch}
+            className="group flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-200 whitespace-nowrap shadow-sm cursor-pointer"
+          >
+            Ver propiedades
+            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </button>
+        </div>
+      </div>
+  );
+}
+
 const services = [
   {
     icon: HomeIcon,
@@ -474,34 +549,32 @@ export default function Home() {
     <div>
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="grain relative min-h-[100dvh] flex items-center overflow-hidden">
-        {/* Hero background photo */}
-        <img src="/equipo.webp" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
-        {/* Dark overlay — left-heavy so team photo breathes on the right */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.97) 0%, rgba(5,16,61,0.92) 35%, rgba(6,18,64,0.68) 58%, rgba(2,11,40,0.52) 78%, rgba(2,11,40,0.45) 100%)' }} />
-        {/* Blob 1: large green ambient — top right, breathes + parallax */}
-        <motion.div
-          className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
-          style={{ background: 'rgba(1,143,51,0.18)', y: blob1ParallaxY, willChange: 'transform' }}
-          animate={shouldReduceMotion ? undefined : { scale: [1, 1.12, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        {/* Blob 2: blue-tinted depth — bottom left, drifts */}
-        <motion.div
-          className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
-          style={{ background: 'rgba(1,4,25,0.70)', willChange: 'transform' }}
-          animate={shouldReduceMotion ? undefined : { x: [0, 15, 0], y: [0, -10, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        {/* Blob 3: small warm accent — center, floats */}
-        <motion.div
-          className="absolute top-1/3 left-1/3 w-72 h-72 rounded-full blur-[80px] pointer-events-none"
-          style={{ background: 'rgba(1,143,51,0.10)', willChange: 'transform' }}
-          animate={shouldReduceMotion ? undefined : { scale: [1, 1.08, 1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        />
+      <section ref={heroRef} className="grain relative min-h-[100dvh] flex items-center">
+        {/* Background layer — overflow clipped here para que los blobs no se filtren */}
+        <div className="absolute inset-0 overflow-hidden">
+          <img src="/equipo.webp" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.97) 0%, rgba(5,16,61,0.92) 35%, rgba(6,18,64,0.68) 58%, rgba(2,11,40,0.52) 78%, rgba(2,11,40,0.45) 100%)' }} />
+          <motion.div
+            className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
+            style={{ background: 'rgba(1,143,51,0.18)', y: blob1ParallaxY, willChange: 'transform' }}
+            animate={shouldReduceMotion ? undefined : { scale: [1, 1.12, 1] }}
+            transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full blur-[80px] pointer-events-none"
+            style={{ background: 'rgba(1,4,25,0.70)', willChange: 'transform' }}
+            animate={shouldReduceMotion ? undefined : { x: [0, 15, 0], y: [0, -10, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="absolute top-1/3 left-1/3 w-72 h-72 rounded-full blur-[80px] pointer-events-none"
+            style={{ background: 'rgba(1,143,51,0.10)', willChange: 'transform' }}
+            animate={shouldReduceMotion ? undefined : { scale: [1, 1.08, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 md:pt-20 w-full" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom, 0px))' }}>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 w-full" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom, 0px))' }}>
           <div className="grid grid-cols-1 gap-8 items-center">
 
             {/* Copy — FM orchestrated entrance */}
@@ -511,15 +584,6 @@ export default function Home() {
               initial={shouldReduceMotion ? false : 'hidden'}
               animate="visible"
             >
-              {/* Badge */}
-              <motion.div
-                variants={heroItemVariants}
-                className="inline-flex items-center gap-2 text-primary text-sm font-medium bg-primary/10 border border-primary/20 px-3 py-1.5 rounded-full mb-8"
-              >
-                <MapPin className="w-3.5 h-3.5" />
-                Santa Rosa, La Pampa
-              </motion.div>
-
               {/* H1 — word by word stagger */}
               <motion.h1
                 variants={heroH1Variants}
@@ -550,22 +614,22 @@ export default function Home() {
                 variants={heroItemVariants}
                 className="flex flex-col sm:flex-row gap-3"
               >
-                <Link
-                  href="/propiedades"
-                  className="group inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary-hover transition-colors text-sm md:text-base shadow-lg shadow-primary/30"
-                >
-                  Ver propiedades
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </Link>
                 <a
                   href="https://wa.me/542954272138"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 bg-white/[0.06] border border-white/20 text-white font-semibold rounded-xl hover:bg-white/15 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 text-sm md:text-base backdrop-blur-sm"
+                  className="inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 text-sm md:text-base shadow-lg shadow-primary/30"
                 >
                   <WhatsAppIcon className="w-5 h-5" />
                   WhatsApp
                 </a>
+                <Link
+                  href="/propiedades"
+                  className="group inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 bg-white/[0.06] border border-white/20 text-white font-semibold rounded-xl hover:bg-white/15 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 text-sm md:text-base backdrop-blur-sm"
+                >
+                  Explorar
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </Link>
               </motion.div>
 
               {/* Stats — glassmorphism panel, entra como unidad */}
@@ -591,13 +655,23 @@ export default function Home() {
                   <div className="text-[10px] md:text-xs text-gray-500 mt-0.5 leading-tight">Seguidores<br className="md:hidden" /> Instagram</div>
                 </div>
               </motion.div>
+
+              {/* Mobile: buscador en flujo, debajo de stats */}
+              <div className="mt-6 sm:hidden">
+                <QuickSearch />
+              </div>
             </motion.div>
 
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <ScrollIndicator />
+        {/* Desktop: buscador absoluto solapando borde inferior del hero */}
+        <div className="hidden sm:block absolute bottom-10 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto">
+            <QuickSearch />
+          </div>
+        </div>
+
       </section>
 
       {/* ── PROPIEDADES DESTACADAS ────────────────────────────────── */}

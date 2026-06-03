@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Filter, Search, X, ChevronDown, Home } from '@/lib/icons';
@@ -217,8 +218,13 @@ function EmptyState({ onClear }: { onClear: () => void }) {
 }
 
 export default function PropiedadesPage() {
+  const searchParams = useSearchParams();
 
-  const [filters, setFilters] = useState<Filters>(defaultFilters);
+  const [filters, setFilters] = useState<Filters>({
+    ...defaultFilters,
+    operation: searchParams.get('operation') ?? '',
+    propertyType: searchParams.get('type') ?? '',
+  });
   const [sortBy, setSortBy] = useState('newest');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [search, setSearch] = useState('');
