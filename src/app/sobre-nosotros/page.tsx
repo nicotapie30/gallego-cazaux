@@ -165,29 +165,53 @@ export default function SobreNosotrosPage() {
             }}
           >
             {stats.map(({ icon: Icon, value, suffix, label }, i) => (
-              <div
+              <motion.div
                 key={label}
-                className={`flex flex-col items-center justify-center gap-3 px-4 py-8 md:px-6 md:py-10 ${[
+                className={`relative overflow-hidden flex flex-col items-center justify-center gap-3 px-4 py-8 md:px-6 md:py-10 cursor-default ${[
                   '',
                   'border-l',
                   'border-t md:border-t-0 md:border-l',
                   'border-l border-t md:border-t-0',
                 ][i]}`}
                 style={{ borderColor: 'rgba(255,255,255,0.06)' }}
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                transition={{ duration: 0.25, ease: 'easeOut' }}
               >
-                <div
+                {/* Radial glow — bottom center expanding up */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'radial-gradient(ellipse 120% 80% at 50% 130%, rgba(255,255,255,0.08) 0%, transparent 70%)' }}
+                  variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                />
+                <motion.div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: 'rgba(1,143,51,0.25)', border: '1px solid rgba(1,143,51,0.3)' }}
+                  variants={{
+                    rest: { boxShadow: '0 0 0px 0px rgba(1,143,51,0)', background: 'rgba(1,143,51,0.25)', border: '1px solid rgba(1,143,51,0.3)' },
+                    hover: { boxShadow: '0 0 18px 3px rgba(1,143,51,0.3)', background: 'rgba(1,143,51,0.45)', border: '1px solid rgba(255,255,255,0.2)' },
+                  }}
+                  transition={{ duration: 0.2, ease: 'easeOut' }}
                 >
                   <Icon className="w-5 h-5 text-primary" />
-                </div>
+                </motion.div>
                 <div className="text-center">
                   <p className="font-outfit font-bold text-white text-3xl leading-none mb-1">
                     <CountUp to={value} suffix={suffix} />
                   </p>
-                  <p className="text-white/45 text-xs">{label}</p>
+                  <motion.p
+                    className="text-xs"
+                    variants={{
+                      rest: { color: 'rgba(255,255,255,0.45)' },
+                      hover: { color: 'rgba(255,255,255,0.8)' },
+                    }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {label}
+                  </motion.p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
