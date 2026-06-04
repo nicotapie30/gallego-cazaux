@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -219,7 +219,7 @@ function EmptyState({ onClear }: { onClear: () => void }) {
   );
 }
 
-export default function PropiedadesPage() {
+function PropiedadesContent() {
   const searchParams = useSearchParams();
 
   const [filters, setFilters] = useState<Filters>({
@@ -400,5 +400,13 @@ export default function PropiedadesPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function PropiedadesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background-alt" />}>
+      <PropiedadesContent />
+    </Suspense>
   );
 }
