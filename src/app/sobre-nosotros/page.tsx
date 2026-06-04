@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, useInView, animate } from 'framer-motion';
-import { MapPin, Phone, Mail, Trophy, Users, Home, Star } from '@/lib/icons';
+import { MapPin, Phone, Mail, Trophy, Users, Home, Star, Clock } from '@/lib/icons';
 import { SiInstagram } from '@/lib/icons/brands';
 import { AnimateIn } from '@/components/AnimateIn';
 
@@ -33,10 +33,9 @@ const stats = [
 ];
 
 const team = [
-  { name: 'Carlos Gallego',   role: 'Fundador & Director',           image: 'https://picsum.photos/seed/man1/400/500' },
-  { name: 'María Cazaux',     role: 'Socia Directora',               image: 'https://picsum.photos/seed/woman1/400/500' },
-  { name: 'Lucas Fernández',  role: 'Agente Inmobiliario',           image: 'https://picsum.photos/seed/man2/400/500' },
-  { name: 'Sofía Morales',    role: 'Administración & Alquileres',   image: 'https://picsum.photos/seed/woman2/400/500' },
+  { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman1/400/500' },
+  { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman2/400/500' },
+  { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman3/400/500' },
 ];
 
 const values = [
@@ -227,9 +226,9 @@ export default function SobreNosotrosPage() {
             </h2>
           </AnimateIn>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {team.map((member, i) => (
-              <AnimateIn key={member.name} delay={i * 80}>
+              <AnimateIn key={i} delay={i * 80}>
                 <motion.div
                   className="group"
                   initial="rest"
@@ -255,7 +254,7 @@ export default function SobreNosotrosPage() {
                     />
                     <motion.div
                       className="absolute inset-0"
-                      style={{ background: 'linear-gradient(to top, rgba(1,143,51,0.4) 0%, transparent 50%)' }}
+                      style={{ background: 'linear-gradient(to top, rgba(1,143,51,0.18) 0%, transparent 50%)' }}
                       variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
                       transition={{ duration: 0.3 }}
                     />
@@ -402,11 +401,20 @@ export default function SobreNosotrosPage() {
                 </div>
               </motion.a>
 
-              <div className="p-5 rounded-xl border border-border bg-background-alt">
-                <p className="text-xs text-muted uppercase tracking-wide mb-1">Horario de atención</p>
-                <p className="text-secondary text-sm font-medium">Lunes a Viernes</p>
-                <p className="text-gray text-sm">9:30–13:00 / 16:30–20:00 hs</p>
-              </div>
+              <motion.div
+                className="flex items-start gap-4 p-5 rounded-xl border border-border bg-background-alt"
+                whileHover={{ y: -3, boxShadow: '0 8px 24px rgba(1,143,51,0.1)', borderColor: 'rgba(1,143,51,0.35)' }}
+                transition={{ duration: 0.2, ease: [0, 0, 0.2, 1] }}
+              >
+                <div className="w-9 h-9 rounded-lg bg-primary/8 flex items-center justify-center shrink-0">
+                  <Clock className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted uppercase tracking-wide mb-0.5">Horario de atención</p>
+                  <p className="text-secondary text-sm font-medium">Lunes a Viernes</p>
+                  <p className="text-gray text-sm">9:30–13:00 / 16:30–20:00 hs</p>
+                </div>
+              </motion.div>
             </div>
 
             {/* Map card */}
