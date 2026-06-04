@@ -94,21 +94,21 @@ export default function SobreNosotrosPage() {
             <AnimateIn direction="left">
               <motion.div
                 className="relative rounded-3xl overflow-hidden"
-                style={{ height: 'clamp(240px, 60vw, 480px)' }}
+                style={{ height: 'clamp(320px, 70vw, 600px)' }}
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
               >
                 <motion.img
-                  src="https://picsum.photos/seed/office2/800/700"
+                  src="/assets/gallegocazaux-local.webp"
                   alt="Oficina Gallego Cazaux"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                   variants={{ rest: { scale: 1.05 }, hover: { scale: 1.1 } }}
                   transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] }}
                 />
                 <motion.div
                   className="absolute inset-0 pointer-events-none"
-                  style={{ background: 'linear-gradient(to top, rgba(1,143,51,0.3), rgba(1,143,51,0.05))' }}
+                  style={{ background: 'linear-gradient(to top, rgba(1,143,51,0.15), rgba(1,143,51,0.02))' }}
                   variants={{ rest: { opacity: 0 }, hover: { opacity: 1 } }}
                   transition={{ duration: 0.4 }}
                 />
@@ -381,7 +381,7 @@ export default function SobreNosotrosPage() {
               <div className="p-5 rounded-xl border border-border bg-background-alt">
                 <p className="text-xs text-muted uppercase tracking-wide mb-1">Horario de atención</p>
                 <p className="text-secondary text-sm font-medium">Lunes a Viernes</p>
-                <p className="text-gray text-sm">9:00 – 18:00 hs</p>
+                <p className="text-gray text-sm">9:30–13:00 / 16:30–20:00 hs</p>
               </div>
             </div>
 

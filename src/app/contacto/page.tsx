@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Phone, Mail, Send } from '@/lib/icons';
+import { MapPin, Phone, Mail, Send, Clock } from '@/lib/icons';
 import { SiInstagram } from '@/lib/icons/brands';
 
 const TOPICS = [
@@ -170,6 +170,17 @@ export default function ContactoPage() {
                       </p>
                     </div>
                   </a>
+
+                  <div className="flex items-start gap-3.5 p-3">
+                    <div className="w-9 h-9 rounded-lg bg-white/8 flex items-center justify-center shrink-0">
+                      <Clock className="w-4 h-4 text-white/50" />
+                    </div>
+                    <div>
+                      <p className="text-white/35 text-xs mb-0.5">Horario de atención</p>
+                      <p className="text-white/80 text-sm font-medium">Lunes a Viernes</p>
+                      <p className="text-white/50 text-xs">9:30–13:00 / 16:30–20:00 hs</p>
+                    </div>
+                  </div>
                 </div>
 
               </div>

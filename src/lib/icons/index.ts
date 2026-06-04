@@ -31,4 +31,5 @@ export {
   Waves,
   Share2,
   Check,
+  Clock,
 } from 'lucide-react';

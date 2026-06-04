@@ -94,7 +94,7 @@ export default function Footer() {
                 </svg>
                 <div>
                   <p className="text-white text-xs md:text-sm font-medium">Lunes a Viernes</p>
-                  <p className="text-gray-500 text-xs mt-0.5">9:00 - 18:00 hs</p>
+                  <p className="text-gray-500 text-xs mt-0.5">9:30–13:00 / 16:30–20:00 hs</p>
                 </div>
               </li>
               <li className="flex items-center gap-2.5">
