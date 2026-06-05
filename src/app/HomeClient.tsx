@@ -76,7 +76,7 @@ function FeaturedCard({ property }: { property: Property }) {
             className="object-cover"
             variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
             transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/30 to-transparent" />
@@ -149,7 +149,7 @@ function MediumCard({ property }: { property: Property }) {
               className="object-cover"
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(50vw - 3rem), 380px"
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -214,7 +214,7 @@ function HorizontalCard({ property }: { property: Property }) {
               className="object-cover"
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
-              sizes="(max-width: 768px) 100vw, 144px"
+              sizes="(max-width: 768px) calc(100vw - 2rem), 144px"
             />
           )}
           <span className="absolute top-2.5 left-2.5 bg-primary text-white text-[9px] font-semibold px-2 py-0.5 rounded-full uppercase">

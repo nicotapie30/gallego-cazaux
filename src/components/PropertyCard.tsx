@@ -92,7 +92,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               style={{ viewTransitionName: `prop-img-${property._id}` }}
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={transition}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1280px) calc(50vw - 3rem), 600px"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-background-alt">

@@ -53,6 +53,7 @@ export default function Header() {
               src="/assets/images/gallego-cazaux-logo-white.webp"
               alt="Gallego Cazaux"
               fill
+              sizes="64px"
               className={`object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-100' : 'opacity-0'}`}
             />
             <Image
@@ -60,6 +61,7 @@ export default function Header() {
               alt=""
               aria-hidden="true"
               fill
+              sizes="64px"
               className={`object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-0' : 'opacity-100'}`}
             />
           </Link>
