@@ -453,7 +453,7 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
                   <p className="text-primary font-medium text-xs uppercase tracking-widest mb-1">Seguí explorando</p>
                   <h2 className="font-outfit text-2xl md:text-3xl font-bold text-secondary">Propiedades similares</h2>
                 </div>
-                <a
+                <Link
                   href="/propiedades"
                   className="group hidden sm:flex items-center gap-1.5 text-sm text-muted hover:text-primary transition-colors duration-200 font-medium"
                 >
@@ -461,7 +461,7 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
                   <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </AnimateIn>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
