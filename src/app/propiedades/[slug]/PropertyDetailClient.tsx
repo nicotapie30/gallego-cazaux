@@ -445,7 +445,7 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
 
       {/* Propiedades similares */}
       {similarProperties.length > 0 && (
-        <section className="bg-background-alt pb-16">
+        <section className="bg-background-alt py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <AnimateIn>
               <div className="flex items-end justify-between mb-8">
