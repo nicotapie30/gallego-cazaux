@@ -94,11 +94,11 @@ export default function ContactoPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch">
 
           {/* Left: dark info card */}
-          <div className="lg:col-span-2">
-            <div className="bg-secondary rounded-2xl overflow-hidden relative">
+          <div className="lg:col-span-2 h-full">
+            <div className="bg-secondary rounded-2xl overflow-hidden relative h-full">
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
@@ -362,6 +362,47 @@ export default function ContactoPage() {
 
         </div>
       </div>
+
+      {/* Mapa */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="rounded-2xl overflow-hidden border border-border flex flex-col">
+          <div className="flex items-center justify-between gap-4 px-5 py-4 bg-secondary">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'rgba(1,143,51,0.3)', border: '1px solid rgba(1,143,51,0.4)' }}>
+                <MapPin className="w-4 h-4 text-primary" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-white font-outfit font-semibold text-sm leading-none mb-0.5">Gallego Cazaux</p>
+                <p className="text-white/45 text-xs truncate">Pellegrini 594, Santa Rosa, La Pampa</p>
+              </div>
+            </div>
+            <a
+              href="https://maps.google.com/?q=Pellegrini+594+Santa+Rosa+La+Pampa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-white/70 hover:text-white border border-white/15 hover:border-white/30 transition-colors duration-200 shrink-0"
+            >
+              Abrir en Maps
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+          <div className="min-h-[460px]">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3196.0!2d-64.2895!3d-36.6167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sPellegrini+594%2C+Santa+Rosa%2C+La+Pampa!5e0!3m2!1ses!2sar!4v1"
+              width="100%"
+              height="100%"
+              style={{ border: 0, display: 'block', minHeight: '460px' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Ubicación Gallego Cazaux"
+            />
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
