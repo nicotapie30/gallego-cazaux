@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Bed, Bath, Ruler, Car, Trees, MapPin, X, ChevronLeft, ChevronRight, Waves, Phone, Send, Share2 } from '@/lib/icons';
 import { toast } from 'sonner';
 import { AnimateIn } from '@/components/AnimateIn';
+import PropertyCard from '@/components/PropertyCard';
 import type { Property } from '@/lib/types';
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -33,9 +34,10 @@ const statusConfig: Record<string, { label: string; className: string }> = {
 
 interface Props {
   property: Property;
+  similarProperties: Property[];
 }
 
-export default function PropertyDetailClient({ property }: Props) {
+export default function PropertyDetailClient({ property, similarProperties }: Props) {
   const [currentImage, setCurrentImage] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -440,6 +442,38 @@ export default function PropertyDetailClient({ property }: Props) {
           </div>
         </AnimateIn>
       </div>
+
+      {/* Propiedades similares */}
+      {similarProperties.length > 0 && (
+        <section className="bg-background-alt pb-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <AnimateIn>
+              <div className="flex items-end justify-between mb-8">
+                <div>
+                  <p className="text-primary font-medium text-xs uppercase tracking-widest mb-1">Seguí explorando</p>
+                  <h2 className="font-outfit text-2xl md:text-3xl font-bold text-secondary">Propiedades similares</h2>
+                </div>
+                <a
+                  href="/propiedades"
+                  className="hidden sm:flex items-center gap-1.5 text-sm text-muted hover:text-primary transition-colors duration-200 font-medium"
+                >
+                  Ver todas
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </AnimateIn>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {similarProperties.map((p, i) => (
+                <AnimateIn key={p._id} delay={i * 80}>
+                  <PropertyCard property={p} />
+                </AnimateIn>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Lightbox */}
       <AnimatePresence>

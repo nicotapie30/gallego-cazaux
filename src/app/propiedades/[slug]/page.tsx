@@ -37,5 +37,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PropertyDetailPage({ params }: Props) {
   const { slug } = await params;
   const property = mockProperties.find((p) => p.slug.current === slug) ?? mockProperties[0];
-  return <PropertyDetailClient property={property} />;
+
+  const similar = mockProperties
+    .filter((p) => p._id !== property._id && p.operation === property.operation && p.propertyType === property.propertyType)
+    .slice(0, 3);
+
+  if (similar.length < 3) {
+    const more = mockProperties
+      .filter((p) => p._id !== property._id && p.operation === property.operation && !similar.find((s) => s._id === p._id))
+      .slice(0, 3 - similar.length);
+    similar.push(...more);
+  }
+
+  return <PropertyDetailClient property={property} similarProperties={similar} />;
 }
