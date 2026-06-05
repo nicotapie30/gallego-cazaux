@@ -201,10 +201,10 @@ export default function PropertyDetailClient({ property }: Props) {
 
               {property.images.length > 1 && (
                 <>
-                  <button onClick={(e) => { e.stopPropagation(); goPrev(); }} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-black/40 backdrop-blur-sm text-white rounded-full opacity-100 md:opacity-0 md:group-hover/gallery:opacity-100 hover:bg-black/65 transition-all duration-200 cursor-pointer z-10" aria-label="Imagen anterior">
+                  <button onClick={(e) => { e.stopPropagation(); goPrev(); }} className="hidden sm:block absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-black/40 backdrop-blur-sm text-white rounded-full opacity-100 md:opacity-0 md:group-hover/gallery:opacity-100 hover:bg-black/65 transition-all duration-200 cursor-pointer z-10" aria-label="Imagen anterior">
                     <ChevronLeft className="w-5 h-5" />
                   </button>
-                  <button onClick={(e) => { e.stopPropagation(); goNext(); }} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-black/40 backdrop-blur-sm text-white rounded-full opacity-100 md:opacity-0 md:group-hover/gallery:opacity-100 hover:bg-black/65 transition-all duration-200 cursor-pointer z-10" aria-label="Siguiente imagen">
+                  <button onClick={(e) => { e.stopPropagation(); goNext(); }} className="hidden sm:block absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-black/40 backdrop-blur-sm text-white rounded-full opacity-100 md:opacity-0 md:group-hover/gallery:opacity-100 hover:bg-black/65 transition-all duration-200 cursor-pointer z-10" aria-label="Siguiente imagen">
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 </>

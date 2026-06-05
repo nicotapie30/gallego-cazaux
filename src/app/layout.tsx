@@ -52,6 +52,7 @@ import { Toaster } from 'sonner';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFAB from "@/components/WhatsAppFAB";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function RootLayout({
   children,
@@ -61,6 +62,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${outfit.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-screen flex flex-col bg-white text-gray font-sans antialiased">
+        <ScrollToTop />
         <Header />
         <main className="flex-1">
           <ViewTransition name="page">
