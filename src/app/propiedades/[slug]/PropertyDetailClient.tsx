@@ -1,11 +1,8 @@
 "use client";
 
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const MotionImage = motion(Image);
 import { ArrowLeft, Bed, Bath, Ruler, Car, Trees, MapPin, X, ChevronLeft, ChevronRight, Waves, Phone, Send, Share2 } from '@/lib/icons';
 import { toast } from 'sonner';
 import { AnimateIn } from '@/components/AnimateIn';
@@ -57,17 +54,6 @@ export default function PropertyDetailClient({ property }: Props) {
 
   const goNext = () => setCurrentImage((i) => (i + 1) % len);
   const goPrev = () => setCurrentImage((i) => (i - 1 + len) % len);
-
-  useEffect(() => {
-    [1, 2, -1].forEach((offset) => {
-      const idx = (currentImage + offset + len) % len;
-      const url = property.images[idx]?.asset?.url;
-      if (url) {
-        const img = new window.Image();
-        img.src = `/_next/image?url=${encodeURIComponent(url)}&w=1080&q=75`;
-      }
-    });
-  }, [currentImage, len, property.images]);
 
   useEffect(() => {
     const container = thumbsRef.current;
@@ -201,14 +187,11 @@ export default function PropertyDetailClient({ property }: Props) {
             >
               <AnimatePresence mode="wait" initial={false}>
                 {property.images[currentImage]?.asset?.url && (
-                  <MotionImage
+                  <motion.img
                     key={currentImage}
                     src={property.images[currentImage]!.asset.url}
                     alt={property.title}
-                    fill
-                    className="object-cover"
-                    priority={currentImage === 0}
-                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    className="w-full h-full object-cover"
                     style={currentImage === 0 ? { viewTransitionName: `prop-img-${property._id}` } : undefined}
                     initial={currentImage === 0 ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -277,8 +260,8 @@ export default function PropertyDetailClient({ property }: Props) {
                 <div className="relative flex-1 min-w-0">
                   <div ref={thumbsRef} className="flex gap-3 overflow-x-auto py-1 px-1 snap-x snap-mandatory md:snap-none" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     {property.images.map((img, idx) => (
-                      <button key={idx} onClick={() => setCurrentImage(idx)} className={`relative flex-shrink-0 w-24 h-[72px] rounded-lg overflow-hidden transition-all duration-200 cursor-pointer ring-2 snap-start ${idx === currentImage ? 'ring-primary opacity-100' : 'ring-transparent opacity-55 hover:opacity-85 hover:ring-border'}`}>
-                        <Image src={img.asset.url} alt={`Imagen ${idx + 1}`} fill className="object-cover" loading="lazy" sizes="96px" />
+                      <button key={idx} onClick={() => setCurrentImage(idx)} className={`flex-shrink-0 w-24 h-[72px] rounded-lg overflow-hidden transition-all duration-200 cursor-pointer ring-2 snap-start ${idx === currentImage ? 'ring-primary opacity-100' : 'ring-transparent opacity-55 hover:opacity-85 hover:ring-border'}`}>
+                        <img src={img.asset.url} alt={`Imagen ${idx + 1}`} className="w-full h-full object-cover" loading="lazy" />
                       </button>
                     ))}
                   </div>
