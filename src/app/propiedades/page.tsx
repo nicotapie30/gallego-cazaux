@@ -337,7 +337,7 @@ function PropiedadesContent() {
             </div>
 
             {filteredProperties.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {filteredProperties.map((property) => (
                   <PropertyCard key={property._id} property={property} />
                 ))}

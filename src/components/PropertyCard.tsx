@@ -67,7 +67,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       animate="rest"
       variants={cardVariants}
       transition={transition}
-      className="group relative rounded-2xl overflow-hidden bg-white border border-border hover:border-primary/25 transition-colors duration-300 cursor-pointer"
+      className="group relative rounded-2xl overflow-hidden bg-white border border-border hover:border-primary/25 transition-colors duration-300 cursor-pointer h-full"
     >
       {/* Bottom border accent — slides in left→right on hover */}
       <motion.div
@@ -81,11 +81,13 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden bg-background-alt">
           {property.images && property.images.length > 0 ? (
-            <img
+            <motion.img
               src={property.images[0]?.asset?.url}
               alt={property.title}
-              className="w-full h-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:scale-[1.05]"
+              className="w-full h-full object-cover"
               style={{ viewTransitionName: `prop-img-${property._id}` }}
+              variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
+              transition={transition}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-background-alt">
@@ -127,7 +129,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             {property.title}
           </h3>
 
-          <p className="flex items-center gap-1.5 text-muted text-xs">
+          <p className="flex items-center gap-1.5 text-muted text-xs line-clamp-1">
             <MapPin className="w-3 h-3 flex-shrink-0 text-primary/50" />
             {property.address}, {property.city}
           </p>
