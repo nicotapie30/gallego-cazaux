@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Send, HelpCircle, Users, Trophy } from '@/lib/icons';
+import { ChevronDown, Send, Home, Users, Trophy } from '@/lib/icons';
 
 const faqs = [
   {
@@ -113,9 +113,9 @@ function FAQItem({ question, answer, isOpen, onToggle }: {
 }
 
 const stats = [
-  { icon: HelpCircle, value: `${faqs.length}`, label: 'Preguntas respondidas' },
-  { icon: Users,      value: '24hs',             label: 'Tiempo de respuesta' },
-  { icon: Trophy,     value: '20+',              label: 'Años de trayectoria' },
+  { icon: Home,   value: '500+', label: 'Operaciones realizadas' },
+  { icon: Users,  value: '24hs', label: 'Tiempo de respuesta' },
+  { icon: Trophy, value: '20+',  label: 'Años de trayectoria' },
 ];
 
 const counts: Record<string, number> = {
