@@ -59,6 +59,17 @@ export default function PropertyDetailClient({ property }: Props) {
   const goPrev = () => setCurrentImage((i) => (i - 1 + len) % len);
 
   useEffect(() => {
+    [1, 2, -1].forEach((offset) => {
+      const idx = (currentImage + offset + len) % len;
+      const url = property.images[idx]?.asset?.url;
+      if (url) {
+        const img = new window.Image();
+        img.src = `/_next/image?url=${encodeURIComponent(url)}&w=1080&q=75`;
+      }
+    });
+  }, [currentImage, len, property.images]);
+
+  useEffect(() => {
     const container = thumbsRef.current;
     if (!container) return;
     const thumb = container.children[currentImage] as HTMLElement;
