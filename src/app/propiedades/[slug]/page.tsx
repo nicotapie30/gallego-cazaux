@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { mockProperties } from '@/lib/mock-data';
 import PropertyDetailClient from './PropertyDetailClient';
+import { breadcrumbSchema, propertySchema } from '@/lib/schema';
 
 export const revalidate = 3600;
 
@@ -49,5 +50,18 @@ export default async function PropertyDetailPage({ params }: Props) {
     similar.push(...more);
   }
 
-  return <PropertyDetailClient property={property} similarProperties={similar} />;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+    ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://gallegocazaux.com');
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(propertySchema(property)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema([
+        { name: 'Inicio', url: siteUrl },
+        { name: 'Propiedades', url: `${siteUrl}/propiedades` },
+        { name: property.title, url: `${siteUrl}/propiedades/${property.slug.current}` },
+      ])) }} />
+      <PropertyDetailClient property={property} similarProperties={similar} />
+    </>
+  );
 }

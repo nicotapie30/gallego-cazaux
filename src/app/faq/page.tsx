@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import FAQClient from './FAQClient';
+import { faqs } from '@/lib/faq-data';
+import { faqPageSchema } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Preguntas Frecuentes - Gallego Cazaux',
@@ -12,5 +14,13 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <FAQClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPageSchema(faqs)) }}
+      />
+      <FAQClient />
+    </>
+  );
 }
