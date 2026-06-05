@@ -1,8 +1,11 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+
+const MotionImage = motion(Image);
 import { Bed, Bath, Ruler, Car, MapPin } from '@/lib/icons';
 import type { Property } from '@/lib/types';
 
@@ -81,13 +84,15 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden bg-background-alt">
           {property.images && property.images.length > 0 ? (
-            <motion.img
-              src={property.images[0]?.asset?.url}
+            <MotionImage
+              src={property.images[0]!.asset!.url}
               alt={property.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
               style={{ viewTransitionName: `prop-img-${property._id}` }}
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={transition}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-background-alt">

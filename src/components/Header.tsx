@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -48,16 +49,18 @@ export default function Header() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo — container fijo, cross-fade por opacity */}
           <Link href="/" className="flex-none relative" style={{ width: 64, height: 64 }}>
-            <img
+            <Image
               src="/assets/images/gallego-cazaux-logo-white.webp"
               alt="Gallego Cazaux"
-              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-100' : 'opacity-0'}`}
+              fill
+              className={`object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-100' : 'opacity-0'}`}
             />
-            <img
+            <Image
               src="/assets/images/gallego-cazaux-logo.webp"
               alt=""
               aria-hidden="true"
-              className={`w-full h-full object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-0' : 'opacity-100'}`}
+              fill
+              className={`object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-0' : 'opacity-100'}`}
             />
           </Link>
 

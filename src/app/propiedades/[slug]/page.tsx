@@ -2,6 +2,12 @@ import type { Metadata } from 'next';
 import { mockProperties } from '@/lib/mock-data';
 import PropertyDetailClient from './PropertyDetailClient';
 
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return mockProperties.map((p) => ({ slug: p.slug.current }));
+}
+
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
