@@ -1,3 +1,6 @@
+import { urlFor } from './sanity';
+import type { SanityImage } from './types';
+
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
   ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
@@ -83,13 +86,14 @@ export function propertySchema(property: {
   address: string;
   city: string;
   province: string;
-  price: number;
+  price: number | null;
   currency: string;
   priceOnRequest?: boolean;
   publishedAt: string;
   slug: { current: string };
-  images: { asset: { url: string } }[];
+  images: SanityImage[];
 }) {
+  const firstImage = property.images?.[0];
   return {
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',
@@ -97,7 +101,7 @@ export function propertySchema(property: {
     description: property.description,
     url: `${SITE_URL}/propiedades/${property.slug.current}`,
     datePosted: property.publishedAt,
-    image: property.images?.[0]?.asset?.url,
+    image: firstImage ? urlFor(firstImage).width(1200).url() : undefined,
     address: {
       '@type': 'PostalAddress',
       streetAddress: property.address,
@@ -105,7 +109,7 @@ export function propertySchema(property: {
       addressRegion: property.province,
       addressCountry: 'AR',
     },
-    ...(!property.priceOnRequest && property.price > 0 ? {
+    ...(!property.priceOnRequest && property.price != null && property.price > 0 ? {
       offers: {
         '@type': 'Offer',
         price: property.price,

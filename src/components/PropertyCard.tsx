@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 const MotionImage = motion(Image);
 import { Bed, Bath, Ruler, Car, MapPin } from '@/lib/icons';
 import type { Property } from '@/lib/types';
+import { urlFor } from '@/lib/sanity';
 
 const cardVariants = {
   rest: {
@@ -46,12 +47,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     }
   };
 
-  const formatPrice = (price: number, currency: string) =>
-    new Intl.NumberFormat('es-AR', {
+  const formatPrice = (price: number | null | undefined, currency: string, priceOnRequest?: boolean) => {
+    if (priceOnRequest || price == null || price === 0) return 'Consultar precio';
+    return new Intl.NumberFormat('es-AR', {
       style: 'currency',
       currency: currency || 'USD',
       maximumFractionDigits: 0,
     }).format(price);
+  };
 
   const operationLabel = property.operation === 'venta' ? 'Venta' : 'Alquiler';
   const operationBg = property.operation === 'venta' ? 'bg-primary/90' : 'bg-blue-600/90';
@@ -85,7 +88,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <div className="relative aspect-[4/3] overflow-hidden bg-background-alt">
           {property.images && property.images.length > 0 ? (
             <MotionImage
-              src={property.images[0]!.asset!.url}
+              src={urlFor(property.images[0]!).width(600).url()}
               alt={property.title}
               fill
               className="object-cover"
@@ -119,7 +122,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <div className="p-5 flex flex-col flex-1">
           {/* Price */}
           <div className="mb-2.5">
-            {property.priceOnRequest ? (
+            {(property.priceOnRequest || property.price == null || property.price === 0) ? (
               <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-secondary bg-secondary/7 border border-secondary/12 px-3 py-1.5 rounded-full">
                 Consultar precio
               </span>

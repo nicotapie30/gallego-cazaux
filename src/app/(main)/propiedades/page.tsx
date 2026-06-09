@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
+import type { Property } from '@/lib/types';
+import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from './PropiedadesClient';
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Propiedades - Gallego Cazaux',
@@ -11,6 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
-  return <PropiedadesClient />;
+export default async function Page() {
+  const properties: Property[] = await getProperties();
+  return <PropiedadesClient initialProperties={properties} />;
 }

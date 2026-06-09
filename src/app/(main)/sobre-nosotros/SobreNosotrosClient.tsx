@@ -105,7 +105,7 @@ export default function SobreNosotrosClient() {
                   src="/assets/gallegocazaux-local-opt.webp"
                   alt="Oficina Gallego Cazaux"
                   fill
-                  className="object-cover object-top"
+                  className="object-cover object-center lg:object-top"
                   variants={{ rest: { scale: 1.05 }, hover: { scale: 1.1 } }}
                   transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] }}
                   sizes="(max-width: 1024px) 100vw, 50vw"

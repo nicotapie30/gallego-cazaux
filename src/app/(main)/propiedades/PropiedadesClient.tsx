@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Filter, Search, X, Home } from '@/lib/icons';
 import PropertyCard from '@/components/PropertyCard';
 import Select from '@/components/ui/Select';
-import { mockProperties } from '@/lib/mock-data';
+import type { Property } from '@/lib/types';
 
 type Filters = {
   operation: string;
@@ -64,9 +64,10 @@ interface FilterPanelProps {
   onSearchChange: (s: string) => void;
   onClear: () => void;
   hasActiveFilters: boolean;
+  cityOptions: { value: string; label: string }[];
 }
 
-function FilterPanel({ filters, search, onFiltersChange, onSearchChange, onClear, hasActiveFilters }: FilterPanelProps) {
+function FilterPanel({ filters, search, onFiltersChange, onSearchChange, onClear, hasActiveFilters, cityOptions }: FilterPanelProps) {
   const setFilter = (key: keyof Filters, value: string) =>
     onFiltersChange({ ...filters, [key]: value });
 
@@ -186,12 +187,7 @@ function FilterPanel({ filters, search, onFiltersChange, onSearchChange, onClear
         <Select
           value={filters.city}
           onChange={(v) => setFilter('city', v)}
-          options={[
-            { value: '', label: 'Todas las ciudades' },
-            { value: 'Santa Rosa', label: 'Santa Rosa' },
-            { value: 'Toay', label: 'Toay' },
-            { value: 'General Pico', label: 'General Pico' },
-          ]}
+          options={[{ value: '', label: 'Todas las ciudades' }, ...cityOptions]}
           className="w-full [&>button]:w-full [&>button]:justify-between"
         />
       </div>
@@ -219,7 +215,7 @@ function EmptyState({ onClear }: { onClear: () => void }) {
   );
 }
 
-function PropiedadesContent() {
+function PropiedadesContent({ initialProperties }: { initialProperties: Property[] }) {
   const searchParams = useSearchParams();
 
   const [filters, setFilters] = useState<Filters>({
@@ -230,15 +226,21 @@ function PropiedadesContent() {
   const [sortBy, setSortBy] = useState('newest');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const cityOptions = useMemo(() => {
+    const cities = [...new Set(initialProperties.map((p) => p.city).filter(Boolean))].sort((a, b) =>
+      a.localeCompare(b, 'es-AR')
+    );
+    return cities.map((c) => ({ value: c, label: c }));
+  }, [initialProperties]);
 
   const filteredProperties = useMemo(() => {
-    return mockProperties
+    return initialProperties
       .filter((p) => {
         if (filters.operation && p.operation !== filters.operation) return false;
         if (filters.propertyType && p.propertyType !== filters.propertyType) return false;
         if (filters.city && p.city !== filters.city) return false;
-        if (filters.minPrice && p.price < Number(filters.minPrice)) return false;
-        if (filters.maxPrice && p.price > Number(filters.maxPrice)) return false;
+        if (filters.minPrice && (p.price == null || p.price < Number(filters.minPrice))) return false;
+        if (filters.maxPrice && (p.price == null || p.price > Number(filters.maxPrice))) return false;
         if (filters.bedrooms && (!p.features.bedrooms || p.features.bedrooms < Number(filters.bedrooms))) return false;
         if (search) {
           const q = search.toLowerCase();
@@ -247,8 +249,8 @@ function PropiedadesContent() {
         return true;
       })
       .sort((a, b) => {
-        if (sortBy === 'price_asc') return a.price - b.price;
-        if (sortBy === 'price_desc') return b.price - a.price;
+        if (sortBy === 'price_asc') return (a.price ?? 0) - (b.price ?? 0);
+        if (sortBy === 'price_desc') return (b.price ?? 0) - (a.price ?? 0);
         return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
       });
   }, [filters, sortBy, search]);
@@ -314,6 +316,7 @@ function PropiedadesContent() {
                 onSearchChange={setSearch}
                 onClear={clearFilters}
                 hasActiveFilters={hasActiveFilters}
+                cityOptions={cityOptions}
               />
             </div>
           </aside>
@@ -384,6 +387,7 @@ function PropiedadesContent() {
                   onSearchChange={setSearch}
                   onClear={clearFilters}
                   hasActiveFilters={hasActiveFilters}
+                  cityOptions={cityOptions}
                 />
               </div>
               <div className="p-5 border-t border-border">
@@ -403,10 +407,10 @@ function PropiedadesContent() {
   );
 }
 
-export default function PropiedadesClient() {
+export default function PropiedadesClient({ initialProperties }: { initialProperties: Property[] }) {
   return (
     <Suspense fallback={<div className="min-h-screen bg-background-alt" />}>
-      <PropiedadesContent />
+      <PropiedadesContent initialProperties={initialProperties} />
     </Suspense>
   );
 }

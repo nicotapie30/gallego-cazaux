@@ -1,15 +1,17 @@
 import type { MetadataRoute } from 'next';
-import { mockProperties } from '@/lib/mock-data';
+import { getPropertySlugs } from '@/lib/sanity';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL
   ?? (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : 'https://gallegocazaux.com');
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const propertyUrls: MetadataRoute.Sitemap = mockProperties.map((p) => ({
-    url: `${SITE_URL}/propiedades/${p.slug.current}`,
-    lastModified: new Date(p.publishedAt),
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const slugs = await getPropertySlugs();
+
+  const propertyUrls: MetadataRoute.Sitemap = slugs.map((s) => ({
+    url: `${SITE_URL}/propiedades/${s.slug}`,
+    lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.8,
   }));

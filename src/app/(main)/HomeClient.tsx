@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Bed, Bath, Ruler, Home as HomeIcon, TrendingUp, Key, FileText, Trophy, Users } from '@/lib/icons';
 import type { Property } from '@/lib/types';
-import { mockProperties } from '@/lib/mock-data';
+import { urlFor } from '@/lib/sanity';
 import { AnimateIn } from '@/components/AnimateIn';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import Select from '@/components/ui/Select';
@@ -38,8 +38,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-function formatPrice(price: number, currency: string, priceOnRequest?: boolean) {
-  if (priceOnRequest) return 'Consultar precio';
+function formatPrice(price: number | null | undefined, currency: string, priceOnRequest?: boolean) {
+  if (priceOnRequest || price == null || price === 0) return 'Consultar precio';
   return currency === 'USD'
     ? `US$ ${price.toLocaleString('es-AR')}`
     : `$ ${price.toLocaleString('es-AR')}`;
@@ -50,7 +50,8 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 function FeaturedCard({ property }: { property: Property }) {
-  const imageUrl = property.images?.[0]?.asset?.url;
+  const firstImage = property.images?.[0];
+  const imageUrl = firstImage ? urlFor(firstImage).width(800).url() : undefined;
   return (
     <motion.div
       initial="rest"
@@ -96,7 +97,7 @@ function FeaturedCard({ property }: { property: Property }) {
           <p className="text-white/60 text-sm mb-1">{property.address}, {property.city}</p>
           <h3 className="font-outfit font-bold text-white text-xl mb-3 leading-tight">{property.title}</h3>
           <div className="flex items-center justify-between">
-            {property.priceOnRequest ? (
+            {(property.priceOnRequest || property.price == null || property.price === 0) ? (
               <span className="inline-flex items-center bg-white/15 backdrop-blur-sm border border-white/30 text-white font-outfit font-semibold text-sm px-4 py-1.5 rounded-full">
                 Consultar precio
               </span>
@@ -126,7 +127,8 @@ function FeaturedCard({ property }: { property: Property }) {
 }
 
 function MediumCard({ property }: { property: Property }) {
-  const imageUrl = property.images?.[0]?.asset?.url;
+  const firstImage = property.images?.[0];
+  const imageUrl = firstImage ? urlFor(firstImage).width(600).url() : undefined;
   return (
     <motion.div
       initial="rest"
@@ -191,7 +193,8 @@ function MediumCard({ property }: { property: Property }) {
 }
 
 function HorizontalCard({ property }: { property: Property }) {
-  const imageUrl = property.images?.[0]?.asset?.url;
+  const firstImage = property.images?.[0];
+  const imageUrl = firstImage ? urlFor(firstImage).width(600).url() : undefined;
   return (
     <motion.div
       initial="rest"
@@ -224,7 +227,7 @@ function HorizontalCard({ property }: { property: Property }) {
         <div className="flex-1 p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
-              {property.priceOnRequest ? (
+              {(property.priceOnRequest || property.price == null || property.price === 0) ? (
                 <p className="font-outfit font-semibold text-secondary text-sm italic">Consultar precio</p>
               ) : (
                 <p className="font-outfit font-bold text-primary text-base">{formatPrice(property.price, property.currency)}</p>
@@ -548,7 +551,7 @@ function ScrollIndicator() {
   )
 }
 
-export default function HomeClient() {
+export default function HomeClient({ featuredProperties }: { featuredProperties: Property[] }) {
   const heroRef = useRef<HTMLElement>(null)
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
@@ -721,22 +724,30 @@ export default function HomeClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:grid-rows-[auto_auto]">
 
             {/* Featured — tall, spans 2 rows on desktop */}
-            <AnimateIn className="md:row-span-2 h-full">
-              <FeaturedCard property={mockProperties[0]} />
-            </AnimateIn>
+            {featuredProperties[0] && (
+              <AnimateIn className="md:row-span-2 h-full">
+                <FeaturedCard property={featuredProperties[0]} />
+              </AnimateIn>
+            )}
 
             {/* Medium cards — top row */}
-            <AnimateIn delay={100}>
-              <MediumCard property={mockProperties[1]} />
-            </AnimateIn>
-            <AnimateIn delay={180}>
-              <MediumCard property={mockProperties[2]} />
-            </AnimateIn>
+            {featuredProperties[1] && (
+              <AnimateIn delay={100}>
+                <MediumCard property={featuredProperties[1]} />
+              </AnimateIn>
+            )}
+            {featuredProperties[2] && (
+              <AnimateIn delay={180}>
+                <MediumCard property={featuredProperties[2]} />
+              </AnimateIn>
+            )}
 
             {/* Horizontal card */}
-            <AnimateIn delay={120}>
-              <HorizontalCard property={mockProperties[3]} />
-            </AnimateIn>
+            {featuredProperties[3] && (
+              <AnimateIn delay={120}>
+                <HorizontalCard property={featuredProperties[3]} />
+              </AnimateIn>
+            )}
 
             {/* Ver todas — CTA card */}
             <AnimateIn delay={200}>

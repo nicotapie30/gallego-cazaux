@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import type { Property } from '@/lib/types';
+import { getFeaturedProperties } from '@/lib/sanity';
 import HomeClient from './HomeClient';
 
 export const revalidate = 3600;
@@ -14,6 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
-  return <HomeClient />;
+export default async function Page() {
+  const featuredProperties: Property[] = await getFeaturedProperties();
+  return <HomeClient featuredProperties={featuredProperties} />;
 }

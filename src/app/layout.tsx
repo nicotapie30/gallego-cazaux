@@ -47,14 +47,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { ViewTransition } from "react";
-import { Toaster } from 'sonner';
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import WhatsAppFAB from "@/components/WhatsAppFAB";
-import ScrollToTop from "@/components/ScrollToTop";
-import { localBusinessSchema } from "@/lib/schema";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,28 +54,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${outfit.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema()) }}
-        />
-      </head>
       <body className="min-h-screen flex flex-col bg-white text-gray font-sans antialiased">
-        <ScrollToTop />
-        <Header />
-        <main className="flex-1">
-          <ViewTransition name="page">
-            {children}
-          </ViewTransition>
-        </main>
-        <Footer />
-        <WhatsAppFAB />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: { fontFamily: 'var(--font-dm-sans)' },
-          }}
-        />
+        {children}
       </body>
     </html>
   );

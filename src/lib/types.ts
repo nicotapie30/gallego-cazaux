@@ -1,10 +1,23 @@
+import type { SanityImageSource } from '@sanity/image-url';
+
+export interface SanityImage {
+  _key?: string;
+  asset: SanityImageSource;
+  alt?: string;
+}
+
+export interface SanityVideo {
+  _key: string;
+  url: string;
+}
+
 export interface Property {
   _id: string;
   title: string;
   slug: { current: string };
   operation: 'venta' | 'alquiler';
   propertyType: 'casa' | 'departamento' | 'local' | 'terreno' | 'ph' | 'otro';
-  price: number;
+  price: number | null;
   currency: string;
   address: string;
   city: string;
@@ -20,14 +33,11 @@ export interface Property {
     garden?: boolean;
     amenities?: string[];
   };
-  images: Array<{
-    asset: {
-      url: string;
-    };
-    alt?: string;
-  }>;
+  images: SanityImage[];
+  videos?: SanityVideo[];
   isFeatured: boolean;
   priceOnRequest?: boolean;
+  priceNotes?: string;
   status: 'disponible' | 'reservado' | 'vendido';
   publishedAt: string;
 }

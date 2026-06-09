@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { AnimateIn } from '@/components/AnimateIn';
 import PropertyCard from '@/components/PropertyCard';
 import type { Property } from '@/lib/types';
+import { urlFor } from '@/lib/sanity';
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -45,10 +46,28 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
 
   useLayoutEffect(() => { window.scrollTo(0, 0); }, []);
 
+  type MediaItem =
+    | { type: 'image'; src: string; thumbSrc: string; alt: string }
+    | { type: 'video'; src: string; key: string };
+
+  const mediaItems: MediaItem[] = [
+    ...property.images.map((img) => ({
+      type: 'image' as const,
+      src: urlFor(img).width(1200).url(),
+      thumbSrc: urlFor(img).width(200).height(150).url(),
+      alt: img.alt ?? property.title,
+    })),
+    ...(property.videos ?? []).map((vid) => ({
+      type: 'video' as const,
+      src: vid.url,
+      key: vid._key,
+    })),
+  ];
+
   const touchStartX = useRef(0);
   const isSwiping = useRef(false);
   const thumbsRef = useRef<HTMLDivElement>(null);
-  const len = property.images.length;
+  const len = mediaItems.length;
 
   const scrollThumbs = (dir: 1 | -1) => {
     thumbsRef.current?.scrollBy({ left: dir * 200, behavior: 'smooth' });
@@ -66,8 +85,8 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
     container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
   }, [currentImage]);
 
-  const formatPrice = (price: number, currency: string, priceOnRequest?: boolean) => {
-    if (priceOnRequest) return 'Consultar precio';
+  const formatPrice = (price: number | null | undefined, currency: string, priceOnRequest?: boolean) => {
+    if (priceOnRequest || price == null || price === 0) return 'Consultar precio';
     return new Intl.NumberFormat('es-AR', {
       style: 'currency',
       currency: currency || 'USD',
@@ -103,7 +122,7 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [lightboxOpen, property.images.length]);
+  }, [lightboxOpen, len]);
 
   const operationLabel = property.operation === 'venta' ? 'Venta' : 'Alquiler';
   const operationColor = property.operation === 'venta' ? 'bg-primary text-white' : 'bg-blue-600 text-white';
@@ -188,11 +207,24 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
               onClick={() => { if (isSwiping.current) { isSwiping.current = false; return; } setLightboxOpen(true); }}
             >
               <AnimatePresence mode="wait" initial={false}>
-                {property.images[currentImage]?.asset?.url && (
+                {mediaItems[currentImage]?.type === 'video' ? (
+                  <motion.div key={`video-${currentImage}`} className="w-full h-full flex items-center justify-center bg-black cursor-zoom-in" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <video
+                      src={(mediaItems[currentImage] as { type: 'video'; src: string; key: string }).src}
+                      className="max-w-full max-h-full pointer-events-none"
+                    />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                      <div className="flex items-center gap-2.5 px-5 py-3 rounded-full bg-black/50 backdrop-blur-md border border-white/25 text-white shadow-lg">
+                        <svg className="w-5 h-5 translate-x-px flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                        <span className="text-sm font-semibold tracking-wide">Ver video</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : mediaItems[currentImage]?.type === 'image' ? (
                   <motion.img
                     key={currentImage}
-                    src={property.images[currentImage]!.asset.url}
-                    alt={property.title}
+                    src={(mediaItems[currentImage] as { type: 'image'; src: string; thumbSrc: string; alt: string }).src}
+                    alt={(mediaItems[currentImage] as { type: 'image'; src: string; thumbSrc: string; alt: string }).alt}
                     className="w-full h-full object-cover"
                     style={currentImage === 0 ? { viewTransitionName: `prop-img-${property._id}` } : undefined}
                     initial={currentImage === 0 ? false : { opacity: 0 }}
@@ -200,7 +232,7 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   />
-                )}
+                ) : null}
               </AnimatePresence>
 
               {property.images.length > 1 && (
@@ -249,21 +281,27 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
               )}
 
               <div className="absolute bottom-3 right-3 px-2.5 py-1 bg-black/50 text-white text-xs rounded-full backdrop-blur-sm">
-                {currentImage + 1} / {property.images.length}
+                {currentImage + 1} / {len}
               </div>
             </div>
 
             {/* Thumbnails */}
-            {property.images.length > 1 && (
+            {mediaItems.length > 1 && (
               <div className="flex items-center gap-2 mt-3">
                 <button onClick={() => scrollThumbs(-1)} className="hidden md:flex flex-shrink-0 w-7 h-7 items-center justify-center bg-white border border-border rounded-full shadow-sm text-secondary hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-200 cursor-pointer" aria-label="Anterior">
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <div className="relative flex-1 min-w-0">
                   <div ref={thumbsRef} className="flex gap-3 overflow-x-auto py-1 px-1 snap-x snap-mandatory md:snap-none" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                    {property.images.map((img, idx) => (
-                      <button key={idx} onClick={() => setCurrentImage(idx)} className={`flex-shrink-0 w-24 h-[72px] rounded-lg overflow-hidden transition-all duration-200 cursor-pointer ring-2 snap-start ${idx === currentImage ? 'ring-primary opacity-100' : 'ring-transparent opacity-55 hover:opacity-85 hover:ring-border'}`}>
-                        <img src={img.asset.url} alt={`Imagen ${idx + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                    {mediaItems.map((item, idx) => (
+                      <button key={idx} onClick={() => setCurrentImage(idx)} className={`relative flex-shrink-0 w-24 h-[72px] rounded-lg overflow-hidden transition-all duration-200 cursor-pointer ring-2 snap-start ${idx === currentImage ? 'ring-primary opacity-100' : 'ring-transparent opacity-55 hover:opacity-85 hover:ring-border'}`}>
+                        {item.type === 'image' ? (
+                          <img src={item.thumbSrc} alt={`Imagen ${idx + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                        ) : (
+                          <div className="w-full h-full bg-black flex items-center justify-center">
+                            <svg className="w-7 h-7 text-white/80" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                          </div>
+                        )}
                       </button>
                     ))}
                   </div>
@@ -329,6 +367,9 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
                       <p className="font-outfit font-bold text-secondary text-2xl">Consultar precio</p>
                     ) : (
                       <p className="font-outfit text-3xl font-bold text-primary">{formatPrice(property.price, property.currency)}</p>
+                    )}
+                    {property.priceNotes && (
+                      <p className="text-muted text-sm mt-1">{property.priceNotes}</p>
                     )}
                   </div>
 
@@ -480,12 +521,16 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
         {lightboxOpen && (
           <motion.div className="fixed inset-0 z-50 bg-black/92 flex items-center justify-center cursor-zoom-out" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={() => setLightboxOpen(false)} onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }} onTouchEnd={(e) => { const diff = touchStartX.current - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) { diff > 0 ? goNext() : goPrev(); } }}>
             <button className="absolute top-4 right-4 p-2.5 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors z-10" onClick={() => setLightboxOpen(false)}><X className="w-6 h-6" /></button>
-            {property.images.length > 1 && <button className="absolute left-4 p-2.5 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors z-10" onClick={(e) => { e.stopPropagation(); goPrev(); }}><ChevronLeft className="w-8 h-8" /></button>}
+            {len > 1 && <button className="absolute left-4 p-2.5 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors z-10" onClick={(e) => { e.stopPropagation(); goPrev(); }}><ChevronLeft className="w-8 h-8" /></button>}
             <AnimatePresence mode="wait">
-              <motion.img key={currentImage} src={property.images[currentImage]?.asset.url} alt={`Imagen ${currentImage + 1}`} className="max-w-[90vw] max-h-[88vh] object-contain rounded-lg cursor-default" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} onClick={(e) => e.stopPropagation()} />
+              {mediaItems[currentImage]?.type === 'video' ? (
+                <motion.video key={`lb-video-${currentImage}`} src={(mediaItems[currentImage] as { type: 'video'; src: string; key: string }).src} controls autoPlay className="max-w-[90vw] max-h-[88vh] rounded-lg cursor-default" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} onClick={(e) => e.stopPropagation()} />
+              ) : (
+                <motion.img key={currentImage} src={(mediaItems[currentImage] as { type: 'image'; src: string })?.src} alt={`Imagen ${currentImage + 1}`} className="max-w-[90vw] max-h-[88vh] object-contain rounded-lg cursor-default" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} onClick={(e) => e.stopPropagation()} />
+              )}
             </AnimatePresence>
-            {property.images.length > 1 && <button className="absolute right-4 p-2.5 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors z-10" onClick={(e) => { e.stopPropagation(); goNext(); }}><ChevronRight className="w-8 h-8" /></button>}
-            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/60 text-sm">{currentImage + 1} / {property.images.length}</div>
+            {len > 1 && <button className="absolute right-4 p-2.5 text-white/70 hover:text-white hover:bg-white/10 rounded-full transition-colors z-10" onClick={(e) => { e.stopPropagation(); goNext(); }}><ChevronRight className="w-8 h-8" /></button>}
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/60 text-sm">{currentImage + 1} / {len}</div>
           </motion.div>
         )}
       </AnimatePresence>

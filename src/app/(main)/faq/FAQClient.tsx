@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Send, Home, Users, Trophy } from '@/lib/icons';
-import { faqs } from '@/lib/faq-data';
+import type { FAQ } from '@/lib/types';
 
 const TABS = [
   { value: 'all', label: 'Todas' },
@@ -76,16 +76,16 @@ const stats = [
   { icon: Trophy, value: '20+',  label: 'Años de trayectoria' },
 ];
 
-const counts: Record<string, number> = {
-  all:      faqs.length,
-  compra:   faqs.filter(f => f.category === 'compra').length,
-  alquiler: faqs.filter(f => f.category === 'alquiler').length,
-  general:  faqs.filter(f => f.category === 'general').length,
-};
-
-export default function FAQClient() {
+export default function FAQClient({ faqs }: { faqs: FAQ[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [activeTab, setActiveTab] = useState('all');
+
+  const counts: Record<string, number> = {
+    all:      faqs.length,
+    compra:   faqs.filter(f => f.category === 'compra').length,
+    alquiler: faqs.filter(f => f.category === 'alquiler').length,
+    general:  faqs.filter(f => f.category === 'general').length,
+  };
 
   const filtered = activeTab === 'all' ? faqs : faqs.filter(f => f.category === activeTab);
 
