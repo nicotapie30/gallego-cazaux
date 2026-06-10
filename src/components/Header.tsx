@@ -1,10 +1,14 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+
+// useLayoutEffect avisa en SSR; en cliente lo necesitamos para resetear el
+// estado antes del paint (anti-parpadeo). Fallback a useEffect en el server.
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 const navigation = [
   { name: 'Inicio', href: '/' },
@@ -25,26 +29,36 @@ function WhatsAppIcon({ className }: { className?: string }) {
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [navigating, setNavigating] = useState(false);
   const pathname = usePathname();
-
-  const isHome = pathname === '/';
-  const isTransparent = isHome && !scrolled;
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // En cada navegación: ScrollToTop lleva el scroll a 0, así que reseteamos
+  // `scrolled` antes del paint para que la home aparezca transparente de una
+  // (sin el parpadeo de quedar con `scrolled` stale de la página anterior).
+  // `navigating` suprime la transición durante ese cambio de ruta.
+  useIsomorphicLayoutEffect(() => {
+    setScrolled(false);
+    setNavigating(true);
+    const id = requestAnimationFrame(() => setNavigating(false));
+    return () => cancelAnimationFrame(id);
+  }, [pathname]);
+
   return (
-    <header className={`
-      ${isHome ? 'fixed left-0 right-0 w-full' : 'sticky'}
-      top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300
-      ${isTransparent ? 'bg-transparent shadow-none' : 'bg-white/70 backdrop-blur-md shadow-sm'}
-    `}>
+    <header
+      data-scrolled={scrolled ? '' : undefined}
+      data-navigating={navigating ? '' : undefined}
+      className="site-header top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300"
+    >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         <div className="flex h-20 items-center justify-between">
           {/* Logo — container fijo, cross-fade por opacity */}
@@ -54,7 +68,7 @@ export default function Header() {
               alt="Gallego Cazaux"
               fill
               sizes="64px"
-              className={`object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-100' : 'opacity-0'}`}
+              className="object-contain transition-opacity duration-300 opacity-0 header-transparent:opacity-100"
             />
             <Image
               src="/assets/images/gallego-cazaux-logo.webp"
@@ -62,7 +76,7 @@ export default function Header() {
               aria-hidden="true"
               fill
               sizes="64px"
-              className={`object-contain transition-opacity duration-300 ${isTransparent ? 'opacity-0' : 'opacity-100'}`}
+              className="object-contain transition-opacity duration-300 opacity-100 header-transparent:opacity-0"
             />
           </Link>
 
@@ -76,32 +90,28 @@ export default function Header() {
                     <Link
                       href={item.href}
                       className={`relative px-3 py-2 text-sm font-medium transition-colors duration-200 group ${
-                        isTransparent
-                          ? active ? 'text-white' : 'text-white/80 hover:text-white'
-                          : active ? 'text-primary' : 'text-gray hover:text-primary'
+                        active
+                          ? 'text-primary header-transparent:text-white'
+                          : 'text-gray hover:text-primary header-transparent:text-white/80 header-transparent:hover:text-white'
                       }`}
                     >
                       {item.name}
-                      <span className={`absolute inset-x-3 bottom-1.5 h-0.5 origin-left transition-transform duration-300 ease-out ${
-                        isTransparent ? 'bg-white' : 'bg-primary'
-                      } ${active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
+                      <span className={`absolute inset-x-3 bottom-1.5 h-0.5 origin-left transition-transform duration-300 ease-out bg-primary header-transparent:bg-white ${
+                        active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                      }`} />
                     </Link>
                   </li>
                 );
               })}
             </ul>
 
-            <div className={`h-8 w-px transition-colors duration-300 ${isTransparent ? 'bg-white/30' : 'bg-gray-200'}`} />
+            <div className="h-8 w-px transition-colors duration-300 bg-gray-200 header-transparent:bg-white/30" />
 
             <a
               href="https://wa.me/542954272138"
               target="_blank"
               rel="noopener noreferrer"
-              className={`flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 ${
-                isTransparent
-                  ? 'border border-white/80 text-white hover:bg-white/10 active:shadow-sm'
-                  : 'border border-transparent bg-primary text-white hover:bg-primary/90 hover:shadow-lg active:shadow-sm'
-              }`}
+              className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 text-white border border-transparent bg-primary hover:bg-primary/90 hover:shadow-lg active:shadow-sm header-transparent:border-white/80 header-transparent:bg-transparent header-transparent:hover:bg-white/10 header-transparent:hover:shadow-none"
             >
               <WhatsAppIcon className="w-4 h-4" />
               WhatsApp
@@ -111,7 +121,7 @@ export default function Header() {
           {/* Mobile: hamburger → X morphing */}
           <button
             type="button"
-            className={`md:hidden p-2 transition-colors duration-300 ${isTransparent ? 'text-white' : 'text-gray hover:text-primary'}`}
+            className="md:hidden p-2 transition-colors duration-300 text-gray hover:text-primary header-transparent:text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
           >

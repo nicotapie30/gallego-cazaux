@@ -18,5 +18,12 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const featuredProperties: Property[] = await getFeaturedProperties();
-  return <HomeClient featuredProperties={featuredProperties} />;
+  return (
+    <>
+      {/* Marcador de ruta home: el Header lee `body:has([data-home])` por CSS
+          para entrar en modo transparente/fixed. Determinista, sin usePathname. */}
+      <div data-home hidden />
+      <HomeClient featuredProperties={featuredProperties} />
+    </>
+  );
 }

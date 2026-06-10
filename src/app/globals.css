@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Variant para hijos del header: activa cuando el header está en modo transparente
+   (home, sin scroll). Se computa 100% en CSS → determinista en el HTML prerenderizado
+   y en el cliente, sin depender de usePathname en el render. */
+@custom-variant header-transparent (&:where(body:has([data-home]) .site-header:not([data-scrolled]) *));
+
 html, body {
   overflow-x: clip;
   padding-bottom: env(safe-area-inset-bottom);
@@ -118,6 +123,38 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-outfit), system-ui, sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
+}
+
+/* ── Header: modo determinado por CSS, no por JS en el render ──────────────
+   Default = opaco/sticky (páginas internas). En la home (marcador [data-home]
+   en el DOM) pasa a fixed; y transparente mientras no haya scroll.
+   La decisión la computa el browser idéntico sobre el HTML del server y en el
+   cliente → sin hydration mismatch, sin race con experimental.viewTransition. */
+.site-header {
+  position: sticky;
+  background-color: rgb(255 255 255 / 0.7);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+body:has([data-home]) .site-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+body:has([data-home]) .site-header:not([data-scrolled]) {
+  background-color: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+/* Durante una navegación cliente: sin transición, para que el header tome su
+   estado correcto al instante (evita el parpadeo blanco→transparente al volver
+   a la home). La transición queda solo para el frost-on-scroll. */
+.site-header[data-navigating] {
+  transition: none;
 }
 
 .font-mono {
