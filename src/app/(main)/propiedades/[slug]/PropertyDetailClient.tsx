@@ -363,7 +363,7 @@ export default function PropertyDetailClient({ property, similarProperties }: Pr
                 <div className="bg-white rounded-2xl border border-border p-6">
                   <div className="mb-4">
                     <p className="text-muted text-xs font-medium uppercase tracking-wide mb-1">Precio de {operationLabel.toLowerCase()}</p>
-                    {property.priceOnRequest ? (
+                    {(property.priceOnRequest || !property.price) ? (
                       <p className="font-outfit font-bold text-secondary text-2xl">Consultar precio</p>
                     ) : (
                       <p className="font-outfit text-3xl font-bold text-primary">{formatPrice(property.price, property.currency)}</p>

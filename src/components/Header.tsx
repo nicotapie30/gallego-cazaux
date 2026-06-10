@@ -27,7 +27,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  const isHome = pathname === '/';
+  const isHome = (typeof window !== 'undefined' ? window.location.pathname : pathname) === '/';
   const isTransparent = isHome && !scrolled;
 
   const isActive = (href: string) =>

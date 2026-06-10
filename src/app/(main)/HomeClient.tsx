@@ -228,7 +228,7 @@ function HorizontalCard({ property }: { property: Property }) {
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               {(property.priceOnRequest || property.price == null || property.price === 0) ? (
-                <p className="font-outfit font-semibold text-secondary text-sm italic">Consultar precio</p>
+                <p className="font-outfit font-semibold text-secondary text-sm">Consultar precio</p>
               ) : (
                 <p className="font-outfit font-bold text-primary text-base">{formatPrice(property.price, property.currency)}</p>
               )}
