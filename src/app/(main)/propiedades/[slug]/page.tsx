@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { Property } from '@/lib/types';
-import { getPropertyBySlug, getPropertySlugs, getProperties } from '@/lib/sanity';
+import { getPropertyBySlug, getProperties } from '@/lib/sanity';
 import { urlFor } from '@/lib/sanity';
 import PropertyDetailClient from './PropertyDetailClient';
 import { breadcrumbSchema, propertySchema } from '@/lib/schema';
@@ -9,11 +9,6 @@ import { safeJsonLd } from '@/lib/safe-json-ld';
 
 export const revalidate = 3600;
 export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  const slugs = await getPropertySlugs();
-  return slugs.map((s) => ({ slug: s.slug }));
-}
 
 type Props = { params: Promise<{ slug: string }> };
 
