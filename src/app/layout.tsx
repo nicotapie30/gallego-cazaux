@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, DM_Sans, JetBrains_Mono } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -57,6 +58,7 @@ export default function RootLayout({
     <html lang="es" className={`${outfit.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-screen flex flex-col bg-white text-gray font-sans antialiased">
         {children}
+        <Toaster position="bottom-right" richColors />
         <SpeedInsights />
       </body>
     </html>

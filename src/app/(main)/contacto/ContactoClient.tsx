@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 import { MapPin, Phone, Mail, Send, Clock } from '@/lib/icons';
 import { SiInstagram } from '@/lib/icons/brands';
 
@@ -50,20 +51,28 @@ const INPUT_CLASS =
 export default function ContactoClient() {
   const [topic, setTopic] = useState('consulta');
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus('loading');
+    setLoading(true);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...formData, topic }),
       });
-      setStatus(res.ok ? 'success' : 'error');
+      if (res.ok) {
+        toast.success('¡Mensaje enviado!', { description: 'Te respondemos en menos de 24 horas.' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
+        setTopic('consulta');
+      } else {
+        toast.error('No se pudo enviar', { description: 'Intentá de nuevo o escribinos por WhatsApp.' });
+      }
     } catch {
-      setStatus('error');
+      toast.error('No se pudo enviar', { description: 'Intentá de nuevo o escribinos por WhatsApp.' });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -190,44 +199,7 @@ export default function ContactoClient() {
 
           {/* Right: form card */}
           <div className="lg:col-span-3">
-            <div className="bg-white rounded-2xl border border-border overflow-hidden relative">
-
-              {/* Success overlay — absoluto para no cambiar el tamaño del contenedor */}
-              <AnimatePresence>
-                {status === 'success' && (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.35, ease: [0, 0, 0.2, 1] }}
-                    className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 bg-white rounded-2xl z-10"
-                  >
-                    <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
-                      <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <h3 className="font-outfit text-2xl font-bold text-secondary mb-3">
-                      ¡Mensaje recibido!
-                    </h3>
-                    <p className="text-muted text-sm max-w-xs mb-8 leading-relaxed">
-                      Te vamos a contactar en menos de 24 horas. Si necesitás respuesta urgente, escribinos por WhatsApp.
-                    </p>
-                    <a
-                      href="https://wa.me/542954272138"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors"
-                    >
-                      <WhatsAppIcon className="w-4 h-4" />
-                      WhatsApp
-                    </a>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Form — siempre en el DOM para mantener altura del contenedor */}
+            <div className="bg-white rounded-2xl border border-border overflow-hidden">
               <div className="p-5 md:p-8">
                     <h2 className="font-outfit text-xl font-semibold text-secondary mb-1">
                       Envianos un mensaje
@@ -325,11 +297,11 @@ export default function ContactoClient() {
                       {/* Submit */}
                       <motion.button
                         type="submit"
-                        disabled={status === 'loading'}
+                        disabled={loading}
                         className="group w-full flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-white font-semibold text-sm rounded-xl hover:bg-secondary/90 transition-colors disabled:opacity-60 cursor-pointer"
                         whileTap={{ scale: 0.98 }}
                       >
-                        {status === 'loading' ? (
+                        {loading ? (
                           <>
                             <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -344,12 +316,6 @@ export default function ContactoClient() {
                           </>
                         )}
                       </motion.button>
-
-                      {status === 'error' && (
-                        <p className="text-red-500 text-xs text-center">
-                          Error al enviar. Intentá de nuevo o escribinos por WhatsApp.
-                        </p>
-                      )}
 
                     </form>
               </div>
