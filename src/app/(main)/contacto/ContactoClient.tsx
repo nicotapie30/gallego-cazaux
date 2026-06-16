@@ -10,6 +10,7 @@ const TOPICS = [
   { value: 'compra',   label: 'Compra' },
   { value: 'venta',    label: 'Venta' },
   { value: 'alquiler', label: 'Alquiler' },
+  { value: 'tasacion', label: 'Tasación' },
   { value: 'consulta', label: 'Consulta general' },
 ];
 
