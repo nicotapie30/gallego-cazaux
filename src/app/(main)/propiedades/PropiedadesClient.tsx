@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Filter, Search, X, Home } from '@/lib/icons';
+import { Filter, Search, X, Home, ChevronLeft, ChevronRight } from '@/lib/icons';
 import PropertyCard from '@/components/PropertyCard';
 import Select from '@/components/ui/Select';
 import type { Property } from '@/lib/types';
@@ -55,6 +55,70 @@ const SORT_OPTIONS = [
   { value: 'price_asc', label: 'Menor precio' },
   { value: 'price_desc', label: 'Mayor precio' },
 ];
+
+const PAGE_SIZE = 12;
+
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+  const pages: (number | 'ellipsis')[] = [];
+
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    if (currentPage > 3) pages.push('ellipsis');
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (currentPage < totalPages - 2) pages.push('ellipsis');
+    pages.push(totalPages);
+  }
+
+  return (
+    <div className="flex items-center justify-center gap-1 mt-10">
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className="p-2 rounded-lg border border-border text-gray hover:bg-background-alt hover:border-primary/30 hover:text-primary transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+        aria-label="Página anterior"
+      >
+        <ChevronLeft className="w-4 h-4" />
+      </button>
+
+      {pages.map((p, i) =>
+        p === 'ellipsis' ? (
+          <span key={`e-${i}`} className="w-9 text-center text-muted text-sm">…</span>
+        ) : (
+          <button
+            key={p}
+            onClick={() => onPageChange(p)}
+            className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
+              p === currentPage
+                ? 'bg-primary text-white'
+                : 'border border-border text-gray hover:bg-background-alt hover:border-primary/30 hover:text-primary'
+            }`}
+          >
+            {p}
+          </button>
+        )
+      )}
+
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="p-2 rounded-lg border border-border text-gray hover:bg-background-alt hover:border-primary/30 hover:text-primary transition-colors cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+        aria-label="Página siguiente"
+      >
+        <ChevronRight className="w-4 h-4" />
+      </button>
+    </div>
+  );
+}
 
 
 interface FilterPanelProps {
@@ -217,6 +281,7 @@ function EmptyState({ onClear }: { onClear: () => void }) {
 
 function PropiedadesContent({ initialProperties }: { initialProperties: Property[] }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const [filters, setFilters] = useState<Filters>({
     ...defaultFilters,
@@ -226,6 +291,12 @@ function PropiedadesContent({ initialProperties }: { initialProperties: Property
   const [sortBy, setSortBy] = useState('newest');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [search, setSearch] = useState('');
+  const isMounted = useRef(false);
+  const filterSignature = useRef<string | null>(null);
+
+  // Derived from URL — single source of truth for sharing
+  const currentPage = Math.max(1, Number(searchParams.get('page') ?? '1'));
+
   const cityOptions = useMemo(() => {
     const cities = [...new Set(initialProperties.map((p) => p.city).filter(Boolean))].sort((a, b) =>
       a.localeCompare(b, 'es-AR')
@@ -253,7 +324,48 @@ function PropiedadesContent({ initialProperties }: { initialProperties: Property
         if (sortBy === 'price_desc') return (b.price ?? 0) - (a.price ?? 0);
         return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
       });
+  }, [filters, sortBy, search, initialProperties]);
+
+  // When filters/sort/search change, clear page param from URL (reset to page 1)
+  // Uses signature comparison — safe against React Strict Mode double-invocation
+  useEffect(() => {
+    const sig = `${filters.operation}|${filters.propertyType}|${filters.city}|${filters.minPrice}|${filters.maxPrice}|${filters.bedrooms}|${sortBy}|${search}`;
+    const prev = filterSignature.current;
+    filterSignature.current = sig;
+    if (prev === null || prev === sig) return; // mount or no change
+    if (!searchParams.has('page')) return;
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('page');
+    const qs = params.toString();
+    router.replace(qs ? `/propiedades?${qs}` : '/propiedades', { scroll: false });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters, sortBy, search]);
+
+  // Scroll to top after page change (skip mount)
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
+  const totalPages = Math.ceil(filteredProperties.length / PAGE_SIZE);
+  const paginatedProperties = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filteredProperties.slice(start, start + PAGE_SIZE);
+  }, [filteredProperties, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (page === 1) {
+      params.delete('page');
+    } else {
+      params.set('page', String(page));
+    }
+    const qs = params.toString();
+    router.replace(qs ? `/propiedades?${qs}` : '/propiedades', { scroll: false });
+  };
 
   const hasActiveFilters = Object.values(filters).some((v) => v !== '') || search !== '';
   const activeFilterCount = Object.values(filters).filter((v) => v !== '').length + (search ? 1 : 0);
@@ -328,6 +440,9 @@ function PropiedadesContent({ initialProperties }: { initialProperties: Property
               <p className="text-muted text-sm">
                 <span className="font-semibold text-secondary">{filteredProperties.length}</span>{' '}
                 {filteredProperties.length === 1 ? 'propiedad encontrada' : 'propiedades encontradas'}
+                {totalPages > 1 && (
+                  <span className="ml-2 text-muted">· Página {currentPage} de {totalPages}</span>
+                )}
               </p>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted hidden sm:block">Ordenar:</span>
@@ -339,12 +454,21 @@ function PropiedadesContent({ initialProperties }: { initialProperties: Property
               </div>
             </div>
 
-            {filteredProperties.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {filteredProperties.map((property) => (
-                  <PropertyCard key={property._id} property={property} />
-                ))}
-              </div>
+            {paginatedProperties.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {paginatedProperties.map((property) => (
+                    <PropertyCard key={property._id} property={property} />
+                  ))}
+                </div>
+                {totalPages > 1 && (
+                  <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
+                )}
+              </>
             ) : (
               <EmptyState onClear={clearFilters} />
             )}

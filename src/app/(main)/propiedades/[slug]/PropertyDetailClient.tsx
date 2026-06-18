@@ -472,7 +472,8 @@ export default function PropertyDetailClient({
                           <Image
                             src={item.thumbSrc}
                             alt={`Imagen ${idx + 1}`}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
                             loading="lazy"
                           />
                         ) : (
