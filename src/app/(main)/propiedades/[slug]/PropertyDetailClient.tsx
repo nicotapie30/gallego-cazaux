@@ -471,7 +471,7 @@ export default function PropertyDetailClient({
                         {item.type === "image" ? (
                           <Image
                             src={item.thumbSrc}
-                            alt={`Imagen ${idx + 1}`}
+                            alt={`${property.title} — imagen ${idx + 1}`}
                             fill
                             className="object-cover"
                             loading="lazy"
@@ -520,9 +520,9 @@ export default function PropertyDetailClient({
                     {status.label}
                   </span>
                 </div>
-                <h1 className="font-outfit text-2xl md:text-3xl font-bold text-secondary mb-2">
+                <h2 className="font-outfit text-2xl md:text-3xl font-bold text-secondary mb-2">
                   {property.title}
-                </h1>
+                </h2>
                 <div className="flex items-center gap-1.5 text-muted text-sm mb-6">
                   <MapPin className="w-4 h-4 shrink-0 text-primary" />
                   {property.address}, {property.city}, {property.province}
@@ -1024,7 +1024,7 @@ export default function PropertyDetailClient({
                     (mediaItems[currentImage] as { type: "image"; src: string })
                       ?.src
                   }
-                  alt={`Imagen ${currentImage + 1}`}
+                  alt={`${property.title} — imagen ${currentImage + 1}`}
                   className="max-w-[90vw] max-h-[88vh] object-contain rounded-lg cursor-default"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

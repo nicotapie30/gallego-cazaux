@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
       from: 'Gallego Cazaux <onboarding@resend.dev>',
-      to:   'nicoatapie@gmail.com',
+      to:   'gallegocazaux@gmail.com',
       replyTo: email,
       subject: `Nuevo contacto web: ${escapeHtml(name)}${topic ? ` — ${TOPIC_LABELS[topic]}` : ''}`,
       html: `

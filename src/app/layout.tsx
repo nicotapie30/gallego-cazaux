@@ -42,6 +42,7 @@ export const metadata: Metadata = {
     title: "Gallego Cazaux - Negocios Inmobiliarios",
     description: "Inmobiliaria en Santa Rosa, La Pampa. Venta y alquiler de propiedades.",
     type: "website",
+    images: [{ url: '/equipo-opt.webp', width: 1200, height: 630, alt: 'Gallego Cazaux Negocios Inmobiliarios' }],
   },
   icons: {
     icon: "/assets/icons/favicon.ico",
@@ -55,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${outfit.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="es" data-scroll-behavior="smooth" className={`${outfit.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-screen flex flex-col bg-white text-gray font-sans antialiased">
         {children}
         <Toaster position="bottom-right" richColors />

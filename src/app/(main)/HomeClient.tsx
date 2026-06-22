@@ -494,7 +494,7 @@ function WhyUsSection() {
   )
 }
 
-const MotionImage = motion(Image);
+const MotionImage = motion.create(Image);
 
 // ── Hero animation variants ───────────────────────────────────
 const EASE_OUT_QUART: [number, number, number, number] = [0.23, 1, 0.32, 1]

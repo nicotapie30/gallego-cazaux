@@ -105,11 +105,7 @@ html, body {
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
+/* scroll-behavior gestionado por Next.js viewTransition via data-scroll-behavior en <html> */
 
 body {
   background: var(--background);

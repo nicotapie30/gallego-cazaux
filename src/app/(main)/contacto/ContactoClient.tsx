@@ -31,8 +31,8 @@ const CONTACT_ITEMS = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'info@gallegocazaux.com',
-    href: 'mailto:info@gallegocazaux.com',
+    value: 'gallegocazaux@gmail.com',
+    href: 'mailto:gallegocazaux@gmail.com',
   },
 ];
 

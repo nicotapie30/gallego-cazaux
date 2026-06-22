@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     title: 'Gallego Cazaux - Negocios Inmobiliarios',
     description: 'Inmobiliaria en Santa Rosa, La Pampa. Venta y alquiler de propiedades.',
     type: 'website',
+    images: [{ url: '/equipo-opt.webp', width: 1200, height: 630, alt: 'Gallego Cazaux Negocios Inmobiliarios' }],
   },
 };
 

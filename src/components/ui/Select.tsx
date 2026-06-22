@@ -46,7 +46,7 @@ export default function Select({ value, onChange, options, className = '', butto
           }
           setOpen((v) => !v);
         }}
-        className={buttonClassName ?? "flex items-center gap-2 pl-3 pr-2.5 py-1.5 bg-white border border-border rounded-lg text-sm text-gray hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors cursor-pointer select-none"}
+        className={buttonClassName ?? "flex items-center gap-2 pl-3 pr-2.5 py-1.5 bg-white border border-border rounded-lg text-sm text-gray hover:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors cursor-pointer select-none whitespace-nowrap"}
       >
         <span>{selected.label}</span>
         <motion.span

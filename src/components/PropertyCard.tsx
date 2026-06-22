@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
-const MotionImage = motion(Image);
+const MotionImage = motion.create(Image);
 import { Bed, Bath, Ruler, Car, MapPin } from '@/lib/icons';
 import type { Property } from '@/lib/types';
 import { urlFor } from '@/lib/sanity';
@@ -85,13 +85,28 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
       <Link href={href} onClick={handleClick} className="flex flex-col h-full">
         {/* Image */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-background-alt">
+        <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
+          {/* Blurred backdrop — fills letterbox areas for any image ratio */}
+          {property.images && property.images.length > 0 && (
+            <>
+              <div
+                className="absolute inset-0 scale-110"
+                style={{
+                  backgroundImage: `url(${urlFor(property.images[0]!).width(40).url()})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  filter: 'blur(40px)',
+                }}
+              />
+              <div className="absolute inset-0 bg-black/40" />
+            </>
+          )}
           {property.images && property.images.length > 0 ? (
             <MotionImage
               src={urlFor(property.images[0]!).width(600).url()}
               alt={property.title}
               fill
-              className="object-cover"
+              className="object-contain"
               style={{ viewTransitionName: `prop-img-${property._id}` }}
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={transition}

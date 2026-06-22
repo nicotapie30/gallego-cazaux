@@ -14,7 +14,9 @@ export default function Footer() {
 
         {/* Brand — full width en mobile */}
         <div className="mb-8 lg:hidden">
-          <Image src="/assets/images/gallego-cazaux-logo-white.webp" alt="Gallego Cazaux" width={200} height={48} className="h-12 w-auto mb-3" />
+          <div className="relative h-12 w-[160px] mb-3">
+            <Image src="/assets/images/gallego-cazaux-logo-white.webp" alt="Gallego Cazaux" fill sizes="160px" className="object-contain object-left" />
+          </div>
           <p className="text-gray-400 text-sm mb-4 leading-relaxed">
             Tu partner de confianza en Santa Rosa, La Pampa.
           </p>
@@ -38,7 +40,9 @@ export default function Footer() {
 
           {/* Brand — solo desktop */}
           <div className="hidden lg:block lg:col-span-2">
-            <Image src="/assets/images/gallego-cazaux-logo-white.webp" alt="Gallego Cazaux" width={200} height={64} className="h-16 w-auto mb-4" />
+            <div className="relative h-16 w-[200px] mb-4">
+              <Image src="/assets/images/gallego-cazaux-logo-white.webp" alt="Gallego Cazaux" fill sizes="200px" className="object-contain object-left" />
+            </div>
             <p className="text-gray-400 text-base mb-5 max-w-sm leading-relaxed">
               Negocios Inmobiliarios. Tu partner de confianza en Santa Rosa, La Pampa.
               Encontrá tu próximo hogar con nosotras.
@@ -106,8 +110,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-primary flex-shrink-0" />
-                <a href="mailto:info@gallegocazaux.com" className="text-gray-400 hover:text-white text-xs md:text-sm transition-colors truncate min-w-0">
-                  info@gallegocazaux.com
+                <a href="mailto:gallegocazaux@gmail.com" className="text-gray-400 hover:text-white text-xs md:text-sm transition-colors truncate min-w-0">
+                  gallegocazaux@gmail.com
                 </a>
               </li>
             </ul>

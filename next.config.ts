@@ -13,12 +13,12 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       // unsafe-eval solo en dev — React lo necesita para reconstruir stack traces
-      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}`,
+      `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ''}`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https://cdn.sanity.io",
       "media-src 'self' blob: https://cdn.sanity.io",
       "frame-src https://www.google.com https://maps.google.com",
-      "connect-src 'self' https://*.sanity.io https://cdn.sanity.io",
+      "connect-src 'self' https://*.sanity.io https://cdn.sanity.io https://vitals.vercel-insights.com",
       "font-src 'self' data: https://fonts.gstatic.com",
     ].join('; '),
   },

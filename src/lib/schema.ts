@@ -13,7 +13,7 @@ export function localBusinessSchema() {
     name: 'Gallego Cazaux Negocios Inmobiliarios',
     url: SITE_URL,
     telephone: '+542954272138',
-    email: 'info@gallegocazaux.com',
+    email: 'gallegocazaux@gmail.com',
     description: 'Inmobiliaria en Santa Rosa, La Pampa. Más de 20 años acompañando familias e inversores en compra, venta y alquiler de propiedades.',
     address: {
       '@type': 'PostalAddress',

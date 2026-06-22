@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useInView, animate } from 'framer-motion';
 
-const MotionImage = motion(Image);
+const MotionImage = motion.create(Image);
 import { MapPin, Phone, Mail, Trophy, Users, Home, Star, Clock } from '@/lib/icons';
 import { SiInstagram } from '@/lib/icons/brands';
 import { AnimateIn } from '@/components/AnimateIn';
@@ -370,7 +370,7 @@ export default function SobreNosotrosClient() {
               {[
                 { icon: MapPin, label: 'Dirección',  value: 'Pellegrini 594, Santa Rosa, La Pampa', href: 'https://maps.google.com/?q=Pellegrini+594+Santa+Rosa+La+Pampa' },
                 { icon: Phone,  label: 'Teléfono',   value: '(2954) 272138',                         href: 'tel:2954272138' },
-                { icon: Mail,   label: 'Email',       value: 'info@gallegocazaux.com',                href: 'mailto:info@gallegocazaux.com' },
+                { icon: Mail,   label: 'Email',       value: 'gallegocazaux@gmail.com',               href: 'mailto:gallegocazaux@gmail.com' },
               ].map(({ icon: Icon, label, value, href }) => (
                 <motion.a
                   key={label}
