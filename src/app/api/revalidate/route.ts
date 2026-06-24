@@ -10,7 +10,10 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const slug: string | undefined = body?.result?.slug?.current;
+    console.log('[revalidate] body:', JSON.stringify(body));
+
+    const slug: string | undefined =
+      body?.result?.slug?.current ?? body?.previous?.slug?.current;
 
     if (slug) {
       revalidatePath(`/propiedades/${slug}`);
