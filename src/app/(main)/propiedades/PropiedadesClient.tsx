@@ -279,14 +279,15 @@ function EmptyState({ onClear }: { onClear: () => void }) {
   );
 }
 
-function PropiedadesContent({ initialProperties }: { initialProperties: Property[] }) {
+function PropiedadesContent({ initialProperties, initialCity, initialOperation, initialPropertyType }: { initialProperties: Property[]; initialCity?: string; initialOperation?: string; initialPropertyType?: string }) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [filters, setFilters] = useState<Filters>({
     ...defaultFilters,
-    operation: searchParams.get('operation') ?? '',
-    propertyType: searchParams.get('type') ?? '',
+    operation: initialOperation ?? searchParams.get('operation') ?? '',
+    propertyType: initialPropertyType ?? searchParams.get('type') ?? '',
+    city: initialCity ?? '',
   });
   const [sortBy, setSortBy] = useState('newest');
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -531,10 +532,10 @@ function PropiedadesContent({ initialProperties }: { initialProperties: Property
   );
 }
 
-export default function PropiedadesClient({ initialProperties }: { initialProperties: Property[] }) {
+export default function PropiedadesClient({ initialProperties, initialCity, initialOperation, initialPropertyType }: { initialProperties: Property[]; initialCity?: string; initialOperation?: string; initialPropertyType?: string }) {
   return (
     <Suspense fallback={<div className="min-h-screen bg-background-alt" />}>
-      <PropiedadesContent initialProperties={initialProperties} />
+      <PropiedadesContent initialProperties={initialProperties} initialCity={initialCity} initialOperation={initialOperation} initialPropertyType={initialPropertyType} />
     </Suspense>
   );
 }

@@ -1,0 +1,132 @@
+# Gallego Cazaux Negocios Inmobiliarios
+URL: https://gallego-cazaux-demo.vercel.app/
+
+## Tu inversión segura en La Pampa.
+
+Más de 20 años acompañando familias e inversores en Santa Rosa. Comprá, vendé o alquilá con confianza.
+
+### Estadísticas
+
+- 20+ años de experiencia
+- 500+ operaciones realizadas
+- 7K+ seguidores en Instagram
+
+### Servicios
+
+**Compra y Venta**
+Acompañamos cada etapa de la operación: búsqueda, negociación, documentación y escritura. Conocemos cada barrio de Santa Rosa.
+
+**Alquiler**
+Gestionamos contratos de alquiler con garantías claras para propietarios e inquilinos. Administración de propiedades incluida.
+
+**Tasación**
+Valuación profesional de tu propiedad basada en el mercado actual de La Pampa. Gratis y sin compromiso.
+
+### Propiedades destacadas
+
+Casas, departamentos, PHs, terrenos y locales comerciales en Santa Rosa y zona. Ver listado completo en /propiedades.
+
+### Testimonios
+
+Clientes satisfechos que confiaron en Gallego Cazaux para sus operaciones inmobiliarias en La Pampa.
+
+### Contacto directo
+
+WhatsApp: +54 2954 272138
+
+---
+
+# Propiedades
+URL: https://gallego-cazaux-demo.vercel.app/propiedades
+
+## Propiedades en Santa Rosa y La Pampa
+
+Explorá todas nuestras propiedades en Santa Rosa y La Pampa. Casas, departamentos, terrenos y locales en venta y alquiler.
+
+### Filtros disponibles
+
+- Operación: Venta / Alquiler
+- Tipo: Casa, Departamento, PH, Terreno, Local
+- Precio máximo
+- Dormitorios
+- Ciudad
+
+(Contenido dinámico — las propiedades se actualizan en tiempo real desde Sanity CMS)
+
+---
+
+# Quiénes Somos
+URL: https://gallego-cazaux-demo.vercel.app/sobre-nosotros
+
+## Más de 20 años acompañando familias e inversores en La Pampa
+
+### Historia
+
+Gallego Cazaux Negocios Inmobiliarios nació en Santa Rosa, La Pampa, en 2003. Lo que empezó como un proyecto familiar creció hasta convertirse en una de las inmobiliarias de referencia de la región. Conocemos el mercado local como pocos: cada barrio, cada precio, cada oportunidad.
+
+### Estadísticas
+
+- 20+ años de trayectoria
+- 500+ operaciones realizadas
+- 7K+ seguidores en Instagram
+- 24hs tiempo de respuesta
+
+### Nuestros valores
+
+**01 — Honestidad**
+Transparencia en cada operación. Te decimos la verdad siempre, aunque no sea lo que querés escuchar. Es la base de cada relación que construimos.
+
+**02 — Compromiso**
+Tu problema es nuestro problema. Te acompañamos en cada paso del proceso, desde la primera consulta hasta el cierre de la operación.
+
+**03 — Profesionalismo**
+Formación constante y conocimiento profundo del mercado local. Sabemos lo que vale cada metro cuadrado en Santa Rosa y La Pampa.
+
+### Equipo
+
+- **Ana Gallego** — Socia fundadora
+
+---
+
+# Preguntas Frecuentes
+URL: https://gallego-cazaux-demo.vercel.app/faq
+
+## Respondemos las dudas más comunes sobre compra, venta y alquiler de propiedades en Santa Rosa, La Pampa.
+
+(Contenido dinámico — las preguntas se gestionan desde Sanity CMS. Ver sitio para el listado completo actualizado.)
+
+Categorías: Compra, Alquiler, General.
+
+---
+
+# Contacto
+URL: https://gallego-cazaux-demo.vercel.app/contacto
+
+## Contactate con Gallego Cazaux Negocios Inmobiliarios
+
+### Datos de contacto
+
+- **Dirección:** Pellegrini 594, Santa Rosa, La Pampa
+- **Teléfono:** (2954) 272138
+- **WhatsApp:** +54 2954 272138
+- **Instagram:** @gallegocazaux
+
+### Formulario de contacto
+
+Motivos disponibles: Compra, Alquiler, Tasación, Otro.
+
+---
+
+# Política de Privacidad
+URL: https://gallego-cazaux-demo.vercel.app/privacidad
+
+(Ver sitio para el contenido completo)
+
+---
+
+# Términos y Condiciones
+URL: https://gallego-cazaux-demo.vercel.app/terminos
+
+(Ver sitio para el contenido completo)
+
+---

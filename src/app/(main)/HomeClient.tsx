@@ -561,11 +561,11 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
     <div>
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="grain relative min-h-[100dvh] flex items-center">
+      <section ref={heroRef} className="relative min-h-[100dvh] flex items-center">
         {/* Background layer — overflow clipped here para que los blobs no se filtren */}
         <div className="absolute inset-0 overflow-hidden">
-          <Image src="/equipo-opt.webp" alt="" fill priority className="object-cover object-center" sizes="100vw" />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.97) 0%, rgba(5,16,61,0.92) 35%, rgba(6,18,64,0.68) 58%, rgba(2,11,40,0.52) 78%, rgba(2,11,40,0.45) 100%)' }} />
+          <Image src="/assets/portada-4x.webp" alt="" fill priority className="object-cover object-[65%_center] md:object-center" sizes="100vw" style={{ filter: 'contrast(1.15) saturate(1.1)' }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.75) 0%, rgba(5,16,61,0.70) 35%, rgba(6,18,64,0.50) 58%, rgba(2,11,40,0.35) 78%, rgba(2,11,40,0.28) 100%)' }} />
           <motion.div
             className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
             style={{ background: 'rgba(1,143,51,0.18)', y: blob1ParallaxY, willChange: 'transform' }}
@@ -586,7 +586,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
           />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 w-full" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom, 0px))' }}>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 w-full" style={{ paddingBottom: 'calc(8rem + env(safe-area-inset-bottom, 0px))' }}>
           <div className="grid grid-cols-1 gap-8 items-center">
 
             {/* Copy — FM orchestrated entrance */}
@@ -678,7 +678,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
         </div>
 
         {/* Desktop: buscador absoluto solapando borde inferior del hero */}
-        <div className="hidden sm:block absolute bottom-10 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8">
+        <div className="hidden sm:block absolute bottom-14 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <QuickSearch />
           </div>

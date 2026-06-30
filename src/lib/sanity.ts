@@ -127,6 +127,11 @@ export async function getBlogPosts() {
   return sanityClient.fetch(query);
 }
 
+export async function getCities(): Promise<string[]> {
+  const query = `array::unique(*[_type == "property" && status == "disponible" && defined(city)].city) | order(@)`;
+  return sanityClient.fetch(query);
+}
+
 export async function getBlogPostBySlug(slug: string) {
   const query = `*[_type == "post" && slug.current == $slug][0] {
     _id,

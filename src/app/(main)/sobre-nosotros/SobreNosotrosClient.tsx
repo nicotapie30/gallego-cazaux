@@ -36,7 +36,7 @@ const stats = [
 ];
 
 const team = [
-  { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman1/400/500' },
+  { name: 'Ana Gallego', role: 'Socia fundadora', image: '/assets/ana-gallego.jpg' },
   { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman2/400/500' },
   { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman3/400/500' },
 ];

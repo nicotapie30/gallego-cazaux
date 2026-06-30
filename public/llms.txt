@@ -1,0 +1,19 @@
+# Gallego Cazaux Negocios Inmobiliarios
+
+> Inmobiliaria en Santa Rosa, La Pampa, Argentina. Más de 20 años acompañando familias e inversores en la compra, venta y alquiler de propiedades.
+
+Empresa familiar con raíces en La Pampa, fundada en 2003. Especializada en el mercado inmobiliario de Santa Rosa y la región. Asesoramiento personalizado en cada operación: venta, alquiler y tasación de propiedades residenciales y comerciales.
+
+## Páginas
+
+- [Inicio](https://gallego-cazaux-demo.vercel.app/): Presentación de la inmobiliaria, propiedades destacadas, servicios y estadísticas de trayectoria.
+- [Propiedades](https://gallego-cazaux-demo.vercel.app/propiedades): Listado completo de propiedades en venta y alquiler en Santa Rosa y La Pampa, con filtros por tipo, operación, precio y dormitorios.
+- [Quiénes Somos](https://gallego-cazaux-demo.vercel.app/sobre-nosotros): Historia, equipo, valores y estadísticas de la empresa.
+- [Preguntas Frecuentes](https://gallego-cazaux-demo.vercel.app/faq): Respuestas a las dudas más comunes sobre compra, alquiler y operaciones inmobiliarias en La Pampa.
+- [Contacto](https://gallego-cazaux-demo.vercel.app/contacto): Formulario de contacto, dirección (Pellegrini 594, Santa Rosa, La Pampa) y teléfono (2954) 272138.
+- [Política de Privacidad](https://gallego-cazaux-demo.vercel.app/privacidad)
+- [Términos y Condiciones](https://gallego-cazaux-demo.vercel.app/terminos)
+
+## Más información
+
+- [Versión completa para IA](https://gallego-cazaux-demo.vercel.app/llms-full.txt)

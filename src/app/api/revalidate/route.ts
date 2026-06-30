@@ -18,7 +18,12 @@ export async function POST(req: NextRequest) {
     }
 
     revalidatePath('/propiedades');
+    revalidatePath('/propiedades/venta');
+    revalidatePath('/propiedades/alquiler');
+    revalidatePath('/propiedades/ciudad', 'layout');
+    revalidatePath('/propiedades/tipo', 'layout');
     revalidatePath('/');
+    revalidatePath('/faq');
 
     return NextResponse.json({ revalidated: true, slug: slug ?? null });
   } catch {

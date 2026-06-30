@@ -57,6 +57,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" data-scroll-behavior="smooth" className={`${outfit.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        <link rel="alternate" type="text/plain" href="/llms.txt" />
+      </head>
       <body className="min-h-screen flex flex-col bg-white text-gray font-sans antialiased">
         {children}
         <Toaster position="bottom-right" richColors />
