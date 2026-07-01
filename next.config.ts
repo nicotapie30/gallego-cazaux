@@ -29,6 +29,10 @@ const nextConfig: NextConfig = {
     viewTransition: true,
   },
   images: {
+    // deviceSizes default corta en 3840 — el hero necesita hasta ~4500px en celus altos/DPR3 (object-cover con foto panorámica en viewport portrait)
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840, 4480, 5120],
+    // Next 16 restringe quality a [75] por default — cualquier otro valor pasado a <Image quality={n}> se ignora en silencio sin esto
+    qualities: [75, 90],
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.sanity.io' },
       { protocol: 'https', hostname: 'picsum.photos' },

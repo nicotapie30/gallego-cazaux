@@ -288,15 +288,15 @@ function QuickSearch() {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 px-6 py-5">
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+    <div className="bg-white rounded-2xl shadow-xl border border-gray-100 px-6 py-5 3xl:px-7 3xl:py-6">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 3xl:gap-4">
           {/* Operación — pills */}
           <div className="flex gap-2">
             {OPERATION_OPTS.map(opt => (
               <button
                 key={opt.value}
                 onClick={() => setOperation(operation === opt.value ? '' : opt.value)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-2 3xl:px-5 3xl:py-2.5 rounded-lg text-sm 3xl:text-base font-medium transition-all duration-200 ${
                   operation === opt.value
                     ? 'bg-primary text-white shadow-sm'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -308,7 +308,7 @@ function QuickSearch() {
           </div>
 
           {/* Divider */}
-          <div className="hidden sm:block w-px h-8 bg-gray-200 mx-1" />
+          <div className="hidden sm:block w-px h-8 3xl:h-9 bg-gray-200 mx-1" />
 
           {/* Tipo — select */}
           <Select
@@ -316,16 +316,16 @@ function QuickSearch() {
             onChange={setType}
             options={TYPE_OPTS}
             className="flex-1"
-            buttonClassName="flex items-center justify-between gap-2 w-full px-4 py-2 rounded-lg text-sm bg-gray-100 text-gray-700 border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors duration-200 focus:outline-none select-none"
+            buttonClassName="flex items-center justify-between gap-2 w-full px-4 py-2 3xl:px-5 3xl:py-2.5 rounded-lg text-sm 3xl:text-base bg-gray-100 text-gray-700 border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors duration-200 focus:outline-none select-none"
           />
 
           {/* CTA */}
           <button
             onClick={handleSearch}
-            className="group flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-200 whitespace-nowrap shadow-sm cursor-pointer"
+            className="group flex items-center justify-center gap-2 px-6 py-2.5 3xl:px-7 3xl:py-3 bg-primary text-white text-sm 3xl:text-base font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-200 whitespace-nowrap shadow-sm cursor-pointer"
           >
             Ver propiedades
-            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            <ArrowRight className="w-4 h-4 3xl:w-5 3xl:h-5 transition-transform duration-200 group-hover:translate-x-1" />
           </button>
         </div>
       </div>
@@ -561,10 +561,12 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
     <div>
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="relative min-h-[100dvh] flex items-center">
-        {/* Background layer — overflow clipped here para que los blobs no se filtren */}
-        <div className="absolute inset-0 overflow-hidden">
-          <Image src="/assets/portada-4x.webp" alt="" fill priority className="object-cover object-[65%_center] md:object-center" sizes="100vw" style={{ filter: 'contrast(1.15) saturate(1.1)' }} />
+      <section ref={heroRef} className="relative min-h-[100dvh] sm:min-h-[max(100dvh,860px)] flex items-center">
+        {/* Background layer — overflow clipped acá para que los blobs no se filtren. bg-[#04122e] queda como fallback de seguridad, no como capa activa: la foto cubre inset-0 (todo el alto real de la sección), ya que con los crops art-directed (mobile 9:16 vs desktop panorámica) el zoom extra por contenido alto ya no es un problema de nitidez */}
+        <div className="absolute inset-0 overflow-hidden bg-[#04122e]">
+          {/* Dos crops distintos (art direction): el original es panorámico (1.5:1) y forzaba un zoom de ~3x contra un viewport portrait — se veía borrosa sin importar la resolución. portada-4x-mobile.webp es un recorte 9:16 pre-cropeado del mismo original. Switch por orientación (no por ancho): una tablet en portrait tiene el mismo problema de aspect ratio que un celular, así que también usa el crop mobile; landscape (tablet o desktop) usa la panorámica completa */}
+          <Image src="/assets/portada-4x-mobile.webp" alt="" fill priority quality={90} className="object-cover object-center landscape:hidden" sizes="100vw" style={{ filter: 'contrast(1.15) saturate(1.1)' }} />
+          <Image src="/assets/portada-4x.webp" alt="" fill priority quality={90} className="hidden landscape:block object-cover object-center" sizes="100vw" style={{ filter: 'contrast(1.15) saturate(1.1)' }} />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.75) 0%, rgba(5,16,61,0.70) 35%, rgba(6,18,64,0.50) 58%, rgba(2,11,40,0.35) 78%, rgba(2,11,40,0.28) 100%)' }} />
           <motion.div
             className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
@@ -591,7 +593,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
 
             {/* Copy — FM orchestrated entrance */}
             <motion.div
-              className="max-w-3xl"
+              className="max-w-3xl 3xl:max-w-4xl"
               variants={heroCopyVariants}
               initial={shouldReduceMotion ? false : 'hidden'}
               animate="visible"
@@ -599,7 +601,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
               {/* H1 — word by word stagger */}
               <motion.h1
                 variants={heroH1Variants}
-                className="font-outfit text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.05] mb-6"
+                className="font-outfit text-5xl md:text-6xl lg:text-7xl 3xl:text-8xl font-bold text-white leading-[1.05] mb-6"
               >
                 {['Tu', 'inversión'].map((word) => (
                   <motion.span key={word} variants={heroWordVariants} className="inline-block mr-[0.25em]">{word}</motion.span>
@@ -616,7 +618,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
               {/* Paragraph */}
               <motion.p
                 variants={heroItemVariants}
-                className="text-gray-400 text-lg mb-6 md:mb-10 max-w-md leading-relaxed"
+                className="text-gray-400 text-lg 3xl:text-xl mb-6 md:mb-10 max-w-md 3xl:max-w-lg leading-relaxed"
               >
                 Más de 20 años acompañando familias e inversores en Santa Rosa. Comprá, vendé o alquilá con confianza.
               </motion.p>
@@ -630,17 +632,17 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                   href="https://wa.me/542954272138"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 text-sm md:text-base shadow-lg shadow-primary/30"
+                  className="inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 3xl:px-8 3xl:py-5 bg-primary text-white font-semibold rounded-xl hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 text-sm md:text-base 3xl:text-lg shadow-lg shadow-primary/30"
                 >
-                  <WhatsAppIcon className="w-5 h-5" />
+                  <WhatsAppIcon className="w-5 h-5 3xl:w-6 3xl:h-6" />
                   WhatsApp
                 </a>
                 <Link
                   href="/propiedades"
-                  className="group inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 bg-white/[0.06] border border-white/20 text-white font-semibold rounded-xl hover:bg-white/15 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 text-sm md:text-base backdrop-blur-sm"
+                  className="group inline-flex justify-center items-center gap-2 px-5 py-3.5 md:px-7 md:py-4 3xl:px-8 3xl:py-5 bg-white/[0.06] border border-white/20 text-white font-semibold rounded-xl hover:bg-white/15 hover:border-white/40 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 text-sm md:text-base 3xl:text-lg backdrop-blur-sm"
                 >
                   Explorar
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 3xl:w-5 3xl:h-5 transition-transform duration-200 group-hover:translate-x-1" />
                 </Link>
               </motion.div>
 
@@ -654,17 +656,17 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                   backdropFilter: 'blur(12px)',
                 }}
               >
-                <div className="px-3 py-3 md:px-6 md:py-5">
-                  <div className="font-outfit text-xl md:text-3xl font-bold text-white"><CountUp to={20} suffix="+" /></div>
-                  <div className="text-[10px] md:text-xs text-gray-500 mt-0.5 leading-tight">Años de<br className="md:hidden" /> experiencia</div>
+                <div className="px-3 py-3 md:px-6 md:py-5 3xl:px-7 3xl:py-6">
+                  <div className="font-outfit text-xl md:text-3xl 3xl:text-4xl font-bold text-white"><CountUp to={20} suffix="+" /></div>
+                  <div className="text-[10px] md:text-xs 3xl:text-sm text-gray-500 mt-0.5 leading-tight">Años de<br className="md:hidden" /> experiencia</div>
                 </div>
-                <div className="px-3 py-3 md:px-6 md:py-5" style={{ borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-                  <div className="font-outfit text-xl md:text-3xl font-bold text-white"><CountUp to={500} suffix="+" /></div>
-                  <div className="text-[10px] md:text-xs text-gray-500 mt-0.5 leading-tight">Operaciones<br className="md:hidden" /> realizadas</div>
+                <div className="px-3 py-3 md:px-6 md:py-5 3xl:px-7 3xl:py-6" style={{ borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+                  <div className="font-outfit text-xl md:text-3xl 3xl:text-4xl font-bold text-white"><CountUp to={500} suffix="+" /></div>
+                  <div className="text-[10px] md:text-xs 3xl:text-sm text-gray-500 mt-0.5 leading-tight">Operaciones<br className="md:hidden" /> realizadas</div>
                 </div>
-                <div className="px-3 py-3 md:px-6 md:py-5">
-                  <div className="font-outfit text-xl md:text-3xl font-bold text-white"><CountUp to={7} suffix="K+" /></div>
-                  <div className="text-[10px] md:text-xs text-gray-500 mt-0.5 leading-tight">Seguidores<br className="md:hidden" /> Instagram</div>
+                <div className="px-3 py-3 md:px-6 md:py-5 3xl:px-7 3xl:py-6">
+                  <div className="font-outfit text-xl md:text-3xl 3xl:text-4xl font-bold text-white"><CountUp to={7} suffix="K+" /></div>
+                  <div className="text-[10px] md:text-xs 3xl:text-sm text-gray-500 mt-0.5 leading-tight">Seguidores<br className="md:hidden" /> Instagram</div>
                 </div>
               </motion.div>
 
@@ -678,8 +680,8 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
         </div>
 
         {/* Desktop: buscador absoluto solapando borde inferior del hero */}
-        <div className="hidden sm:block absolute bottom-14 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto">
+        <div className="hidden sm:block absolute bottom-14 3xl:bottom-16 left-0 right-0 z-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl 3xl:max-w-4xl mx-auto">
             <QuickSearch />
           </div>
         </div>

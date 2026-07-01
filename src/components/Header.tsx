@@ -60,14 +60,14 @@ export default function Header() {
       className="site-header top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300"
     >
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex h-20 3xl:h-24 items-center justify-between">
           {/* Logo — container fijo, cross-fade por opacity */}
-          <Link href="/" className="flex-none relative" style={{ width: 64, height: 64 }}>
+          <Link href="/" className="flex-none relative w-16 h-16 3xl:w-20 3xl:h-20">
             <Image
               src="/assets/images/gallego-cazaux-logo-white.webp"
               alt="Gallego Cazaux"
               fill
-              sizes="64px"
+              sizes="80px"
               className="object-contain transition-opacity duration-300 opacity-0 header-transparent:opacity-100"
             />
             <Image
@@ -75,21 +75,21 @@ export default function Header() {
               alt=""
               aria-hidden="true"
               fill
-              sizes="64px"
+              sizes="80px"
               className="object-contain transition-opacity duration-300 opacity-100 header-transparent:opacity-0"
             />
           </Link>
 
           {/* Desktop: Nav + WhatsApp */}
-          <div className="hidden md:flex items-center gap-4">
-            <ul className="flex items-center h-20 gap-1">
+          <div className="hidden md:flex items-center gap-4 3xl:gap-5">
+            <ul className="flex items-center h-20 3xl:h-24 gap-1">
               {navigation.map((item) => {
                 const active = isActive(item.href);
                 return (
                   <li key={item.name} className="relative h-full flex items-center">
                     <Link
                       href={item.href}
-                      className={`relative px-3 py-2 text-sm font-medium transition-colors duration-200 group ${
+                      className={`relative px-3 py-2 text-sm 3xl:text-base font-medium transition-colors duration-200 group ${
                         active
                           ? 'text-primary header-transparent:text-white'
                           : 'text-gray hover:text-primary header-transparent:text-white/80 header-transparent:hover:text-white'
@@ -105,15 +105,15 @@ export default function Header() {
               })}
             </ul>
 
-            <div className="h-8 w-px transition-colors duration-300 bg-gray-200 header-transparent:bg-white/30" />
+            <div className="h-8 3xl:h-9 w-px transition-colors duration-300 bg-gray-200 header-transparent:bg-white/30" />
 
             <a
               href="https://wa.me/542954272138"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 text-white border border-transparent bg-primary hover:bg-primary/90 hover:shadow-lg active:shadow-sm header-transparent:border-white/80 header-transparent:bg-transparent header-transparent:hover:bg-white/10 header-transparent:hover:shadow-none"
+              className="flex items-center gap-2 px-5 py-2.5 3xl:px-6 3xl:py-3 text-sm 3xl:text-base font-medium rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 text-white border border-transparent bg-primary hover:bg-primary/90 hover:shadow-lg active:shadow-sm header-transparent:border-white/80 header-transparent:bg-transparent header-transparent:hover:bg-white/10 header-transparent:hover:shadow-none"
             >
-              <WhatsAppIcon className="w-4 h-4" />
+              <WhatsAppIcon className="w-4 h-4 3xl:w-5 3xl:h-5" />
               WhatsApp
             </a>
           </div>

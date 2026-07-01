@@ -26,6 +26,9 @@ html, body {
 }
 
 @theme inline {
+  /* Breakpoint custom para monitores grandes (24"+, ~2560px) — 1920px es Full HD estándar (22-27"), no debe agrandarse ahí */
+  --breakpoint-3xl: 2200px;
+
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-secondary: var(--secondary);
