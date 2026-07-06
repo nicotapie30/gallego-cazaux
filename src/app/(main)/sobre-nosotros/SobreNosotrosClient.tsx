@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion, useInView, animate } from 'framer-motion';
 
 const MotionImage = motion.create(Image);
-import { MapPin, Phone, Mail, Trophy, Users, Home, Star, Clock } from '@/lib/icons';
+import { MapPin, Phone, Mail, Trophy, Users, Home, Star, Clock, ArrowRight } from '@/lib/icons';
 import { SiInstagram } from '@/lib/icons/brands';
 import { AnimateIn } from '@/components/AnimateIn';
 
@@ -36,9 +36,9 @@ const stats = [
 ];
 
 const team = [
-  { name: 'Ana Gallego', role: 'Socia fundadora', image: '/assets/ana-gallego.jpg' },
-  { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman2/400/500' },
-  { name: 'Nombre Apellido', role: 'Cargo', image: 'https://picsum.photos/seed/woman3/400/500' },
+  { name: 'Ana Gallego', role: 'Socia fundadora', image: '/assets/ana-gallego.webp', focus: '30% 25%' },
+  { name: 'Natalia Tapié', role: 'Agente inmobiliario', image: '/assets/natalia-tapie.webp', focus: '78% 58%' },
+  { name: 'Sofía Segovia', role: 'Agente inmobiliario', image: '/assets/sofia-segovia.webp', focus: '78% 55%' },
 ];
 
 const values = [
@@ -224,16 +224,26 @@ export default function SobreNosotrosClient() {
       {/* Equipo */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimateIn className="text-center mb-14">
+          <AnimateIn className="text-center max-w-2xl mx-auto mb-14">
             <p className="text-primary font-medium text-sm uppercase tracking-widest mb-3">El equipo</p>
-            <h2 className="font-outfit text-4xl font-bold text-secondary">
-              Las personas detrás<br />de cada operación
+            <h2 className="font-outfit text-4xl font-bold text-secondary mb-5">
+              Las personas detrás de cada operación
             </h2>
+            <p className="text-gray text-base leading-relaxed mb-8">
+              Profesionales matriculadas con conocimiento real del mercado de Santa Rosa. Te acompañamos en cada paso, con cercanía y sin vueltas.
+            </p>
+            <Link
+              href="/contacto"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary/90 transition-colors duration-200 whitespace-nowrap shadow-sm"
+            >
+              Hablá con nosotros
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
           </AnimateIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-10 max-w-5xl mx-auto">
             {team.map((member, i) => (
-              <AnimateIn key={i} delay={i * 80}>
+              <AnimateIn key={member.name} delay={i * 80}>
                 <motion.div
                   className="group"
                   initial="rest"
@@ -242,7 +252,7 @@ export default function SobreNosotrosClient() {
                 >
                   {/* Photo */}
                   <motion.div
-                    className="relative rounded-2xl overflow-hidden mb-4"
+                    className="relative rounded-2xl overflow-hidden mb-5"
                     style={{ aspectRatio: '3/4' }}
                     variants={{
                       rest: { boxShadow: '0 2px 8px rgba(0,0,0,0.08)' },
@@ -255,9 +265,10 @@ export default function SobreNosotrosClient() {
                       alt={member.name}
                       fill
                       className="object-cover"
+                      style={{ objectPosition: member.focus }}
                       variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
                       transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
-                      sizes="(max-width: 640px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 30vw, 320px"
                     />
                     <motion.div
                       className="absolute inset-0"
@@ -270,7 +281,7 @@ export default function SobreNosotrosClient() {
                   {/* Info */}
                   <div className="px-1">
                     <motion.h3
-                      className="font-outfit font-bold text-secondary text-base leading-tight mb-0.5"
+                      className="font-outfit font-bold text-secondary text-lg leading-tight mb-1"
                       variants={{ rest: { color: '#05103d' }, hover: { color: '#018f33' } }}
                       transition={{ duration: 0.2 }}
                     >

@@ -1,5 +1,5 @@
 # Gallego Cazaux Negocios Inmobiliarios
-URL: https://gallego-cazaux-demo.vercel.app/
+URL: https://gallegocazaux.com/
 
 ## Tu inversión segura en La Pampa.
 
@@ -37,7 +37,7 @@ WhatsApp: +54 2954 272138
 ---
 
 # Propiedades
-URL: https://gallego-cazaux-demo.vercel.app/propiedades
+URL: https://gallegocazaux.com/propiedades
 
 ## Propiedades en Santa Rosa y La Pampa
 
@@ -56,7 +56,7 @@ Explorá todas nuestras propiedades en Santa Rosa y La Pampa. Casas, departament
 ---
 
 # Quiénes Somos
-URL: https://gallego-cazaux-demo.vercel.app/sobre-nosotros
+URL: https://gallegocazaux.com/sobre-nosotros
 
 ## Más de 20 años acompañando familias e inversores en La Pampa
 
@@ -89,7 +89,7 @@ Formación constante y conocimiento profundo del mercado local. Sabemos lo que v
 ---
 
 # Preguntas Frecuentes
-URL: https://gallego-cazaux-demo.vercel.app/faq
+URL: https://gallegocazaux.com/faq
 
 ## Respondemos las dudas más comunes sobre compra, venta y alquiler de propiedades en Santa Rosa, La Pampa.
 
@@ -100,7 +100,7 @@ Categorías: Compra, Alquiler, General.
 ---
 
 # Contacto
-URL: https://gallego-cazaux-demo.vercel.app/contacto
+URL: https://gallegocazaux.com/contacto
 
 ## Contactate con Gallego Cazaux Negocios Inmobiliarios
 
@@ -118,14 +118,14 @@ Motivos disponibles: Compra, Alquiler, Tasación, Otro.
 ---
 
 # Política de Privacidad
-URL: https://gallego-cazaux-demo.vercel.app/privacidad
+URL: https://gallegocazaux.com/privacidad
 
 (Ver sitio para el contenido completo)
 
 ---
 
 # Términos y Condiciones
-URL: https://gallego-cazaux-demo.vercel.app/terminos
+URL: https://gallegocazaux.com/terminos
 
 (Ver sitio para el contenido completo)
 
