@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { Resend } from 'resend';
+import { isRateLimited } from '@/lib/rate-limit';
 
 const contactSchema = z.object({
   name:    z.string().min(2).max(100),
@@ -29,6 +30,14 @@ function escapeHtml(str: string): string {
 
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
+    if (isRateLimited(ip)) {
+      return NextResponse.json(
+        { error: 'Demasiados mensajes. Probá de nuevo en un minuto.' },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const parsed = contactSchema.safeParse(body);
 

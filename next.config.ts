@@ -45,6 +45,19 @@ const nextConfig: NextConfig = {
         source: '/((?!studio).*)',
         headers: securityHeaders,
       },
+      {
+        // /studio no puede usar el CSP estricto de arriba (Sanity Studio necesita unsafe-eval,
+        // blobs y llamadas a api.sanity.io), pero igual necesita anti-clickjacking y el resto
+        // de headers que no dependen de CSP.
+        source: '/studio/:path*',
+        headers: [
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+        ],
+      },
     ];
   },
 };
