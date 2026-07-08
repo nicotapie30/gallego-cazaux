@@ -38,8 +38,9 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
-// Art direction del hero: <picture> elige UNA sola imagen por media query en vez de que
-// el navegador descargue ambas y CSS oculte la que sobra (lo que pasaba antes con dos <Image priority>).
+// Hero: <picture> elige UNA sola imagen por breakpoint de ancho (no orientación —
+// una ventana de escritorio angosta sigue siendo landscape aunque el ancho sea chico)
+// en vez de que el navegador descargue las dos y CSS oculte la que sobra.
 const heroImageCommon = {
   alt: '',
   fill: true as const,
@@ -48,8 +49,8 @@ const heroImageCommon = {
   sizes: '100vw',
   style: { objectFit: 'cover' as const, objectPosition: 'center', filter: 'contrast(1.15) saturate(1.1)' },
 };
-const { props: heroMobileImgProps } = getImageProps({ ...heroImageCommon, src: '/assets/portada-4x-mobile.webp' });
 const { props: heroDesktopImgProps } = getImageProps({ ...heroImageCommon, src: '/assets/portada-4x.webp' });
+const { props: heroMobileImgProps } = getImageProps({ ...heroImageCommon, src: '/assets/portada-4x-mobile.webp' });
 
 function formatPrice(price: number | null | undefined, currency: string, priceOnRequest?: boolean) {
   if (priceOnRequest || price == null || price === 0) return 'Consultar precio';
@@ -574,15 +575,16 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
     <div>
 
       {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="relative min-h-[100dvh] sm:min-h-[max(100dvh,860px)] flex items-center">
-        {/* Background layer — overflow clipped acá para que los blobs no se filtren. bg-[#04122e] queda como fallback de seguridad, no como capa activa: la foto cubre inset-0 (todo el alto real de la sección), ya que con los crops art-directed (mobile 9:16 vs desktop panorámica) el zoom extra por contenido alto ya no es un problema de nitidez */}
-        <div className="absolute inset-0 overflow-hidden bg-[#04122e]">
-          {/* Dos crops distintos (art direction): el original es panorámico (1.5:1) y forzaba un zoom de ~3x contra un viewport portrait — se veía borrosa sin importar la resolución. portada-4x-mobile.webp es un recorte 9:16 pre-cropeado del mismo original. Switch por orientación (no por ancho): una tablet en portrait tiene el mismo problema de aspect ratio que un celular, así que también usa el crop mobile; landscape (tablet o desktop) usa la panorámica completa. <picture> hace que el navegador pida una sola imagen — no las dos */}
+      <section ref={heroRef} className="relative bg-[#04122e] min-h-[100dvh] sm:min-h-[max(100dvh,860px)] flex md:items-center">
+        {/* Fondo full-bleed — una sola foto por breakpoint vía <picture>. Mobile: crop vertical con la cara arriba y degradado de arriba (clara) a abajo (oscura) para que el texto caiga sobre la zona ya oscurecida, no sobre la cara. Desktop: panorámica con degradado horizontal, texto a la izquierda */}
+        <div className="absolute inset-0 overflow-hidden">
           <picture>
-            <source media="(orientation: landscape)" srcSet={heroDesktopImgProps.srcSet} sizes={heroDesktopImgProps.sizes} />
+            <source media="(min-width: 768px)" srcSet={heroDesktopImgProps.srcSet} sizes={heroDesktopImgProps.sizes} />
             <img {...heroMobileImgProps} alt="" />
           </picture>
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.75) 0%, rgba(5,16,61,0.70) 35%, rgba(6,18,64,0.50) 58%, rgba(2,11,40,0.35) 78%, rgba(2,11,40,0.28) 100%)' }} />
+          {/* Degradado "valle": oscuro atrás del título (arriba), se aclara en la franja donde debería caer la cara (medio), vuelve a oscurecer atrás de botones/stats (abajo) */}
+          <div className="absolute inset-0 md:hidden" style={{ background: 'linear-gradient(to bottom, rgba(4,18,46,0.32) 0%, rgba(4,18,46,0.62) 16%, rgba(4,18,46,0.50) 30%, rgba(4,18,46,0.12) 42%, rgba(4,18,46,0.08) 55%, rgba(4,18,46,0.55) 66%, rgba(4,18,46,0.88) 78%, rgba(4,18,46,0.96) 100%)' }} />
+          <div className="hidden md:block absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.75) 0%, rgba(5,16,61,0.70) 35%, rgba(6,18,64,0.50) 58%, rgba(2,11,40,0.35) 78%, rgba(2,11,40,0.28) 100%)' }} />
           <motion.div
             className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
             style={{ background: 'rgba(1,143,51,0.18)', y: blob1ParallaxY, willChange: 'transform' }}
@@ -603,7 +605,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
           />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 w-full" style={{ paddingBottom: 'calc(8rem + env(safe-area-inset-bottom, 0px))' }}>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 w-full [--hero-pb:2rem] sm:[--hero-pb:8rem]" style={{ paddingBottom: 'calc(var(--hero-pb) + env(safe-area-inset-bottom, 0px))' }}>
           <div className="grid grid-cols-1 gap-8 items-center">
 
             {/* Copy — FM orchestrated entrance */}
@@ -637,6 +639,9 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
               >
                 Más de 20 años acompañando familias e inversores en Santa Rosa. Comprá, vendé o alquilá con confianza.
               </motion.p>
+
+              {/* Hueco mobile — deja a la persona visible entre el copy y los botones, sin texto encima */}
+              <div className="h-64 md:hidden" aria-hidden="true" />
 
               {/* Buttons */}
               <motion.div
