@@ -70,7 +70,13 @@ export const property = defineType({
         defineField({ name: 'garage', title: 'Cochera', type: 'boolean', initialValue: false }),
         defineField({ name: 'pool', title: 'Pileta', type: 'boolean', initialValue: false }),
         defineField({ name: 'garden', title: 'Jardín', type: 'boolean', initialValue: false }),
-        defineField({ name: 'amenities', title: 'Amenities / extras', type: 'array', of: [{ type: 'string' }] }),
+        defineField({
+          name: 'amenities',
+          title: 'Amenities / extras',
+          type: 'array',
+          of: [{ type: 'string' }],
+          description: 'Sugeridos: Cocina, Living-comedor, Cocina-comedor, Lavadero, Balcón, Parrilla, Quincho, Aire acondicionado, Calefacción. Podés escribir cualquier otro que no esté en la lista.',
+        }),
       ],
     }),
     defineField({
