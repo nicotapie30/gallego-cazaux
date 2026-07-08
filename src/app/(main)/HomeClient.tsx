@@ -1,6 +1,6 @@
 "use client";
 
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Bed, Bath, Ruler, Home as HomeIcon, TrendingUp, Key, FileText, Trophy, Users } from '@/lib/icons';
 import type { Property } from '@/lib/types';
@@ -37,6 +37,19 @@ function WhatsAppIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+// Art direction del hero: <picture> elige UNA sola imagen por media query en vez de que
+// el navegador descargue ambas y CSS oculte la que sobra (lo que pasaba antes con dos <Image priority>).
+const heroImageCommon = {
+  alt: '',
+  fill: true as const,
+  priority: true,
+  quality: 90,
+  sizes: '100vw',
+  style: { objectFit: 'cover' as const, objectPosition: 'center', filter: 'contrast(1.15) saturate(1.1)' },
+};
+const { props: heroMobileImgProps } = getImageProps({ ...heroImageCommon, src: '/assets/portada-4x-mobile.webp' });
+const { props: heroDesktopImgProps } = getImageProps({ ...heroImageCommon, src: '/assets/portada-4x.webp' });
 
 function formatPrice(price: number | null | undefined, currency: string, priceOnRequest?: boolean) {
   if (priceOnRequest || price == null || price === 0) return 'Consultar precio';
@@ -564,9 +577,11 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
       <section ref={heroRef} className="relative min-h-[100dvh] sm:min-h-[max(100dvh,860px)] flex items-center">
         {/* Background layer — overflow clipped acá para que los blobs no se filtren. bg-[#04122e] queda como fallback de seguridad, no como capa activa: la foto cubre inset-0 (todo el alto real de la sección), ya que con los crops art-directed (mobile 9:16 vs desktop panorámica) el zoom extra por contenido alto ya no es un problema de nitidez */}
         <div className="absolute inset-0 overflow-hidden bg-[#04122e]">
-          {/* Dos crops distintos (art direction): el original es panorámico (1.5:1) y forzaba un zoom de ~3x contra un viewport portrait — se veía borrosa sin importar la resolución. portada-4x-mobile.webp es un recorte 9:16 pre-cropeado del mismo original. Switch por orientación (no por ancho): una tablet en portrait tiene el mismo problema de aspect ratio que un celular, así que también usa el crop mobile; landscape (tablet o desktop) usa la panorámica completa */}
-          <Image src="/assets/portada-4x-mobile.webp" alt="" fill priority quality={90} className="object-cover object-center landscape:hidden" sizes="100vw" style={{ filter: 'contrast(1.15) saturate(1.1)' }} />
-          <Image src="/assets/portada-4x.webp" alt="" fill priority quality={90} className="hidden landscape:block object-cover object-center" sizes="100vw" style={{ filter: 'contrast(1.15) saturate(1.1)' }} />
+          {/* Dos crops distintos (art direction): el original es panorámico (1.5:1) y forzaba un zoom de ~3x contra un viewport portrait — se veía borrosa sin importar la resolución. portada-4x-mobile.webp es un recorte 9:16 pre-cropeado del mismo original. Switch por orientación (no por ancho): una tablet en portrait tiene el mismo problema de aspect ratio que un celular, así que también usa el crop mobile; landscape (tablet o desktop) usa la panorámica completa. <picture> hace que el navegador pida una sola imagen — no las dos */}
+          <picture>
+            <source media="(orientation: landscape)" srcSet={heroDesktopImgProps.srcSet} sizes={heroDesktopImgProps.sizes} />
+            <img {...heroMobileImgProps} alt="" />
+          </picture>
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(4,18,46,0.75) 0%, rgba(5,16,61,0.70) 35%, rgba(6,18,64,0.50) 58%, rgba(2,11,40,0.35) 78%, rgba(2,11,40,0.28) 100%)' }} />
           <motion.div
             className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-[700px] h-[700px] rounded-full blur-[120px] pointer-events-none"
