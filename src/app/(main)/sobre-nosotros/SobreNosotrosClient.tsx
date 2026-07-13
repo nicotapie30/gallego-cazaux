@@ -430,7 +430,7 @@ export default function SobreNosotrosClient() {
                 <div>
                   <p className="text-xs text-muted uppercase tracking-wide mb-0.5">Horario de atención</p>
                   <p className="text-secondary text-sm font-medium">Lunes a Viernes</p>
-                  <p className="text-gray text-sm">9:30–13:00 / 16:30–20:00 hs</p>
+                  <p className="text-gray text-sm">9:30–13:00 / 16:30–19:00 hs</p>
                 </div>
               </motion.div>
             </div>

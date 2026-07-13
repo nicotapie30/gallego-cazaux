@@ -39,7 +39,7 @@ export function localBusinessSchema() {
         '@type': 'OpeningHoursSpecification',
         dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
         opens: '16:30',
-        closes: '20:00',
+        closes: '19:00',
       },
     ],
     areaServed: [

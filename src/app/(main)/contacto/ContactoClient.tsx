@@ -188,7 +188,7 @@ export default function ContactoClient() {
                     <div>
                       <p className="text-white/35 text-xs mb-0.5">Horario de atención</p>
                       <p className="text-white/80 text-sm font-medium">Lunes a Viernes</p>
-                      <p className="text-white/50 text-xs">9:30–13:00 / 16:30–20:00 hs</p>
+                      <p className="text-white/50 text-xs">9:30–13:00 / 16:30–19:00 hs</p>
                     </div>
                   </div>
                 </div>
