@@ -428,7 +428,7 @@ function WhyUsSection() {
               >
                 <p className="text-white/50 text-xs uppercase tracking-widest mb-1">Pellegrini 594 · Santa Rosa</p>
                 <p className="text-white font-outfit font-bold text-lg leading-snug">Abriendo puertas desde 2003</p>
-                <p className="text-white/40 text-xs mt-1.5">Lun–Vie · 9:30–13:00 / 16:30–20:00</p>
+                <p className="text-white/40 text-xs mt-1.5">Lun–Vie · 9:30–13:00 / 16:30–19:00</p>
               </div>
             </motion.div>
           </AnimateIn>
