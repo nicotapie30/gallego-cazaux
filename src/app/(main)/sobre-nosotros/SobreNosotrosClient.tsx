@@ -36,7 +36,7 @@ const stats = [
 ];
 
 const team = [
-  { name: 'Ana Gallego', role: 'Socia fundadora', image: '/assets/ana-gallego.webp', focus: '30% 25%' },
+  { name: 'Ana Gallego', role: 'Fundadora', image: '/assets/ana-gallego.webp', focus: '30% 25%' },
   { name: 'Natalia Tapié', role: 'Agente inmobiliario', image: '/assets/natalia-tapie.webp', focus: '78% 58%' },
   { name: 'Sofía Segovia', role: 'Agente inmobiliario', image: '/assets/sofia-segovia.webp', focus: '78% 55%' },
 ];
