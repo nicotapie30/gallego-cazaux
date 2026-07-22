@@ -90,7 +90,7 @@ export default function Footer() {
                 <MapPin className="w-4 h-4 mt-0.5 text-primary flex-shrink-0" />
                 <div>
                   <p className="text-white text-xs md:text-sm font-medium">Pellegrini 594</p>
-                  <p className="text-gray-500 text-xs mt-0.5">Santa Rosa, La Pampa</p>
+                  <p className="text-gray-400 text-xs mt-0.5">Santa Rosa, La Pampa</p>
                 </div>
               </li>
               <li className="flex items-start gap-2.5">
@@ -99,7 +99,7 @@ export default function Footer() {
                 </svg>
                 <div>
                   <p className="text-white text-xs md:text-sm font-medium">Lunes a Viernes</p>
-                  <p className="text-gray-500 text-xs mt-0.5">9:30–13:00 / 16:30–19:00 hs</p>
+                  <p className="text-gray-400 text-xs mt-0.5">9:30–13:00 / 16:30–19:00 hs</p>
                 </div>
               </li>
               <li className="flex items-center gap-2.5">
@@ -126,10 +126,10 @@ export default function Footer() {
               © {currentYear} Gallego Cazaux. Todos los derechos reservados.
             </p>
             <div className="flex gap-6 pr-16 md:pr-0">
-              <Link href="/terminos" className="text-gray-500 hover:text-white text-xs transition-colors whitespace-nowrap">
+              <Link href="/terminos" className="text-gray-400 hover:text-white text-xs transition-colors whitespace-nowrap">
                 Términos y Condiciones
               </Link>
-              <Link href="/privacidad" className="text-gray-500 hover:text-white text-xs transition-colors whitespace-nowrap">
+              <Link href="/privacidad" className="text-gray-400 hover:text-white text-xs transition-colors whitespace-nowrap">
                 Privacidad
               </Link>
             </div>
