@@ -523,16 +523,6 @@ const heroItemVariants = {
   visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: EASE_OUT_QUART } },
 }
 
-const heroH1Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.07 } },
-}
-
-const heroWordVariants = {
-  hidden: { y: 30, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.45, ease: EASE_OUT_QUART } },
-}
-
 
 
 function ScrollIndicator() {
@@ -615,30 +605,17 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
               initial={shouldReduceMotion ? false : 'hidden'}
               animate="visible"
             >
-              {/* H1 — word by word stagger */}
-              <motion.h1
-                variants={heroH1Variants}
-                className="font-outfit text-5xl md:text-6xl lg:text-7xl 3xl:text-8xl font-bold text-white leading-[1.05] mb-6"
-              >
-                {['Tu', 'inversión'].map((word) => (
-                  <motion.span key={word} variants={heroWordVariants} className="inline-block mr-[0.25em]">{word}</motion.span>
-                ))}
-                <br />
-                <motion.span variants={heroWordVariants} className="inline-block mr-[0.25em] text-primary">segura</motion.span>
-                <motion.span variants={heroWordVariants} className="inline-block mr-[0.25em]">en</motion.span>
-                <br />
-                {['La', 'Pampa.'].map((word) => (
-                  <motion.span key={word} variants={heroWordVariants} className="inline-block mr-[0.25em]">{word}</motion.span>
-                ))}
-              </motion.h1>
+              {/* H1 — visible desde SSR, sin gating de FM (era el LCP element, animarlo con opacity:0 inicial retrasaba el paint hasta hidratación) */}
+              <h1 className="font-outfit text-5xl md:text-6xl lg:text-7xl 3xl:text-8xl font-bold text-white leading-[1.05] mb-6">
+                Tu inversión<br />
+                <span className="text-primary">segura</span> en<br />
+                La Pampa.
+              </h1>
 
-              {/* Paragraph */}
-              <motion.p
-                variants={heroItemVariants}
-                className="text-gray-400 text-lg 3xl:text-xl mb-6 md:mb-10 max-w-md 3xl:max-w-lg leading-relaxed"
-              >
+              {/* Paragraph — visible desde SSR, mismo motivo */}
+              <p className="text-gray-400 text-lg 3xl:text-xl mb-6 md:mb-10 max-w-md 3xl:max-w-lg leading-relaxed">
                 Más de 20 años acompañando familias e inversores en Santa Rosa. Comprá, vendé o alquilá con confianza.
-              </motion.p>
+              </p>
 
               {/* Hueco mobile — deja a la persona visible entre el copy y los botones, sin texto encima */}
               <div className="h-64 md:hidden" aria-hidden="true" />
@@ -857,13 +834,13 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                       className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
                       variants={{
                         rest: { scale: 1, backgroundColor: 'rgba(1,143,51,0.08)' },
-                        hover: { scale: 1.15, backgroundColor: '#018f33' },
+                        hover: { scale: 1.15, backgroundColor: '#018931' },
                       }}
                       transition={{ duration: 0.25, ease: [0, 0, 0.2, 1] }}
                     >
                       <motion.span
                         variants={{
-                          rest: { color: '#018f33' },
+                          rest: { color: '#018931' },
                           hover: { color: '#ffffff' },
                         }}
                         transition={{ duration: 0.2 }}
@@ -876,7 +853,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                       className="font-outfit font-bold text-lg mb-2"
                       variants={{
                         rest: { color: '#05103d' },
-                        hover: { color: '#018f33' },
+                        hover: { color: '#018931' },
                       }}
                       transition={{ duration: 0.25 }}
                     >
@@ -914,7 +891,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
           <AnimateIn>
             <div
               className="grain relative rounded-3xl px-6 py-10 md:px-16 md:py-20 overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #018f33 0%, #016d28 60%, #014d1d 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #018931 0%, #016d28 60%, #014d1d 100%)' }}
             >
               {/* Decorative rings */}
               <div className="absolute -top-16 -right-16 w-72 h-72 rounded-full pointer-events-none" style={{ border: '1px solid rgba(255,255,255,0.08)' }} />

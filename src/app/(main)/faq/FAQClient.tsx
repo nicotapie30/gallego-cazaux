@@ -160,7 +160,7 @@ export default function FAQClient({ faqs }: { faqs: FAQ[] }) {
                 className={`relative flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium cursor-pointer ${
                   isActive ? 'text-white' : 'text-gray bg-white border border-border'
                 }`}
-                whileHover={isActive ? {} : { y: -2, boxShadow: '0 4px 12px rgba(1,143,51,0.12)', borderColor: 'rgba(1,143,51,0.4)', color: '#018f33' }}
+                whileHover={isActive ? {} : { y: -2, boxShadow: '0 4px 12px rgba(1,143,51,0.12)', borderColor: 'rgba(1,143,51,0.4)', color: '#018931' }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ duration: 0.18, ease: [0, 0, 0.2, 1] }}
               >

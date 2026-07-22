@@ -282,7 +282,7 @@ export default function SobreNosotrosClient() {
                   <div className="px-1">
                     <motion.h3
                       className="font-outfit font-bold text-secondary text-lg leading-tight mb-1"
-                      variants={{ rest: { color: '#05103d' }, hover: { color: '#018f33' } }}
+                      variants={{ rest: { color: '#05103d' }, hover: { color: '#018931' } }}
                       transition={{ duration: 0.2 }}
                     >
                       {member.name}
@@ -328,7 +328,7 @@ export default function SobreNosotrosClient() {
                   {/* Left border accent */}
                   <motion.div
                     className="absolute left-0 top-4 bottom-4 w-[3px] rounded-full"
-                    variants={{ rest: { backgroundColor: 'rgba(1,143,51,0.2)', scaleY: 0.4, opacity: 0.4 }, hover: { backgroundColor: '#018f33', scaleY: 1, opacity: 1 } }}
+                    variants={{ rest: { backgroundColor: 'rgba(1,143,51,0.2)', scaleY: 0.4, opacity: 0.4 }, hover: { backgroundColor: '#018931', scaleY: 1, opacity: 1 } }}
                     transition={{ duration: 0.25 }}
                   />
 
@@ -340,7 +340,7 @@ export default function SobreNosotrosClient() {
                   {/* Inline number */}
                   <motion.span
                     className="font-outfit font-bold text-3xl md:text-5xl leading-none shrink-0 w-10 md:w-16 tabular-nums"
-                    variants={{ rest: { color: 'rgba(255,255,255,0.12)' }, hover: { color: '#018f33' } }}
+                    variants={{ rest: { color: 'rgba(255,255,255,0.12)' }, hover: { color: '#018931' } }}
                     transition={{ duration: 0.25 }}
                   >
                     {v.number}
