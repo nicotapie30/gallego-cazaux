@@ -25,15 +25,20 @@ export async function POST(req: NextRequest) {
 
     const slug: string | undefined = body?.slug?.current;
 
-    if (slug) {
-      revalidatePath(`/propiedades/${slug}`);
-    }
+    // Todas las fichas de una vez, no solo la del slug que vino en el payload.
+    // En un borrado Sanity no manda slug, y si lo cambian el payload trae el
+    // nuevo: en ambos casos la ficha vieja seguía accesible hasta que venciera
+    // su hora. Con 20 propiedades el costo de invalidarlas juntas es nulo.
+    revalidatePath('/propiedades/[slug]', 'page');
 
     revalidatePath('/propiedades');
     revalidatePath('/propiedades/venta');
     revalidatePath('/propiedades/alquiler');
-    revalidatePath('/propiedades/ciudad', 'layout');
-    revalidatePath('/propiedades/tipo', 'layout');
+    // Con el patrón de la ruta dinámica + 'page'. Antes apuntaban al segmento
+    // padre con 'layout', pero ahí no hay ningún layout.tsx: el tag no existía
+    // y estas landings no se revalidaban nunca por webhook.
+    revalidatePath('/propiedades/ciudad/[ciudad]', 'page');
+    revalidatePath('/propiedades/tipo/[tipo]', 'page');
     revalidatePath('/');
     revalidatePath('/faq');
     // Estas no muestran propiedades, pero su footer lista las ciudades y tipos
