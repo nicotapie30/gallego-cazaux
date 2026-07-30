@@ -4,6 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Términos y Condiciones - Gallego Cazaux',
   description: 'Términos y condiciones de uso del sitio web Gallego Cazaux Negocios Inmobiliarios.',
+  alternates: { canonical: '/terminos' },
 };
 
 const sections = [

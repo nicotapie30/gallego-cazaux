@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from '../../PropiedadesClient';
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ tipo: str
       title: `${meta.plural} en Venta y Alquiler - Gallego Cazaux`,
       description: `Encontrá ${meta.plural.toLowerCase()} en La Pampa con Gallego Cazaux.`,
       type: 'website',
+      images: [OG_IMAGE],
     },
   };
 }

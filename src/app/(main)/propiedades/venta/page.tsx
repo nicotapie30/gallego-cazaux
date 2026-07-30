@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/seo';
 import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from '../PropiedadesClient';
 import PropiedadesHeader from '../PropiedadesHeader';
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
     title: 'Propiedades en Venta - Gallego Cazaux',
     description: 'Encontrá tu propiedad ideal en venta en La Pampa.',
     type: 'website',
+    images: [OG_IMAGE],
   },
 };
 

@@ -29,6 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${property.title} | Gallego Cazaux`,
     description,
+    // Las fichas se comparten por Instagram y WhatsApp, que agregan fbclid/utm:
+    // sin canonical cada variante puede indexarse como página aparte
+    alternates: { canonical: `/propiedades/${slug}` },
     openGraph: {
       title: property.title,
       description,

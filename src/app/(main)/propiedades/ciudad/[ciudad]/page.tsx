@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import { getProperties, getCities } from '@/lib/sanity';
 import { slugifyCity, deslugifyCity } from '@/lib/utils';
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ ciudad: s
       title: `Propiedades en ${cityName} - Gallego Cazaux`,
       description: `Encontrá tu propiedad ideal en ${cityName}. Venta y alquiler con más de 8 años de experiencia.`,
       type: 'website',
+      images: [OG_IMAGE],
     },
   };
 }

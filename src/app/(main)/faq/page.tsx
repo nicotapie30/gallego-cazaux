@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/seo';
 import type { FAQ } from '@/lib/types';
 import { getFAQ } from '@/lib/sanity';
 import FAQClient from './FAQClient';
@@ -10,10 +11,12 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: 'Preguntas Frecuentes - Gallego Cazaux',
   description: 'Respondemos las dudas más comunes sobre compra, venta y alquiler de propiedades en Santa Rosa, La Pampa.',
+  alternates: { canonical: '/faq' },
   openGraph: {
     title: 'Preguntas Frecuentes - Gallego Cazaux',
     description: 'Todo lo que necesitás saber sobre operaciones inmobiliarias en La Pampa.',
     type: 'website',
+    images: [OG_IMAGE],
   },
 };
 
