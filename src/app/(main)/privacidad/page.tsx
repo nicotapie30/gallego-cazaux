@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-// El footer lista las ciudades y tipos con propiedades publicadas: sin esto
-// la página queda congelada en el build y muestra links que pueden dar 404
-export const revalidate = 3600;
+// Contenido fijo: lo único que cambia es el footer, que lista las ciudades y
+// tipos con propiedades publicadas. El webhook de Sanity la revalida al publicar;
+// esto es solo la red de seguridad por si el webhook falla.
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad - Gallego Cazaux',
