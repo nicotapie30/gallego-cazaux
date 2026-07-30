@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+// El footer lista las ciudades y tipos con propiedades publicadas: sin esto
+// la página queda congelada en el build y muestra links que pueden dar 404
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: 'Términos y Condiciones - Gallego Cazaux',
   description: 'Términos y condiciones de uso del sitio web Gallego Cazaux Negocios Inmobiliarios.',
