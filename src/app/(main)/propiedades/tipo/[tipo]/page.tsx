@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from '../../PropiedadesClient';
 import PropiedadesHeader from '../../PropiedadesHeader';
+import PropertyListSchema from '@/components/PropertyListSchema';
 import { PROPERTY_TYPES as TIPOS } from '@/lib/property-types';
 
 export const revalidate = 3600;
@@ -38,6 +39,7 @@ export default async function Page({ params }: { params: Promise<{ tipo: string 
   const properties = await getProperties({ propertyType: tipo });
   return (
     <>
+      <PropertyListSchema properties={properties} name={`${meta.plural} en venta y alquiler`} path={`/propiedades/tipo/${tipo}`} />
       <PropiedadesHeader
         heading={{
           title: `${meta.plural} en Santa Rosa y La Pampa`,

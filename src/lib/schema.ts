@@ -80,6 +80,29 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
   };
 }
 
+/**
+ * ItemList para las páginas de listado. Google espera el formato "summary page":
+ * cada ListItem apunta con `url` a la ficha, sin repetir el detalle acá.
+ */
+export function propertyListSchema(
+  properties: { title: string; slug: { current: string } }[],
+  { name, path }: { name: string; path: string },
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name,
+    url: `${SITE_URL}${path}`,
+    numberOfItems: properties.length,
+    itemListElement: properties.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.title,
+      url: `${SITE_URL}/propiedades/${p.slug.current}`,
+    })),
+  };
+}
+
 export function propertySchema(property: {
   title: string;
   description: string;

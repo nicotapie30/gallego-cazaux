@@ -5,6 +5,7 @@ import { getProperties, getCities } from '@/lib/sanity';
 import { slugifyCity, deslugifyCity } from '@/lib/utils';
 import PropiedadesClient from '../../PropiedadesClient';
 import PropiedadesHeader from '../../PropiedadesHeader';
+import PropertyListSchema from '@/components/PropertyListSchema';
 
 export const revalidate = 3600;
 
@@ -42,6 +43,7 @@ export default async function Page({ params }: { params: Promise<{ ciudad: strin
 
   return (
     <>
+      <PropertyListSchema properties={properties} name={`Propiedades en ${cityName}`} path={`/propiedades/ciudad/${ciudad}`} />
       <PropiedadesHeader
         heading={{
           title: `Propiedades en ${cityName}`,

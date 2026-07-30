@@ -3,6 +3,7 @@ import { OG_IMAGE } from '@/lib/seo';
 import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from '../PropiedadesClient';
 import PropiedadesHeader from '../PropiedadesHeader';
+import PropertyListSchema from '@/components/PropertyListSchema';
 
 export const revalidate = 3600;
 
@@ -22,6 +23,7 @@ export default async function Page() {
   const properties = await getProperties({ operation: 'venta' });
   return (
     <>
+      <PropertyListSchema properties={properties} name="Propiedades en venta" path="/propiedades/venta" />
       <PropiedadesHeader
         heading={{
           title: 'Propiedades en venta',

@@ -5,6 +5,7 @@ import { getPropertyBySlug, getProperties, getPropertySlugs } from '@/lib/sanity
 import { urlFor } from '@/lib/sanity';
 import PropertyDetailClient from './PropertyDetailClient';
 import { breadcrumbSchema, propertySchema } from '@/lib/schema';
+import { metaDescription } from '@/lib/seo';
 import { safeJsonLd } from '@/lib/safe-json-ld';
 
 export const revalidate = 3600;
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const image = property.images?.[0];
   const imageUrl = image ? urlFor(image).width(1200).height(630).url() : undefined;
-  const description = property.description?.slice(0, 160) ?? '';
+  const description = metaDescription(property.description);
 
   return {
     title: `${property.title} | Gallego Cazaux`,
