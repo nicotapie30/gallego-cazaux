@@ -70,7 +70,10 @@ export async function POST(request: Request) {
           <div style="border: 1px solid #e5e7eb; border-top: none; padding: 24px; border-radius: 0 0 8px 8px;">
             ${topic ? `<p style="margin: 0 0 12px;"><strong>Motivo:</strong> ${TOPIC_LABELS[topic]}</p>` : ''}
             <p style="margin: 0 0 12px;"><strong>Nombre:</strong> ${escapeHtml(name)}</p>
-            <p style="margin: 0 0 12px;"><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
+            <!-- Sin <a mailto:>: el mail del visitante nunca coincide con el dominio
+                 remitente y los filtros lo puntúan como spam. Para responder está el
+                 Reply-To, que apunta a esta misma dirección. -->
+            <p style="margin: 0 0 12px;"><strong>Email:</strong> ${escapeHtml(email)}</p>
             <p style="margin: 0 0 12px;"><strong>Teléfono:</strong> ${phone ? escapeHtml(phone) : 'No proporcionado'}</p>
             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 16px 0;" />
             <p style="margin: 0 0 8px;"><strong>Mensaje:</strong></p>
