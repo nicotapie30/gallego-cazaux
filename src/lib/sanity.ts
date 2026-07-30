@@ -106,6 +106,12 @@ export async function getPropertySlugs(): Promise<{ slug: string; updatedAt: str
   return sanityClient.fetch(query);
 }
 
+/** Fecha de la última FAQ editada — para el lastmod del sitemap */
+export async function getLastFaqUpdate(): Promise<string | null> {
+  const query = `*[_type == "faq"] | order(_updatedAt desc)[0]._updatedAt`;
+  return sanityClient.fetch(query);
+}
+
 export async function getFAQ() {
   const query = `*[_type == "faq"] | order(category asc) {
     _id,
