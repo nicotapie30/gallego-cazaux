@@ -47,9 +47,6 @@ next-env.d.ts
 # ignora también los assets del sitio (íconos, imágenes de public/)
 /*.png
 /*.jpeg
-# Fuente intermedia del upscale del hero (15 MB, sin usar). El original está en
-# Imagenes-Gallego-Cazaux/; el sitio usa portada-4x.webp
-public/assets/portada-4x-hf.png
 .claude/settings.local.json
 openspec/
 
