@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useEffect, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Filter, Search, X, Home, ChevronLeft, ChevronRight } from '@/lib/icons';
 import PropertyCard from '@/components/PropertyCard';
@@ -377,31 +376,7 @@ function PropiedadesContent({ initialProperties, initialCity, initialOperation, 
   };
 
   return (
-    <div className="min-h-screen bg-background-alt">
-      {/* Header */}
-      <div className="bg-secondary relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-          <div className="flex items-center gap-2 text-white/40 text-sm mb-4">
-            <Link href="/" className="hover:text-white/80 transition-colors">Inicio</Link>
-            <span>/</span>
-            <span className="text-white/70">Propiedades</span>
-          </div>
-          <h1 className="font-outfit text-4xl md:text-5xl font-bold text-white mb-3">
-            Nuestras Propiedades
-          </h1>
-          <p className="text-white/55 text-lg">
-            Encontrá tu próximo hogar en Santa Rosa y La Pampa
-          </p>
-        </div>
-      </div>
-
+    <div className="bg-background-alt">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar */}
@@ -534,7 +509,7 @@ function PropiedadesContent({ initialProperties, initialCity, initialOperation, 
 
 export default function PropiedadesClient({ initialProperties, initialCity, initialOperation, initialPropertyType }: { initialProperties: Property[]; initialCity?: string; initialOperation?: string; initialPropertyType?: string }) {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-background-alt" />}>
+    <Suspense fallback={<div className="min-h-[60vh] bg-background-alt" />}>
       <PropiedadesContent initialProperties={initialProperties} initialCity={initialCity} initialOperation={initialOperation} initialPropertyType={initialPropertyType} />
     </Suspense>
   );

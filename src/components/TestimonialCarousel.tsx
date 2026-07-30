@@ -72,7 +72,7 @@ export function TestimonialCarousel() {
           transition: 'opacity 0.35s ease, transform 0.35s ease',
         }}
       >
-        <div className="text-white/25 text-6xl font-serif leading-none mb-4">"</div>
+        <div className="text-white/25 text-6xl font-serif leading-none mb-4" aria-hidden="true">&ldquo;</div>
         <p className="text-white text-lg leading-relaxed mb-6">{t.quote}</p>
         <div className="flex items-center gap-4 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.12)' }}>
           <div
@@ -89,19 +89,26 @@ export function TestimonialCarousel() {
       </div>
 
       {/* Dots */}
-      <div className="flex items-center gap-1.5 mt-6 justify-end">
+      <div className="flex items-center mt-6 justify-end">
         {testimonials.map((_, i) => (
+          // El punto mide 6px, pero el botón se estira a 44px de alto para que
+          // sea tocable en mobile sin cambiar el diseño
           <button
             key={i}
             onClick={() => { setVisible(false); setTimeout(() => { setIndex(i); setVisible(true) }, 350) }}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === index ? '20px' : '6px',
-              height: '6px',
-              background: i === index ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.25)',
-            }}
+            className="flex items-center justify-center h-11 px-1 -my-3 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 rounded-full"
             aria-label={`Testimonio ${i + 1}`}
-          />
+            aria-current={i === index}
+          >
+            <span
+              className="block rounded-full transition-all duration-300"
+              style={{
+                width: i === index ? '20px' : '6px',
+                height: '6px',
+                background: i === index ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.25)',
+              }}
+            />
+          </button>
         ))}
       </div>
     </div>

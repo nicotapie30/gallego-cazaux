@@ -43,8 +43,13 @@ next-env.d.ts
 
 # ai / dev tooling — not needed in production
 .playwright-mcp/
-*.png
-*.jpeg
+# Solo la raíz: son los screenshots de verificación. Sin la barra inicial esto
+# ignora también los assets del sitio (íconos, imágenes de public/)
+/*.png
+/*.jpeg
+# Fuente intermedia del upscale del hero (15 MB, sin usar). El original está en
+# Imagenes-Gallego-Cazaux/; el sitio usa portada-4x.webp
+public/assets/portada-4x-hf.png
 .claude/settings.local.json
 openspec/
 

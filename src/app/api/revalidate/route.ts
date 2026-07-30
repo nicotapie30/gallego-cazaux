@@ -36,6 +36,9 @@ export async function POST(req: NextRequest) {
     revalidatePath('/propiedades/tipo', 'layout');
     revalidatePath('/');
     revalidatePath('/faq');
+    // El sitemap lista las propiedades y las landings de ciudad/tipo: si no se
+    // revalida acá, se queda con el estado del último deploy
+    revalidatePath('/sitemap.xml');
 
     return NextResponse.json({ revalidated: true, slug: slug ?? null });
   } catch {

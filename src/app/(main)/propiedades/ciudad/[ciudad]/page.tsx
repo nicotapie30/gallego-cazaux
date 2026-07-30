@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getProperties, getCities } from '@/lib/sanity';
 import { slugifyCity, deslugifyCity } from '@/lib/utils';
 import PropiedadesClient from '../../PropiedadesClient';
+import PropiedadesHeader from '../../PropiedadesHeader';
 
 export const revalidate = 3600;
 
@@ -20,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ ciudad: s
   return {
     title: `Propiedades en ${cityName} - Gallego Cazaux`,
     description: `Casas, departamentos, terrenos y locales en venta y alquiler en ${cityName}, La Pampa. Gallego Cazaux Negocios Inmobiliarios.`,
+    alternates: { canonical: `/propiedades/ciudad/${ciudad}` },
     openGraph: {
       title: `Propiedades en ${cityName} - Gallego Cazaux`,
       description: `Encontrá tu propiedad ideal en ${cityName}. Venta y alquiler con más de 8 años de experiencia.`,
@@ -36,5 +38,16 @@ export default async function Page({ params }: { params: Promise<{ ciudad: strin
 
   const properties = await getProperties({ city: cityName });
 
-  return <PropiedadesClient initialProperties={properties} initialCity={cityName} />;
+  return (
+    <>
+      <PropiedadesHeader
+        heading={{
+          title: `Propiedades en ${cityName}`,
+          subtitle: `Casas, departamentos, terrenos y locales en venta y alquiler en ${cityName}`,
+          crumb: cityName,
+        }}
+      />
+      <PropiedadesClient initialProperties={properties} initialCity={cityName} />
+    </>
+  );
 }

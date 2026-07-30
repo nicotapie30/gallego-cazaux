@@ -44,10 +44,8 @@ export const metadata: Metadata = {
     type: "website",
     images: [{ url: '/assets/og-portada.webp', width: 1200, height: 630, alt: 'Gallego Cazaux Negocios Inmobiliarios' }],
   },
-  icons: {
-    icon: "/assets/icons/favicon.ico",
-    apple: "/assets/icons/apple-icon.png",
-  },
+  // Los íconos salen de app/favicon.ico, app/icon.png y app/apple-icon.png —
+  // Next los detecta y les pone hash de cache automáticamente
 };
 
 export default function RootLayout({
@@ -58,6 +56,8 @@ export default function RootLayout({
   return (
     <html lang="es" data-scroll-behavior="smooth" className={`${outfit.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <head>
+        {/* Las imágenes de propiedades se sirven desde el CDN de Sanity — adelantamos el handshake */}
+        <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="alternate" type="text/plain" href="/llms.txt" />
       </head>
       <body className="min-h-screen flex flex-col bg-white text-gray font-sans antialiased">

@@ -4,6 +4,8 @@ export interface SanityImage {
   _key?: string;
   asset: SanityImageSource;
   alt?: string;
+  /** Placeholder base64 que genera Sanity — viaja en el HTML, sin request extra */
+  lqip?: string;
 }
 
 export interface SanityVideo {

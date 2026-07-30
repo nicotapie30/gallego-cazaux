@@ -6,12 +6,16 @@ import WhatsAppFAB from "@/components/WhatsAppFAB";
 import ScrollToTop from "@/components/ScrollToTop";
 import { localBusinessSchema } from "@/lib/schema";
 import { safeJsonLd } from "@/lib/safe-json-ld";
+import { getCities, getPropertyTypesInUse } from "@/lib/sanity";
 
-export default function MainLayout({
+export default async function MainLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Para los links del footer a las landings de tipo y ciudad
+  const [cities, types] = await Promise.all([getCities(), getPropertyTypesInUse()]);
+
   return (
     <>
       <script
@@ -25,7 +29,7 @@ export default function MainLayout({
           {children}
         </ViewTransition>
       </main>
-      <Footer />
+      <Footer cities={cities} types={types} />
       <WhatsAppFAB />
       <Toaster
         position="bottom-right"

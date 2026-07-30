@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { ArrowRight, MapPin, Bed, Bath, Ruler, Home as HomeIcon, TrendingUp, Key, FileText, Trophy, Users } from '@/lib/icons';
 import type { Property } from '@/lib/types';
 import { urlFor } from '@/lib/sanity';
+import { sanityImageLoader } from '@/lib/sanity-image';
 import { AnimateIn } from '@/components/AnimateIn';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import Select from '@/components/ui/Select';
-import { motion, AnimatePresence, useInView, animate, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from 'framer-motion';
+import { motion, useInView, animate, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -65,7 +66,7 @@ const TYPE_LABEL: Record<string, string> = {
 
 function FeaturedCard({ property }: { property: Property }) {
   const firstImage = property.images?.[0];
-  const imageUrl = firstImage ? urlFor(firstImage).width(800).url() : undefined;
+  const imageUrl = firstImage ? urlFor(firstImage).url() : undefined;
   return (
     <motion.div
       initial="rest"
@@ -86,12 +87,14 @@ function FeaturedCard({ property }: { property: Property }) {
         {imageUrl && (
           <MotionImage
             src={imageUrl}
+            loader={sanityImageLoader}
             alt={property.title}
             fill
             className="object-cover"
             variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
             transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+            {...(firstImage?.lqip ? { placeholder: 'blur' as const, blurDataURL: firstImage.lqip } : {})}
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/30 to-transparent" />
@@ -142,7 +145,7 @@ function FeaturedCard({ property }: { property: Property }) {
 
 function MediumCard({ property }: { property: Property }) {
   const firstImage = property.images?.[0];
-  const imageUrl = firstImage ? urlFor(firstImage).width(600).url() : undefined;
+  const imageUrl = firstImage ? urlFor(firstImage).url() : undefined;
   return (
     <motion.div
       initial="rest"
@@ -160,12 +163,14 @@ function MediumCard({ property }: { property: Property }) {
           {imageUrl && (
             <MotionImage
               src={imageUrl}
+              loader={sanityImageLoader}
               alt={property.title}
               fill
               className="object-cover"
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
               sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(50vw - 3rem), 380px"
+              {...(firstImage?.lqip ? { placeholder: 'blur' as const, blurDataURL: firstImage.lqip } : {})}
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -208,7 +213,7 @@ function MediumCard({ property }: { property: Property }) {
 
 function HorizontalCard({ property }: { property: Property }) {
   const firstImage = property.images?.[0];
-  const imageUrl = firstImage ? urlFor(firstImage).width(600).url() : undefined;
+  const imageUrl = firstImage ? urlFor(firstImage).url() : undefined;
   return (
     <motion.div
       initial="rest"
@@ -226,12 +231,14 @@ function HorizontalCard({ property }: { property: Property }) {
           {imageUrl && (
             <MotionImage
               src={imageUrl}
+              loader={sanityImageLoader}
               alt={property.title}
               fill
               className="object-cover"
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
               sizes="(max-width: 768px) calc(100vw - 2rem), 144px"
+              {...(firstImage?.lqip ? { placeholder: 'blur' as const, blurDataURL: firstImage.lqip } : {})}
             />
           )}
           <span className="absolute top-2.5 left-2.5 bg-primary text-white text-[9px] font-semibold px-2 py-0.5 rounded-full uppercase">
@@ -524,36 +531,6 @@ const heroItemVariants = {
 }
 
 
-
-function ScrollIndicator() {
-  const { scrollY } = useScroll()
-  const [visible, setVisible] = useState(true)
-
-  useMotionValueEvent(scrollY, 'change', (v) => {
-    setVisible(v < 80)
-  })
-
-  return (
-    <motion.div
-      className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none"
-      animate={{ opacity: visible ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <motion.div
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-        className="flex flex-col items-center gap-0.5"
-      >
-        <svg width="20" height="11" viewBox="0 0 20 11" fill="none">
-          <path d="M1 1L10 10L19 1" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-        <svg width="20" height="11" viewBox="0 0 20 11" fill="none" className="-mt-1">
-          <path d="M1 1L10 10L19 1" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </motion.div>
-    </motion.div>
-  )
-}
 
 export default function HomeClient({ featuredProperties }: { featuredProperties: Property[] }) {
   const heroRef = useRef<HTMLElement>(null)

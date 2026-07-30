@@ -4,9 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Phone, Mail } from '@/lib/icons';
 import { SiInstagram } from '@/lib/icons/brands';
+import { PROPERTY_TYPES } from '@/lib/property-types';
+import { slugifyCity } from '@/lib/utils';
 
-export default function Footer() {
+/** Los datos llegan del layout (Server Component): las landings de tipo y ciudad
+ *  no tenían ningún link interno y solo se descubrían por el sitemap */
+export default function Footer({ cities = [], types = [] }: { cities?: string[]; types?: string[] }) {
   const currentYear = new Date().getFullYear();
+  const typeLinks = Object.entries(PROPERTY_TYPES).filter(([slug]) => types.includes(slug));
 
   return (
     <footer className="bg-secondary text-white border-t border-white/10">
@@ -119,8 +124,40 @@ export default function Footer() {
 
         </div>
 
+        {/* Búsquedas frecuentes — da entrada a las landings de tipo y ciudad */}
+        {(typeLinks.length > 0 || cities.length > 0) && (
+          <nav aria-label="Búsquedas frecuentes" className="mt-10 pt-8 border-t border-white/10 space-y-3">
+            {typeLinks.length > 0 && (
+              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1.5">
+                <span className="text-white/70 text-xs font-medium shrink-0">Por tipo:</span>
+                {typeLinks.map(([slug, meta], i) => (
+                  <span key={slug} className="flex items-baseline gap-2">
+                    {i > 0 && <span className="text-white/20 text-xs">·</span>}
+                    <Link href={`/propiedades/tipo/${slug}`} className="text-gray-400 hover:text-white text-xs transition-colors">
+                      {meta.plural}
+                    </Link>
+                  </span>
+                ))}
+              </div>
+            )}
+            {cities.length > 0 && (
+              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1.5">
+                <span className="text-white/70 text-xs font-medium shrink-0">Por ciudad:</span>
+                {cities.map((city, i) => (
+                  <span key={city} className="flex items-baseline gap-2">
+                    {i > 0 && <span className="text-white/20 text-xs">·</span>}
+                    <Link href={`/propiedades/ciudad/${slugifyCity(city)}`} className="text-gray-400 hover:text-white text-xs transition-colors">
+                      {city}
+                    </Link>
+                  </span>
+                ))}
+              </div>
+            )}
+          </nav>
+        )}
+
         {/* Bottom */}
-        <div className="mt-10 pt-8 border-t border-white/10">
+        <div className="mt-8 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-xs select-none">
               © {currentYear} Gallego Cazaux. Todos los derechos reservados.

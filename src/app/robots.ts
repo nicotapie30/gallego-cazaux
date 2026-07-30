@@ -10,7 +10,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/api/',
+      // /studio es el Sanity Studio — no tiene por qué estar en el índice
+      disallow: ['/api/', '/studio'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

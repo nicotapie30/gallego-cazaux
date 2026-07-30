@@ -9,6 +9,7 @@ const MotionImage = motion.create(Image);
 import { Bed, Bath, Ruler, Car, MapPin } from '@/lib/icons';
 import type { Property } from '@/lib/types';
 import { urlFor } from '@/lib/sanity';
+import { sanityImageLoader } from '@/lib/sanity-image';
 
 const cardVariants = {
   rest: {
@@ -56,6 +57,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
     }).format(price);
   };
 
+  const cover = property.images?.[0];
   const operationLabel = property.operation === 'venta' ? 'Venta' : 'Alquiler';
   const operationBg = property.operation === 'venta' ? 'bg-primary/90' : 'bg-blue-600/90';
 
@@ -87,12 +89,12 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         {/* Image */}
         <div className="relative aspect-[3/4] overflow-hidden bg-secondary">
           {/* Blurred backdrop — fills letterbox areas for any image ratio */}
-          {property.images && property.images.length > 0 && (
+          {cover && (
             <>
               <div
                 className="absolute inset-0 scale-110"
                 style={{
-                  backgroundImage: `url(${urlFor(property.images[0]!).width(40).url()})`,
+                  backgroundImage: `url(${cover.lqip})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   filter: 'blur(40px)',
@@ -101,9 +103,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               <div className="absolute inset-0 bg-black/40" />
             </>
           )}
-          {property.images && property.images.length > 0 ? (
+          {cover ? (
             <MotionImage
-              src={urlFor(property.images[0]!).width(600).url()}
+              src={urlFor(cover).url()}
+              loader={sanityImageLoader}
               alt={property.title}
               fill
               className="object-contain"
@@ -111,6 +114,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               variants={{ rest: { scale: 1 }, hover: { scale: 1.06 } }}
               transition={transition}
               sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1280px) calc(50vw - 3rem), 600px"
+              {...(cover.lqip ? { placeholder: 'blur' as const, blurDataURL: cover.lqip } : {})}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-background-alt">

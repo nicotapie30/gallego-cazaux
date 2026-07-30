@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url';
-import type { Property, FAQ, Post } from './types';
+import type { Property, FAQ } from './types';
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 if (!projectId || projectId === 'your-project-id') {
@@ -35,7 +35,7 @@ const PROPERTY_FIELDS = `
   city,
   province,
   features,
-  images[]{ _key, asset, alt },
+  images[]{ _key, asset, alt, "lqip": asset->metadata.lqip },
   "videos": videos[]{ _key, "url": asset->url },
   isFeatured,
   status
@@ -101,8 +101,8 @@ export async function getFeaturedProperties(limit = 4): Promise<Property[]> {
   return sanityClient.fetch<Property[]>(query);
 }
 
-export async function getPropertySlugs(): Promise<{ slug: string }[]> {
-  const query = `*[_type == "property" && defined(slug.current)]{ "slug": slug.current }`;
+export async function getPropertySlugs(): Promise<{ slug: string; updatedAt: string }[]> {
+  const query = `*[_type == "property" && defined(slug.current)]{ "slug": slug.current, "updatedAt": _updatedAt }`;
   return sanityClient.fetch(query);
 }
 
@@ -124,6 +124,13 @@ export async function getBlogPosts() {
     excerpt,
     publishedAt
   }`;
+  return sanityClient.fetch(query);
+}
+
+/** Tipos que hoy tienen al menos una propiedad disponible — el sitemap no debe
+ *  listar landings vacías (thin content) */
+export async function getPropertyTypesInUse(): Promise<string[]> {
+  const query = `array::unique(*[_type == "property" && status == "disponible" && defined(propertyType)].propertyType)`;
   return sanityClient.fetch(query);
 }
 

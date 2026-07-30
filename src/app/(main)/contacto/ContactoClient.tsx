@@ -239,6 +239,8 @@ export default function ContactoClient() {
                         <input
                           type="text"
                           id="name"
+                          name="name"
+                          autoComplete="name"
                           required
                           value={formData.name}
                           onChange={e => setFormData({ ...formData, name: e.target.value })}
@@ -256,6 +258,9 @@ export default function ContactoClient() {
                           <input
                             type="email"
                             id="email"
+                            name="email"
+                            autoComplete="email"
+                            inputMode="email"
                             required
                             value={formData.email}
                             onChange={e => setFormData({ ...formData, email: e.target.value })}
@@ -270,6 +275,9 @@ export default function ContactoClient() {
                           <input
                             type="tel"
                             id="phone"
+                            name="phone"
+                            autoComplete="tel"
+                            inputMode="tel"
                             value={formData.phone}
                             onChange={e => setFormData({ ...formData, phone: e.target.value })}
                             className={INPUT_CLASS}
@@ -285,6 +293,7 @@ export default function ContactoClient() {
                         </label>
                         <textarea
                           id="message"
+                          name="message"
                           required
                           rows={5}
                           value={formData.message}

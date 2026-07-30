@@ -25,6 +25,7 @@ import { AnimateIn } from "@/components/AnimateIn";
 import PropertyCard from "@/components/PropertyCard";
 import type { Property } from "@/lib/types";
 import { urlFor } from "@/lib/sanity";
+import { sanityImageLoader } from "@/lib/sanity-image";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -74,8 +75,9 @@ export default function PropertyDetailClient({
   const mediaItems: MediaItem[] = [
     ...property.images.map((img) => ({
       type: "image" as const,
-      src: urlFor(img).width(1200).url(),
-      thumbSrc: urlFor(img).width(200).height(150).url(),
+      // La grande es un <motion.img>: no pasa por Next, así que la URL ya pide el formato óptimo
+      src: urlFor(img).width(1200).auto('format').url(),
+      thumbSrc: urlFor(img).url(),
       alt: img.alt ?? property.title,
     })),
     ...(property.videos ?? []).map((vid) => ({
@@ -284,7 +286,8 @@ export default function PropertyDetailClient({
                 const diff = touchStartX.current - e.changedTouches[0].clientX;
                 if (Math.abs(diff) > 50) {
                   isSwiping.current = true;
-                  diff > 0 ? goNext() : goPrev();
+                  if (diff > 0) goNext();
+                  else goPrev();
                 }
               }}
               onClick={() => {
@@ -471,9 +474,11 @@ export default function PropertyDetailClient({
                         {item.type === "image" ? (
                           <Image
                             src={item.thumbSrc}
+                            loader={sanityImageLoader}
                             alt={`${property.title} — imagen ${idx + 1}`}
                             fill
                             className="object-cover"
+                            sizes="96px"
                             loading="lazy"
                           />
                         ) : (
@@ -974,7 +979,8 @@ export default function PropertyDetailClient({
             onTouchEnd={(e) => {
               const diff = touchStartX.current - e.changedTouches[0].clientX;
               if (Math.abs(diff) > 50) {
-                diff > 0 ? goNext() : goPrev();
+                if (diff > 0) goNext();
+                else goPrev();
               }
             }}
           >
