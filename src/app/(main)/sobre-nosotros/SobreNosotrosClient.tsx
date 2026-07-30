@@ -28,11 +28,17 @@ function CountUp({ to, suffix = '' }: { to: number; suffix?: string }) {
   return <span ref={ref}>{value}{suffix}</span>;
 }
 
-const stats = [
-  { icon: Trophy, value: 20,  suffix: '+',  label: 'Años de trayectoria' },
-  { icon: Home,   value: 500, suffix: '+',  label: 'Operaciones realizadas' },
-  { icon: Users,  value: 7,   suffix: 'K+', label: 'Seguidores en Instagram' },
-  { icon: Star,   value: 24,  suffix: 'hs', label: 'Tiempo de respuesta' },
+const stats: {
+  icon: typeof Trophy;
+  value?: number;
+  suffix?: string;
+  text?: string;
+  label: string;
+}[] = [
+  { icon: Trophy, value: 8,  suffix: '+',  label: 'Años de trayectoria' },
+  { icon: Home,   text: 'Múltiples',       label: 'Operaciones realizadas' },
+  { icon: Users,  value: 7,  suffix: 'K+', label: 'Seguidores en Instagram' },
+  { icon: Star,   value: 24, suffix: 'hs', label: 'Tiempo de respuesta' },
 ];
 
 const team = [
@@ -82,7 +88,7 @@ export default function SobreNosotrosClient() {
             Quiénes somos
           </h1>
           <p className="text-white/55 text-lg">
-            Más de 20 años acompañando familias e inversores en La Pampa
+            Más de 8 años acompañando familias e inversores en La Pampa
           </p>
         </div>
       </div>
@@ -122,7 +128,7 @@ export default function SobreNosotrosClient() {
                   style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.12)' }}
                 >
                   <p className="text-white/50 text-xs uppercase tracking-widest mb-0.5">Pellegrini 594 · Santa Rosa</p>
-                  <p className="text-white font-outfit font-bold text-base">Abriendo puertas desde 2003</p>
+                  <p className="text-white font-outfit font-bold text-base">Abriendo puertas desde 2018</p>
                 </div>
               </motion.div>
             </AnimateIn>
@@ -135,10 +141,10 @@ export default function SobreNosotrosClient() {
               </h2>
               <div className="space-y-4 text-gray text-base leading-relaxed">
                 <p>
-                  Gallego Cazaux Negocios Inmobiliarios nació en 2003 como un proyecto familiar con una convicción simple: que el mercado inmobiliario de Santa Rosa merecía una inmobiliaria que priorizara las personas por encima de las comisiones.
+                  Gallego Cazaux Negocios Inmobiliarios nació en 2018 como un proyecto familiar con una convicción simple: que el mercado inmobiliario de Santa Rosa merecía una inmobiliaria que priorizara las personas por encima de las comisiones.
                 </p>
                 <p>
-                  Dos décadas después, seguimos siendo la misma empresa de siempre — pero con más experiencia, más red de contactos y más herramientas para ayudarte a tomar la mejor decisión de tu vida.
+                  Ocho años después, seguimos siendo la misma empresa de siempre — pero con más experiencia, más red de contactos y más herramientas para ayudarte a tomar la mejor decisión de tu vida.
                 </p>
                 <p>
                   Cada operación que cerramos lleva el nombre de una familia que confió en nosotros. Eso es lo que nos mueve.
@@ -168,7 +174,7 @@ export default function SobreNosotrosClient() {
               backdropFilter: 'blur(12px)',
             }}
           >
-            {stats.map(({ icon: Icon, value, suffix, label }, i) => (
+            {stats.map(({ icon: Icon, value, suffix, text, label }, i) => (
               <motion.div
                 key={label}
                 className={`relative overflow-hidden flex flex-col items-center justify-center gap-3 px-4 py-8 md:px-6 md:py-10 cursor-default ${[
@@ -202,7 +208,7 @@ export default function SobreNosotrosClient() {
                 </motion.div>
                 <div className="text-center">
                   <p className="font-outfit font-bold text-white text-3xl leading-none mb-1">
-                    <CountUp to={value} suffix={suffix} />
+                    {text ?? <CountUp to={value ?? 0} suffix={suffix} />}
                   </p>
                   <motion.p
                     className="text-xs"

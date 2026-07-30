@@ -6,7 +6,7 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Propiedades en Venta - Gallego Cazaux',
-  description: 'Casas, departamentos, terrenos y locales en venta en Santa Rosa y La Pampa. Gallego Cazaux Negocios Inmobiliarios — más de 20 años de experiencia.',
+  description: 'Casas, departamentos, terrenos y locales en venta en Santa Rosa y La Pampa. Gallego Cazaux Negocios Inmobiliarios — más de 8 años de experiencia.',
   openGraph: {
     title: 'Propiedades en Venta - Gallego Cazaux',
     description: 'Encontrá tu propiedad ideal en venta en La Pampa.',

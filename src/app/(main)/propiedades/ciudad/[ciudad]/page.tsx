@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ ciudad: s
     description: `Casas, departamentos, terrenos y locales en venta y alquiler en ${cityName}, La Pampa. Gallego Cazaux Negocios Inmobiliarios.`,
     openGraph: {
       title: `Propiedades en ${cityName} - Gallego Cazaux`,
-      description: `Encontrá tu propiedad ideal en ${cityName}. Venta y alquiler con más de 20 años de experiencia.`,
+      description: `Encontrá tu propiedad ideal en ${cityName}. Venta y alquiler con más de 8 años de experiencia.`,
       type: 'website',
     },
   };

@@ -372,8 +372,8 @@ const services = [
 const differentials = [
   {
     icon: Trophy,
-    title: '20+ años en el mercado',
-    description: 'Décadas de experiencia nos dan el conocimiento y la red de contactos que ningún portal puede reemplazar.',
+    title: '8 años en el mercado',
+    description: 'Años de experiencia nos dan el conocimiento y la red de contactos que ningún portal puede reemplazar.',
   },
   {
     icon: MapPin,
@@ -427,7 +427,7 @@ function WhyUsSection() {
                 style={{ background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.12)' }}
               >
                 <p className="text-white/50 text-xs uppercase tracking-widest mb-1">Pellegrini 594 · Santa Rosa</p>
-                <p className="text-white font-outfit font-bold text-lg leading-snug">Abriendo puertas desde 2003</p>
+                <p className="text-white font-outfit font-bold text-lg leading-snug">Abriendo puertas desde 2018</p>
                 <p className="text-white/40 text-xs mt-1.5">Lun–Vie · 9:30–13:00 / 16:30–19:00</p>
               </div>
             </motion.div>
@@ -614,7 +614,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
 
               {/* Paragraph — visible desde SSR, mismo motivo */}
               <p className="text-gray-400 text-lg 3xl:text-xl mb-6 md:mb-10 max-w-md 3xl:max-w-lg leading-relaxed">
-                Más de 20 años acompañando familias e inversores en Santa Rosa. Comprá, vendé o alquilá con confianza.
+                Más de 8 años acompañando familias e inversores en Santa Rosa y toda la zona. Comprá, vendé o alquilá con confianza.
               </p>
 
               {/* Hueco mobile — deja a la persona visible entre el copy y los botones, sin texto encima */}
@@ -654,11 +654,11 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                 }}
               >
                 <div className="px-3 py-3 md:px-6 md:py-5 3xl:px-7 3xl:py-6">
-                  <div className="font-outfit text-xl md:text-3xl 3xl:text-4xl font-bold text-white"><CountUp to={20} suffix="+" /></div>
+                  <div className="font-outfit text-xl md:text-3xl 3xl:text-4xl font-bold text-white"><CountUp to={8} suffix="+" /></div>
                   <div className="text-[10px] md:text-xs 3xl:text-sm text-gray-500 mt-0.5 leading-tight">Años de<br className="md:hidden" /> experiencia</div>
                 </div>
                 <div className="px-3 py-3 md:px-6 md:py-5 3xl:px-7 3xl:py-6" style={{ borderLeft: '1px solid rgba(255,255,255,0.06)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-                  <div className="font-outfit text-xl md:text-3xl 3xl:text-4xl font-bold text-white"><CountUp to={500} suffix="+" /></div>
+                  <div className="font-outfit text-base leading-7 md:text-2xl md:leading-9 3xl:text-3xl 3xl:leading-10 font-bold text-white">Múltiples</div>
                   <div className="text-[10px] md:text-xs 3xl:text-sm text-gray-500 mt-0.5 leading-tight">Operaciones<br className="md:hidden" /> realizadas</div>
                 </div>
                 <div className="px-3 py-3 md:px-6 md:py-5 3xl:px-7 3xl:py-6">
@@ -793,7 +793,7 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                 Todo lo que<br />necesitás en<br />una sola oficina.
               </h2>
               <p className="text-muted text-base leading-relaxed">
-                Compra, venta, alquiler o tasación — con el respaldo de más de 20 años en el mercado pampeano.
+                Compra, venta, alquiler o tasación — con el respaldo de más de 8 años en el mercado pampeano.
               </p>
             </AnimateIn>
 
@@ -906,11 +906,11 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                 <div>
                   <p className="text-white/50 font-medium text-xs uppercase tracking-widest mb-3">¿Listo para el próximo paso?</p>
                   <h2 className="font-outfit text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 md:mb-6">
-                    Más de 500 familias encontraron su lugar.{' '}
+                    Muchas familias ya encontraron su lugar.{' '}
                     <span className="text-white/55">La próxima podés ser vos.</span>
                   </h2>
                   <p className="text-white/70 text-base md:text-lg leading-relaxed mb-6 md:mb-10">
-                    Dos décadas en Santa Rosa nos enseñaron que detrás de cada operación hay una historia. Contanos la tuya y te ayudamos a dar el siguiente paso.
+                    Ocho años en Santa Rosa y toda la zona nos enseñaron que detrás de cada operación hay una historia. Contanos la tuya y te ayudamos a dar el siguiente paso.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <a

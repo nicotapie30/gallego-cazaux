@@ -7,7 +7,7 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Gallego Cazaux - Negocios Inmobiliarios',
-  description: 'Inmobiliaria en Santa Rosa, La Pampa. Más de 20 años acompañando familias e inversores. Venta, alquiler y tasación de propiedades.',
+  description: 'Inmobiliaria en Santa Rosa, La Pampa. Más de 8 años acompañando familias e inversores en Santa Rosa y toda la zona. Venta, alquiler y tasación de propiedades.',
   keywords: ['inmobiliaria', 'propiedades', 'venta', 'alquiler', 'Santa Rosa', 'La Pampa'],
   openGraph: {
     title: 'Gallego Cazaux - Negocios Inmobiliarios',

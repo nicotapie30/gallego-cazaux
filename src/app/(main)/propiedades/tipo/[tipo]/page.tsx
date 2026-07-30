@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ tipo: str
 
   return {
     title: `${meta.plural} en Venta y Alquiler - Gallego Cazaux`,
-    description: `${meta.plural} en venta y alquiler en Santa Rosa y La Pampa. Gallego Cazaux Negocios Inmobiliarios — más de 20 años de experiencia.`,
+    description: `${meta.plural} en venta y alquiler en Santa Rosa y La Pampa. Gallego Cazaux Negocios Inmobiliarios — más de 8 años de experiencia.`,
     openGraph: {
       title: `${meta.plural} en Venta y Alquiler - Gallego Cazaux`,
       description: `Encontrá ${meta.plural.toLowerCase()} en La Pampa con Gallego Cazaux.`,

@@ -71,9 +71,9 @@ function FAQItem({ question, answer, isOpen, onToggle }: {
 }
 
 const stats = [
-  { icon: Home,   value: '500+', label: 'Operaciones realizadas' },
-  { icon: Users,  value: '24hs', label: 'Tiempo de respuesta' },
-  { icon: Trophy, value: '20+',  label: 'Años de trayectoria' },
+  { icon: Home,   value: 'Múltiples', label: 'Operaciones realizadas' },
+  { icon: Users,  value: '24hs',      label: 'Tiempo de respuesta' },
+  { icon: Trophy, value: '8+',        label: 'Años de trayectoria' },
 ];
 
 export default function FAQClient({ faqs }: { faqs: FAQ[] }) {
