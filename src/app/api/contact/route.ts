@@ -11,6 +11,12 @@ const contactSchema = z.object({
   topic:   z.enum(['compra', 'venta', 'alquiler', 'tasacion', 'consulta']).optional(),
 });
 
+// onboarding@resend.dev es el remitente de sandbox de Resend: solo entrega al mail
+// dueño de la cuenta y lo que sale cae en spam. Una vez verificado el dominio en
+// Resend, se setea RESEND_FROM en Vercel y esto queda andando sin tocar código.
+const FROM = process.env.RESEND_FROM ?? 'Gallego Cazaux <onboarding@resend.dev>';
+const TO = process.env.CONTACT_TO ?? 'gallegocazaux@gmail.com';
+
 const TOPIC_LABELS: Record<string, string> = {
   compra:   'Compra',
   venta:    'Venta',
@@ -51,9 +57,9 @@ export async function POST(request: Request) {
     const { name, email, phone, message, topic } = parsed.data;
 
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
-      from: 'Gallego Cazaux <onboarding@resend.dev>',
-      to:   'gallegocazaux@gmail.com',
+    const { error: sendError } = await resend.emails.send({
+      from: FROM,
+      to:   TO,
       replyTo: email,
       subject: `Nuevo contacto web: ${escapeHtml(name)}${topic ? ` — ${TOPIC_LABELS[topic]}` : ''}`,
       html: `
@@ -73,6 +79,16 @@ export async function POST(request: Request) {
         </div>
       `,
     });
+
+    // Resend no lanza cuando la API rechaza el envío: devuelve { data: null, error }.
+    // Sin este chequeo el visitante ve "mensaje enviado" y la consulta se pierde.
+    if (sendError) {
+      console.error('Resend rechazó el envío:', sendError.name, '-', sendError.message);
+      return NextResponse.json(
+        { error: 'No pudimos enviar el mensaje. Escribinos por WhatsApp al (2954) 272138.' },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

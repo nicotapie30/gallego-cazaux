@@ -46,6 +46,13 @@ export const metadata: Metadata = {
   },
   // Los íconos salen de app/favicon.ico, app/icon.png y app/apple-icon.png —
   // Next los detecta y les pone hash de cache automáticamente
+
+  // Verificación de Google Search Console por meta tag. Se setea
+  // GOOGLE_SITE_VERIFICATION en Vercel con el código que da Google; si no está,
+  // no se emite ninguna etiqueta.
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
 };
 
 export default function RootLayout({
