@@ -50,4 +50,14 @@ next-env.d.ts
 .claude/settings.local.json
 openspec/
 
+# material de trabajo del cliente — fotos originales, PDFs y documentación que
+# se le entrega. No es código ni assets del sitio: lo del sitio vive en public/.
+# Mismo criterio de la barra inicial que arriba: ancla a la raíz para no ignorar
+# carpetas con nombres parecidos anidadas en el proyecto
+/Imagenes-Gallego-Cazaux/
+/propiedades-gallegocazaux/
+/guia-sanity/
+# Incluye la guía del CMS que se genera en la raíz, además de los PDFs sueltos
+/*.pdf
+
 .vercel
