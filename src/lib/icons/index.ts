@@ -9,6 +9,7 @@ export {
   Bed,
   Bath,
   Ruler,
+  Frame,
   Car,
   Trees,
   Filter,

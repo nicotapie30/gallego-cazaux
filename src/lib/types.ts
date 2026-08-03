@@ -30,6 +30,8 @@ export interface Property {
     bathrooms?: number;
     coveredArea?: number;
     totalArea?: number;
+    lotWidth?: number;
+    lotDepth?: number;
     garage?: boolean;
     pool?: boolean;
     garden?: boolean;

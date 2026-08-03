@@ -8,6 +8,7 @@ import {
   Bed,
   Bath,
   Ruler,
+  Frame,
   Car,
   Trees,
   MapPin,
@@ -26,6 +27,7 @@ import PropertyCard from "@/components/PropertyCard";
 import type { Property } from "@/lib/types";
 import { urlFor } from "@/lib/sanity";
 import { sanityImageLoader } from "@/lib/sanity-image";
+import { formatLotSize } from "@/lib/utils";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -159,6 +161,7 @@ export default function PropertyDetailClient({
     return () => window.removeEventListener("keydown", handler);
   }, [lightboxOpen, len]);
 
+  const lotSize = formatLotSize(property.features);
   const operationLabel = property.operation === "venta" ? "Venta" : "Alquiler";
   const operationColor =
     property.operation === "venta"
@@ -586,6 +589,19 @@ export default function PropertyDetailClient({
                       </div>
                     </div>
                   )}
+                  {lotSize && (
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-primary/8 flex items-center justify-center shrink-0">
+                        <Frame className="w-4.5 h-4.5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-secondary text-sm">
+                          {lotSize}
+                        </p>
+                        <p className="text-muted text-xs">Medidas del lote</p>
+                      </div>
+                    </div>
+                  )}
                   {property.features.garage && (
                     <div className="flex items-center gap-3">
                       <div className="w-9 h-9 rounded-xl bg-primary/8 flex items-center justify-center shrink-0">
@@ -685,7 +701,8 @@ export default function PropertyDetailClient({
 
                   {(property.features.bedrooms ||
                     property.features.bathrooms ||
-                    property.features.coveredArea) && (
+                    property.features.coveredArea ||
+                    lotSize) && (
                     <div className="flex flex-wrap gap-3 text-sm text-muted pb-5 border-b border-border mb-5">
                       {property.features.bedrooms && (
                         <span className="flex items-center gap-1.5">
@@ -703,6 +720,12 @@ export default function PropertyDetailClient({
                         <span className="flex items-center gap-1.5">
                           <Ruler className="w-4 h-4 text-primary" />
                           {property.features.coveredArea} m²
+                        </span>
+                      )}
+                      {lotSize && (
+                        <span className="flex items-center gap-1.5">
+                          <Frame className="w-4 h-4 text-primary" />
+                          {lotSize}
                         </span>
                       )}
                     </div>

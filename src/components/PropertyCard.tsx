@@ -6,10 +6,11 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 const MotionImage = motion.create(Image);
-import { Bed, Bath, Ruler, Car, MapPin } from '@/lib/icons';
+import { Bed, Bath, Ruler, Frame, Car, MapPin } from '@/lib/icons';
 import type { Property } from '@/lib/types';
 import { urlFor } from '@/lib/sanity';
 import { sanityImageLoader } from '@/lib/sanity-image';
+import { formatLotSize } from '@/lib/utils';
 
 const cardVariants = {
   rest: {
@@ -61,10 +62,15 @@ export default function PropertyCard({ property }: PropertyCardProps) {
   const operationLabel = property.operation === 'venta' ? 'Venta' : 'Alquiler';
   const operationBg = property.operation === 'venta' ? 'bg-primary/90' : 'bg-blue-600/90';
 
+  const lotSize = formatLotSize(property.features);
+  /** En terrenos no hay superficie cubierta — cae a la total para no dejar la fila vacía */
+  const area = property.features.coveredArea || property.features.totalArea;
+
   const hasFeatures =
     property.features.bedrooms ||
     property.features.bathrooms ||
-    property.features.coveredArea ||
+    area ||
+    lotSize ||
     property.features.garage;
 
   return (
@@ -163,7 +169,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
           {/* Features row */}
           {hasFeatures && (
-            <div className="flex items-center gap-3 text-xs text-muted pt-4 mt-4 border-t border-border">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted pt-4 mt-4 border-t border-border">
               {property.features.bedrooms && (
                 <span className="flex items-center gap-1">
                   <Bed className="w-3.5 h-3.5 text-secondary/40" />
@@ -178,14 +184,20 @@ export default function PropertyCard({ property }: PropertyCardProps) {
                   <span>baños</span>
                 </span>
               )}
-              {property.features.coveredArea && (
+              {!!area && (
                 <span className="flex items-center gap-1">
                   <Ruler className="w-3.5 h-3.5 text-secondary/40" />
-                  <span className="font-medium text-secondary/70">{property.features.coveredArea}</span>
+                  <span className="font-medium text-secondary/70">{area}</span>
                   <span>m²</span>
                 </span>
               )}
-              {property.features.garage && !property.features.bedrooms && !property.features.bathrooms && !property.features.coveredArea && (
+              {lotSize && (
+                <span className="flex items-center gap-1">
+                  <Frame className="w-3.5 h-3.5 text-secondary/40" />
+                  <span className="font-medium text-secondary/70">{lotSize}</span>
+                </span>
+              )}
+              {property.features.garage && !property.features.bedrooms && !property.features.bathrooms && !area && !lotSize && (
                 <span className="flex items-center gap-1">
                   <Car className="w-3.5 h-3.5 text-secondary/40" />
                   <span>Cochera</span>
