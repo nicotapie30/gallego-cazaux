@@ -123,7 +123,9 @@ export default function FAQClient({ faqs }: { faqs: FAQ[] }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-3 divide-x divide-border">
             {stats.map(({ icon: Icon, value, label }) => (
-              <div key={label} className="flex flex-col items-center justify-center gap-2 py-6 text-center">
+              // justify-start, no center: los labels no wrapean todos igual en
+              // mobile y centrarlos empujaba el ícono del más corto 8px abajo
+              <div key={label} className="flex flex-col items-center justify-start gap-2 py-6 text-center">
                 <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center">
                   <Icon className="w-5 h-5 text-primary" />
                 </div>
