@@ -547,7 +547,12 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
         <div className="absolute inset-0 overflow-hidden">
           <picture>
             <source media="(min-width: 768px)" srcSet={heroDesktopImgProps.srcSet} sizes={heroDesktopImgProps.sizes} />
-            <img {...heroMobileImgProps} alt="" />
+            {/* fetchPriority explícito: getImageProps no lo devuelve aunque se le
+                pase priority: true, así que el tag salía sin ningún hint. Chrome
+                arranca las imágenes en prioridad Low y recién las sube a High
+                después del layout — para entonces los chunks de JS ya coparon el
+                ancho de banda. Esta foto es el elemento LCP del home. */}
+            <img {...heroMobileImgProps} alt="" fetchPriority="high" />
           </picture>
           {/* Degradado "valle": oscuro atrás del título (arriba), se aclara en la franja donde debería caer la cara (medio), vuelve a oscurecer atrás de botones/stats (abajo) */}
           <div className="absolute inset-0 md:hidden" style={{ background: 'linear-gradient(to bottom, rgba(4,18,46,0.32) 0%, rgba(4,18,46,0.62) 16%, rgba(4,18,46,0.50) 30%, rgba(4,18,46,0.12) 42%, rgba(4,18,46,0.08) 55%, rgba(4,18,46,0.55) 66%, rgba(4,18,46,0.88) 78%, rgba(4,18,46,0.96) 100%)' }} />
