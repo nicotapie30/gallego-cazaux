@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { OG_IMAGE, SITE_NAME } from "@/lib/seo";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -26,6 +27,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  // Barra del navegador en mobile — mismo azul que el footer y los títulos
+  themeColor: "#05103d",
 };
 
 export const metadata: Metadata = {
@@ -38,11 +41,16 @@ export const metadata: Metadata = {
   title: "Gallego Cazaux - Negocios Inmobiliarios",
   description: "Inmobiliaria en Santa Rosa, La Pampa. Venta y alquiler de propiedades. Encontrá tu hogar ideal con nosotros.",
   keywords: ["inmobiliaria", "propiedades", "venta", "alquiler", "Santa Rosa", "La Pampa", "casa", "departamento"],
+  // Sin `url` acá a propósito: es global y haría que toda página que no defina
+  // su propio openGraph se declare como la home. El og:url va por página, con
+  // ogBase(path). Esto queda de red para cualquier página futura que lo olvide.
   openGraph: {
     title: "Gallego Cazaux - Negocios Inmobiliarios",
     description: "Inmobiliaria en Santa Rosa, La Pampa. Venta y alquiler de propiedades.",
     type: "website",
-    images: [{ url: '/assets/og-portada.webp', width: 1200, height: 630, alt: 'Gallego Cazaux Negocios Inmobiliarios' }],
+    siteName: SITE_NAME,
+    locale: 'es_AR',
+    images: [OG_IMAGE],
   },
   // Los íconos salen de app/favicon.ico, app/icon.png y app/apple-icon.png —
   // Next los detecta y les pone hash de cache automáticamente

@@ -9,6 +9,29 @@ export const OG_IMAGE = {
   alt: 'Gallego Cazaux Negocios Inmobiliarios',
 } as const;
 
+export const SITE_NAME = 'Gallego Cazaux Negocios Inmobiliarios';
+
+/**
+ * Campos de `openGraph` que Next NO hereda del layout cuando la página define
+ * el suyo — el mismo problema que documenta OG_IMAGE arriba, pero también para
+ * `url`, `siteName` y `locale`.
+ *
+ * `url` sale del mismo path que el canonical. Va acá y no en el layout porque
+ * un og:url global haría que todas las páginas se declaren como la home.
+ *
+ * Se spreadea PRIMERO para que la página pueda pisar `images` o `type`:
+ *   openGraph: { ...ogBase('/faq'), title, description }
+ */
+export function ogBase(path: string) {
+  return {
+    url: path,
+    siteName: SITE_NAME,
+    locale: 'es_AR',
+    type: 'website' as const,
+    images: [OG_IMAGE],
+  };
+}
+
 /**
  * Arma la meta description a partir del texto libre que se carga en Sanity.
  * Las descripciones vienen con emojis decorativos (✨ 📐 🏠) que quedan mal en

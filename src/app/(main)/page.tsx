@@ -1,20 +1,22 @@
 import type { Metadata } from 'next';
 import type { Property } from '@/lib/types';
 import { getFeaturedProperties } from '@/lib/sanity';
+import { ogBase } from '@/lib/seo';
 import HomeClient from './HomeClient';
 
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Gallego Cazaux - Negocios Inmobiliarios',
-  description: 'Inmobiliaria en Santa Rosa, La Pampa. Más de 8 años acompañando familias e inversores en Santa Rosa y toda la zona. Venta, alquiler y tasación de propiedades.',
+  // 145 chars: la anterior medía 158 y quedaba justo en el corte del SERP.
+  // Se sacó el segundo "Santa Rosa", que estaba repetido
+  description: 'Inmobiliaria en Santa Rosa, La Pampa. Más de 8 años acompañando familias e inversores en toda la zona. Venta, alquiler y tasación de propiedades.',
   keywords: ['inmobiliaria', 'propiedades', 'venta', 'alquiler', 'Santa Rosa', 'La Pampa'],
   alternates: { canonical: '/' },
   openGraph: {
+    ...ogBase('/'),
     title: 'Gallego Cazaux - Negocios Inmobiliarios',
     description: 'Inmobiliaria en Santa Rosa, La Pampa. Venta y alquiler de propiedades.',
-    type: 'website',
-    images: [{ url: '/assets/og-portada.webp', width: 1200, height: 630, alt: 'Gallego Cazaux Negocios Inmobiliarios' }],
   },
 };
 

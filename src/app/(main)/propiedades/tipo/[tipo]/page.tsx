@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { OG_IMAGE } from '@/lib/seo';
+import { ogBase } from '@/lib/seo';
 import { notFound } from 'next/navigation';
 import { getProperties, getPropertyTypesInUse } from '@/lib/sanity';
 import PropiedadesClient from '../../PropiedadesClient';
@@ -29,10 +29,9 @@ export async function generateMetadata({ params }: { params: Promise<{ tipo: str
     alternates: { canonical: `/propiedades/tipo/${tipo}` },
     ...(hayPropiedades ? {} : { robots: { index: false, follow: true } }),
     openGraph: {
+      ...ogBase(`/propiedades/tipo/${tipo}`),
       title: `${meta.plural} en Venta y Alquiler - Gallego Cazaux`,
       description: `Encontrá ${meta.plural.toLowerCase()} en La Pampa con Gallego Cazaux.`,
-      type: 'website',
-      images: [OG_IMAGE],
     },
   };
 }

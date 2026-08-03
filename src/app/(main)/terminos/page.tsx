@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { ogBase } from '@/lib/seo';
 
 // Contenido fijo: lo único que cambia es el footer, que lista las ciudades y
 // tipos con propiedades publicadas. El webhook de Sanity la revalida al publicar;
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
   title: 'Términos y Condiciones - Gallego Cazaux',
   description: 'Términos y condiciones de uso del sitio web Gallego Cazaux Negocios Inmobiliarios.',
   alternates: { canonical: '/terminos' },
+  // Sin title/description propios: Next cae a los de arriba
+  openGraph: ogBase('/terminos'),
 };
 
 const sections = [

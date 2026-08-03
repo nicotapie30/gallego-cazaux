@@ -5,7 +5,7 @@ import { getPropertyBySlug, getProperties, getPropertySlugs } from '@/lib/sanity
 import { urlFor } from '@/lib/sanity';
 import PropertyDetailClient from './PropertyDetailClient';
 import { breadcrumbSchema, propertySchema } from '@/lib/schema';
-import { metaDescription } from '@/lib/seo';
+import { metaDescription, ogBase } from '@/lib/seo';
 import { safeJsonLd } from '@/lib/safe-json-ld';
 
 export const revalidate = 3600;
@@ -34,10 +34,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // sin canonical cada variante puede indexarse como página aparte
     alternates: { canonical: `/propiedades/${slug}` },
     openGraph: {
+      ...ogBase(`/propiedades/${slug}`),
       title: property.title,
       description,
-      type: 'website',
-      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630, alt: property.title }] : [],
+      // Con `[]` una propiedad sin fotos se compartía sin preview: ogBase deja
+      // la imagen del sitio como fallback
+      ...(imageUrl ? { images: [{ url: imageUrl, width: 1200, height: 630, alt: property.title }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',

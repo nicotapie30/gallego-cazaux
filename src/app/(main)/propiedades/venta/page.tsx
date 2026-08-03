@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { OG_IMAGE } from '@/lib/seo';
+import { ogBase } from '@/lib/seo';
 import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from '../PropiedadesClient';
 import PropiedadesHeader from '../PropiedadesHeader';
@@ -12,10 +12,9 @@ export const metadata: Metadata = {
   description: 'Casas, departamentos, terrenos y locales en venta en Santa Rosa y La Pampa. Gallego Cazaux Negocios Inmobiliarios — más de 8 años de experiencia.',
   alternates: { canonical: '/propiedades/venta' },
   openGraph: {
+    ...ogBase('/propiedades/venta'),
     title: 'Propiedades en Venta - Gallego Cazaux',
     description: 'Encontrá tu propiedad ideal en venta en La Pampa.',
-    type: 'website',
-    images: [OG_IMAGE],
   },
 };
 

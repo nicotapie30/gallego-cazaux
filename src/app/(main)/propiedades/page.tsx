@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { OG_IMAGE } from '@/lib/seo';
+import { ogBase } from '@/lib/seo';
 import type { Property } from '@/lib/types';
 import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from './PropiedadesClient';
@@ -9,14 +9,15 @@ import PropertyListSchema from '@/components/PropertyListSchema';
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: 'Propiedades en venta y alquiler en Santa Rosa | Gallego Cazaux',
-  description: 'Explorá todas nuestras propiedades en Santa Rosa y La Pampa: casas, departamentos, terrenos y locales en venta y alquiler, con filtros por zona, precio y dormitorios.',
+  // 60 y 158 chars: el título anterior (62) y la description (166) se pasaban
+  // del corte del SERP y Google truncaba el final
+  title: 'Propiedades en venta y alquiler, Santa Rosa | Gallego Cazaux',
+  description: 'Casas, departamentos, terrenos y locales en venta y alquiler en Santa Rosa y La Pampa. Filtrá por zona, precio y dormitorios y encontrá el tuyo.',
   alternates: { canonical: '/propiedades' },
   openGraph: {
+    ...ogBase('/propiedades'),
     title: 'Propiedades - Gallego Cazaux',
     description: 'Casas, departamentos, terrenos y locales en venta y alquiler en Santa Rosa, La Pampa.',
-    type: 'website',
-    images: [OG_IMAGE],
   },
 };
 

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { OG_IMAGE } from '@/lib/seo';
+import { ogBase } from '@/lib/seo';
 import SobreNosotrosClient from './SobreNosotrosClient';
 
 // Contenido fijo: lo único que cambia es el footer, que lista las ciudades y
@@ -12,10 +12,9 @@ export const metadata: Metadata = {
   description: 'Más de 8 años acompañando familias e inversores en Santa Rosa y toda la zona de La Pampa. Conocé nuestra historia y nuestros valores.',
   alternates: { canonical: '/sobre-nosotros' },
   openGraph: {
+    ...ogBase('/sobre-nosotros'),
     title: 'Quiénes Somos - Gallego Cazaux',
     description: 'Una empresa familiar con raíces en La Pampa. Abriendo puertas desde 2018.',
-    type: 'website',
-    images: [OG_IMAGE],
   },
 };
 

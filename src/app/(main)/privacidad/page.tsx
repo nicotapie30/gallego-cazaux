@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { ogBase } from '@/lib/seo';
 
 // Contenido fijo: lo único que cambia es el footer, que lista las ciudades y
 // tipos con propiedades publicadas. El webhook de Sanity la revalida al publicar;
@@ -10,6 +11,8 @@ export const metadata: Metadata = {
   title: 'Política de Privacidad - Gallego Cazaux',
   description: 'Política de privacidad y tratamiento de datos personales de Gallego Cazaux Negocios Inmobiliarios.',
   alternates: { canonical: '/privacidad' },
+  // Sin title/description propios: Next cae a los de arriba
+  openGraph: ogBase('/privacidad'),
 };
 
 const sections = [

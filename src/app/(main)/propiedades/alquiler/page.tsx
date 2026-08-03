@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { OG_IMAGE } from '@/lib/seo';
+import { ogBase } from '@/lib/seo';
 import { getProperties } from '@/lib/sanity';
 import PropiedadesClient from '../PropiedadesClient';
 import PropiedadesHeader from '../PropiedadesHeader';
@@ -12,10 +12,9 @@ export const metadata: Metadata = {
   description: 'Casas, departamentos y locales en alquiler en Santa Rosa y La Pampa. Gallego Cazaux Negocios Inmobiliarios — más de 8 años de experiencia.',
   alternates: { canonical: '/propiedades/alquiler' },
   openGraph: {
+    ...ogBase('/propiedades/alquiler'),
     title: 'Propiedades en Alquiler - Gallego Cazaux',
     description: 'Encontrá tu propiedad ideal en alquiler en La Pampa.',
-    type: 'website',
-    images: [OG_IMAGE],
   },
 };
 
