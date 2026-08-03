@@ -25,6 +25,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Next manda `X-Powered-By: Next.js` por default. No afecta SEO, pero anuncia
+  // el stack sin necesidad — mismo criterio que los headers de seguridad de abajo
+  poweredByHeader: false,
   experimental: {
     viewTransition: true,
   },
