@@ -35,8 +35,14 @@ const PROPERTY_FIELDS = `
   city,
   province,
   features,
-  images[]{ _key, asset, alt, "lqip": asset->metadata.lqip },
-  "videos": videos[]{ _key, "url": asset->url },
+  // defined(asset): en el Studio se puede agregar un slot de foto/video y no
+  // subir el archivo. Esa entrada llega con asset nulo y urlFor() explota
+  // leyendo asset._ref, que tiraba abajo el prerender de la ficha entera.
+  // Se filtra acá y no en los componentes porque estos campos alimentan las 3
+  // queries de propiedades: así el tipo Property, que declara asset como
+  // obligatorio, deja de mentir y los 8 usos de urlFor quedan cubiertos.
+  images[defined(asset)]{ _key, asset, alt, "lqip": asset->metadata.lqip },
+  "videos": videos[defined(asset)]{ _key, "url": asset->url },
   isFeatured,
   status
 `;
