@@ -21,6 +21,16 @@ export function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
+/** Un tag por tipo de documento: el webhook de Sanity rompe el del tipo que se
+ *  editó y Next regenera todas las páginas que hayan consultado ese contenido,
+ *  incluidas las de generateStaticParams. Ver src/app/api/revalidate/route.ts */
+export const SANITY_TAGS = ['property', 'faq', 'post'] as const;
+export type SanityTag = (typeof SANITY_TAGS)[number];
+
+/** El revalidate es la red por si el webhook falla: con tags a secas, un hook
+ *  caído dejaría el contenido congelado para siempre. */
+const cache = (tag: SanityTag) => ({ next: { tags: [tag], revalidate: 3600 } });
+
 const PROPERTY_FIELDS = `
   _id,
   title,
@@ -89,7 +99,7 @@ export async function getProperties(filters?: {
 
   query += `] | order(publishedAt desc) { ${PROPERTY_FIELDS} }`;
 
-  return sanityClient.fetch<Property[]>(query, params);
+  return sanityClient.fetch<Property[]>(query, params, cache('property'));
 }
 
 export async function getPropertyBySlug(slug: string) {
@@ -98,24 +108,24 @@ export async function getPropertyBySlug(slug: string) {
     description,
     publishedAt
   }`;
-  return sanityClient.fetch<Property>(query, { slug });
+  return sanityClient.fetch<Property>(query, { slug }, cache('property'));
 }
 
 export async function getFeaturedProperties(limit = 4): Promise<Property[]> {
   const safeLimit = Math.max(1, Math.min(20, Math.floor(limit)));
   const query = `*[_type == "property" && status == "disponible"] | order(isFeatured desc, publishedAt desc)[0..${safeLimit - 1}] { ${PROPERTY_FIELDS} }`;
-  return sanityClient.fetch<Property[]>(query);
+  return sanityClient.fetch<Property[]>(query, {}, cache('property'));
 }
 
 export async function getPropertySlugs(): Promise<{ slug: string; updatedAt: string }[]> {
   const query = `*[_type == "property" && defined(slug.current)]{ "slug": slug.current, "updatedAt": _updatedAt }`;
-  return sanityClient.fetch(query);
+  return sanityClient.fetch(query, {}, cache('property'));
 }
 
 /** Fecha de la última FAQ editada — para el lastmod del sitemap */
 export async function getLastFaqUpdate(): Promise<string | null> {
   const query = `*[_type == "faq"] | order(_updatedAt desc)[0]._updatedAt`;
-  return sanityClient.fetch(query);
+  return sanityClient.fetch(query, {}, cache('faq'));
 }
 
 export async function getFAQ() {
@@ -125,7 +135,7 @@ export async function getFAQ() {
     answer,
     category
   }`;
-  return sanityClient.fetch<FAQ[]>(query);
+  return sanityClient.fetch<FAQ[]>(query, {}, cache('faq'));
 }
 
 export async function getBlogPosts() {
@@ -136,19 +146,19 @@ export async function getBlogPosts() {
     excerpt,
     publishedAt
   }`;
-  return sanityClient.fetch(query);
+  return sanityClient.fetch(query, {}, cache('post'));
 }
 
 /** Tipos que hoy tienen al menos una propiedad disponible — el sitemap no debe
  *  listar landings vacías (thin content) */
 export async function getPropertyTypesInUse(): Promise<string[]> {
   const query = `array::unique(*[_type == "property" && status == "disponible" && defined(propertyType)].propertyType)`;
-  return sanityClient.fetch(query);
+  return sanityClient.fetch(query, {}, cache('property'));
 }
 
 export async function getCities(): Promise<string[]> {
   const query = `array::unique(*[_type == "property" && status == "disponible" && defined(city)].city) | order(@)`;
-  return sanityClient.fetch(query);
+  return sanityClient.fetch(query, {}, cache('property'));
 }
 
 export async function getBlogPostBySlug(slug: string) {
@@ -160,5 +170,5 @@ export async function getBlogPostBySlug(slug: string) {
     content,
     publishedAt
   }`;
-  return sanityClient.fetch(query, { slug });
+  return sanityClient.fetch(query, { slug }, cache('post'));
 }
