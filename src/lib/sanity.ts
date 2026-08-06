@@ -28,8 +28,17 @@ export const SANITY_TAGS = ['property', 'faq', 'post'] as const;
 export type SanityTag = (typeof SANITY_TAGS)[number];
 
 /** El revalidate es la red por si el webhook falla: con tags a secas, un hook
- *  caído dejaría el contenido congelado para siempre. */
-const cache = (tag: SanityTag) => ({ next: { tags: [tag], revalidate: 3600 } });
+ *  caído dejaría el contenido congelado para siempre. Diario y no horario
+ *  porque es solo eso, una red: la frescura real la da el webhook, que rompe
+ *  el tag al publicar.
+ *
+ *  Con 3600 se regeneraba el sitio entero cada hora. Estos fetch los hace el
+ *  layout de (main), y el revalidate más bajo de un route gana sobre el de sus
+ *  páginas: el 86400 que declaran /contacto, /sobre-nosotros, /terminos y
+ *  /privacidad quedaba anulado desde acá, y cada regeneración se paga en
+ *  writes al caché ISR. No se estira más que un día porque el caso caro es una
+ *  propiedad vendida que sigue publicada si el webhook se rompe en silencio. */
+const cache = (tag: SanityTag) => ({ next: { tags: [tag], revalidate: 86400 } });
 
 const PROPERTY_FIELDS = `
   _id,
@@ -152,7 +161,11 @@ export async function getBlogPosts() {
 /** Tipos que hoy tienen al menos una propiedad disponible — el sitemap no debe
  *  listar landings vacías (thin content) */
 export async function getPropertyTypesInUse(): Promise<string[]> {
-  const query = `array::unique(*[_type == "property" && status == "disponible" && defined(propertyType)].propertyType)`;
+  // order(@) como en getCities: el array se serializa tal cual en el payload RSC
+  // de todas las páginas (va como prop al Footer, que es client). Sin orden fijo,
+  // dos regeneraciones con los mismos datos pueden dar bytes distintos y cada una
+  // se paga como un write al caché ISR.
+  const query = `array::unique(*[_type == "property" && status == "disponible" && defined(propertyType)].propertyType) | order(@)`;
   return sanityClient.fetch(query, {}, cache('property'));
 }
 

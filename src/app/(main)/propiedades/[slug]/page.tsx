@@ -8,7 +8,7 @@ import { breadcrumbSchema, propertySchema } from '@/lib/schema';
 import { metaDescription, ogBase } from '@/lib/seo';
 import { safeJsonLd } from '@/lib/safe-json-ld';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 export const dynamicParams = true;
 
 export async function generateStaticParams() {

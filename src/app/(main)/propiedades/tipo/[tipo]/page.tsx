@@ -7,7 +7,7 @@ import PropiedadesHeader from '../../PropiedadesHeader';
 import PropertyListSchema from '@/components/PropertyListSchema';
 import { PROPERTY_TYPES as TIPOS } from '@/lib/property-types';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
   return Object.keys(TIPOS).map((tipo) => ({ tipo }));

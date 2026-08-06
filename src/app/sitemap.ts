@@ -4,8 +4,9 @@ import { PROPERTY_TYPES } from '@/lib/property-types';
 import { slugifyCity } from '@/lib/utils';
 
 // Sin esto el sitemap se congela en el build: una propiedad nueva no aparecería
-// hasta el próximo deploy
-export const revalidate = 3600;
+// hasta el próximo deploy. Diario y no horario porque el webhook ya lo revalida
+// por tag al publicar — el reloj es solo la red por si el hook falla
+export const revalidate = 86400;
 
 /**
  * Última edición del contenido fijo (contacto, nosotros, términos, privacidad).

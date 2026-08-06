@@ -4,7 +4,7 @@ import { getFeaturedProperties } from '@/lib/sanity';
 import { ogBase } from '@/lib/seo';
 import HomeClient from './HomeClient';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Gallego Cazaux - Negocios Inmobiliarios',

@@ -5,7 +5,7 @@ import PropiedadesClient from '../PropiedadesClient';
 import PropiedadesHeader from '../PropiedadesHeader';
 import PropertyListSchema from '@/components/PropertyListSchema';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Propiedades en Venta - Gallego Cazaux',

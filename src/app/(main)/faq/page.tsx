@@ -6,7 +6,7 @@ import FAQClient from './FAQClient';
 import { faqPageSchema } from '@/lib/schema';
 import { safeJsonLd } from '@/lib/safe-json-ld';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Preguntas Frecuentes - Gallego Cazaux',

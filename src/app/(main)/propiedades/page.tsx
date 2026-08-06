@@ -6,7 +6,7 @@ import PropiedadesClient from './PropiedadesClient';
 import PropiedadesHeader from './PropiedadesHeader';
 import PropertyListSchema from '@/components/PropertyListSchema';
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   // 60 y 158 chars: el título anterior (62) y la description (166) se pasaban
