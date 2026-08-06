@@ -894,19 +894,29 @@ export default function HomeClient({ featuredProperties }: { featuredProperties:
                   <p className="text-white/70 text-base md:text-lg leading-relaxed mb-6 md:mb-10">
                     Ocho años en Santa Rosa y toda la zona nos enseñaron que detrás de cada operación hay una historia. Contanos la tuya y te ayudamos a dar el siguiente paso.
                   </p>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  {/* Los dos botones son whitespace-nowrap: no encogen, así que
+                      o entran o desbordan. Con px-8 suman 531px y la columna
+                      del grid mide 392px en lg y 520px como máximo en xl (la
+                      topea el max-w-7xl). Sin wrap, "Ver propiedades" se salía
+                      de su celda y terminaba abajo de la card del testimonio.
+
+                      flex-wrap por defecto, y en xl se fuerza la fila única
+                      bajando el padding a px-6: ahí el par mide 499px y entra
+                      en los 520 con margen. Si se alarga el texto de un botón,
+                      revisar que siga entrando o sacar el xl:flex-nowrap. */}
+                  <div className="flex flex-col sm:flex-row flex-wrap xl:flex-nowrap gap-3">
                     <a
                       href="https://wa.me/542954272138"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex justify-center items-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 bg-white text-primary font-semibold rounded-xl text-sm sm:text-base whitespace-nowrap transition-shadow duration-200 hover:shadow-xl"
+                      className="inline-flex justify-center items-center gap-3 px-6 py-3.5 sm:px-8 sm:py-4 xl:px-6 bg-white text-primary font-semibold rounded-xl text-sm sm:text-base whitespace-nowrap transition-shadow duration-200 hover:shadow-xl"
                     >
                       <WhatsAppIcon className="w-5 h-5 shrink-0" />
                       Hablemos sin compromiso
                     </a>
                     <Link
                       href="/propiedades"
-                      className="group inline-flex justify-center items-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 text-white/75 hover:text-white font-semibold rounded-xl border border-white/20 hover:border-white/40 transition-colors text-sm sm:text-base whitespace-nowrap"
+                      className="group inline-flex justify-center items-center gap-2 px-6 py-3.5 sm:px-8 sm:py-4 xl:px-6 text-white/75 hover:text-white font-semibold rounded-xl border border-white/20 hover:border-white/40 transition-colors text-sm sm:text-base whitespace-nowrap"
                     >
                       Ver propiedades
                       <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
